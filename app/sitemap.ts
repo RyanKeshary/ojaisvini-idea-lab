@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const base = process.env.NEXT_PUBLIC_SITE_URL || "https://ojaisvini.vercel.app";
 
 /** Static public routes. Shop pages are dynamic (no cookie) — crawled via links. */
 export default function sitemap(): MetadataRoute.Sitemap {
