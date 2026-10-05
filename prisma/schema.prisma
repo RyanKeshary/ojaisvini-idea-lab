@@ -1,0 +1,484 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+  // Production: switch provider to "postgresql" with a Postgres DATABASE_URL.
+  // Enums below are Strings for SQLite/Postgres compatibility.
+}
+
+model User {
+  id            String    @id @default(cuid())
+  phone         String    @unique
+  name          String    @default("")
+  // Role: WOMAN | SAKHI | MENTOR | ADMIN (String for sqlite compat)
+  role          String    @default("WOMAN")
+  email         String?   @unique
+  passwordHash  String?
+  locale        String    @default("mr")
+  village       String?
+  district      String?
+  pincode       String?
+  pinHash       String?
+  pinFails      Int       @default(0)
+  pinLockedUntil DateTime?
+  photoUrl      String?
+  sakhiId       String?
+  sakhi         User?     @relation("SakhiWomen", fields: [sakhiId], references: [id])
+  women         User[]    @relation("SakhiWomen")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  shops         Shop[]
+  lessonProgress LessonProgress[]
+  badges        UserBadge[]
+  savedSchemes  SavedScheme[]
+  posts         Post[]
+  replies       Reply[]
+  reactions     Reaction[]
+  notifications Notification[]
+  sakhiSessionsAsSakhi SakhiSession[] @relation("SakhiSessions")
+  sakhiSessionsAsWoman SakhiSession[] @relation("WomanSessions")
+  auditLogs     AuditLog[]
+  tickets       AuthTicket[]
+
+  @@index([phone])
+  @@index([pincode])
+}
+
+model OtpToken {
+  id        String   @id @default(cuid())
+  phone     String
+  hash      String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([phone])
+}
+
+/** Server-side AI usage/cost log. No PII, no prompts — feature, model, tokens, latency. */
+model AiUsageLog {
+  id           String   @id @default(cuid())
+  feature      String
+  provider     String
+  model        String
+  degraded     Boolean  @default(false)
+  latencyMs    Int
+  promptTokens Int?
+  completionTokens Int?
+  userId       String?
+  createdAt    DateTime @default(now())
+
+  @@index([feature, createdAt])
+}
+
+/** Assistant chat memory (per user, latest open thread). */
+model ChatThread {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messages ChatMessage[]
+
+  @@index([userId, updatedAt])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  threadId  String
+  thread    ChatThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  role      String
+  content   String
+  // 1 = helpful, -1 = not helpful, null = unrated
+  feedback  Int?
+  meta      String   @default("{}")
+  createdAt DateTime @default(now())
+
+  @@index([threadId, createdAt])
+}
+
+/** Content cache keyed by hash(input): listing drafts, scheme explanations, narrations. */
+model AiCache {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  kind      String
+  value     String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([kind, expiresAt])
+}
+
+/** Single-use login ticket: verify APIs mint it, Credentials authorize redeems it. */
+model AuthTicket {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Shop {
+  id              String    @id @default(cuid())
+  ownerId         String
+  owner           User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  slug            String    @unique
+  name            String
+  theme           String    @default("turmeric")
+  greetingAudioUrl String?
+  bio             String?
+  upiId           String?
+  isLive          Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  products Product[]
+  orders   Order[]
+  payouts  Payout[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  shopId      String
+  shop        Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  category    String
+  tags        String   @default("[]")
+  priceINR    Int
+  stock       Int      @default(1)
+  images      String   @default("[]")
+  attributes  String   @default("{}")
+  // Status: DRAFT | LIVE | PAUSED
+  status      String   @default("DRAFT")
+  aiMeta      String   @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([shopId, status])
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  shopId      String
+  shop        Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  buyerName   String
+  buyerPhone  String
+  address     String   @default("{}")
+  items       String   @default("[]")
+  subtotal    Int
+  deliveryFee Int      @default(0)
+  total       Int
+  // PENDING_PAYMENT | PLACED | ACCEPTED | PREPARING | READY | PICKED_UP |
+  // OUT_FOR_DELIVERY | DELIVERED | CANCELLED | REFUNDED
+  status      String   @default("PENDING_PAYMENT")
+  // UNPAID | PAID | FAILED | COD_PENDING | REFUNDED
+  payStatus   String   @default("UNPAID")
+  paymentId   String?
+  payment     Payment? @relation(fields: [paymentId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderItems OrderItem[]
+  events    OrderEvent[]
+  delivery Delivery?
+  payouts  Payout[]
+
+  @@index([shopId, status, createdAt])
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  orderId   String
+  order     Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  title     String
+  price     Int
+  qty       Int
+  image     String @default("")
+
+  @@index([orderId])
+}
+
+model OrderEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status    String
+  note      String   @default("")
+  createdAt DateTime @default(now())
+
+  @@index([orderId, createdAt])
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  orderId       String
+  // UPI | CARD | NETBANKING | COD
+  method        String   @default("UPI")
+  // CREATED | ATTEMPTED | PAID | FAILED | REFUNDED
+  status        String   @default("CREATED")
+  providerRef   String?
+  attempts      Int      @default(0)
+  failureReason String?
+  // Idempotency: one key per checkout attempt chain.
+  idemKey       String?  @unique
+  meta          String   @default("{}")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  orders Order[]
+  refunds Refund[]
+}
+
+model Refund {
+  id        String   @id @default(cuid())
+  paymentId String
+  payment   Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  orderId   String
+  amount    Int
+  // REQUESTED | PROCESSING | DONE | FAILED
+  status    String   @default("REQUESTED")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orderId])
+}
+
+model Payout {
+  id        String    @id @default(cuid())
+  shopId    String
+  shop      Shop      @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  orderId   String
+  order     Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  gross     Int
+  fees      String    @default("{}")
+  net       Int
+  // PENDING | PROCESSING | SETTLED | FAILED
+  status    String    @default("PENDING")
+  // UPI id the money goes to (masked in responses)
+  upiId     String    @default("")
+  settledAt DateTime?
+  createdAt DateTime  @default(now())
+}
+
+model Delivery {
+  id         String   @id @default(cuid())
+  orderId    String   @unique
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  provider   String
+  trackingId String?
+  status     String   @default("CREATED")
+  poolId     String?
+  events     String   @default("[]")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  batch DeliveryBatch? @relation(fields: [poolId], references: [id])
+}
+
+/** Village pooling: orders in one pincode grouped into a shared pickup batch. */
+model DeliveryBatch {
+  id         String   @id @default(cuid())
+  pincode    String
+  // OPEN | READY | COLLECTED
+  status     String   @default("OPEN")
+  // Paise saved per order by pooling (shown as savings).
+  savedPaise Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  deliveries Delivery[]
+
+  @@index([pincode, status])
+}
+
+model Lesson {
+  id         String @id @default(cuid())
+  journey    String
+  order      Int
+  contentRef String
+  progress   LessonProgress[]
+
+  @@index([journey, order])
+}
+
+model LessonProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId    String
+  lesson      Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  status      String    @default("STARTED")
+  score       Int?
+  completedAt DateTime?
+
+  @@unique([userId, lessonId])
+}
+
+model Badge {
+  id    String @id @default(cuid())
+  code  String @unique
+  users UserBadge[]
+}
+
+model UserBadge {
+  id       String   @id @default(cuid())
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badgeId  String
+  badge    Badge    @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+  earnedAt DateTime @default(now())
+
+  @@unique([userId, badgeId])
+}
+
+model Scheme {
+  id             String   @id @default(cuid())
+  name           String
+  // Localized display names {hi, mr} (official English stays in name).
+  nameI18n       String   @default("{}")
+  level          String
+  states         String   @default("[]")
+  categories     String   @default("[]")
+  gender         String   @default("[]")
+  ageMin         Int?
+  ageMax         Int?
+  incomeMax      Int?
+  occupations    String   @default("[]")
+  // Structured eligibility (rules live in data + code, NEVER decided by LLM):
+  businessTypes  String   @default("[]")
+  casteList      String   @default("[]")
+  shgOnly        Boolean  @default(false)
+  benefits       String   @default("{}")
+  documents      String   @default("[]")
+  applyUrl       String?
+  deadline       DateTime?
+  sourceUrl      String?
+  lastVerifiedAt DateTime?
+  savedBy        SavedScheme[]
+}
+
+model SavedScheme {
+  id             String @id @default(cuid())
+  userId         String
+  user           User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  schemeId       String
+  scheme         Scheme @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+  checklistState String @default("{}")
+
+  @@unique([userId, schemeId])
+}
+
+model Post {
+  id           String   @id @default(cuid())
+  authorId     String
+  author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  // Type: question | win | tip. Room: food | craft | tailor | dairy | money | tech | wins.
+  category     String   @default("question")
+  room         String   @default("food")
+  anon         Boolean  @default(false)
+  text         String
+  audioUrl     String?
+  imageUrl     String?
+  locale       String   @default("mr")
+  translations String   @default("{}")
+  // VISIBLE | FLAGGED | HIDDEN
+  status       String   @default("VISIBLE")
+  bestReplyId  String?
+  createdAt    DateTime @default(now())
+
+  replies Reply[]
+
+  @@index([room, status, createdAt])
+}
+
+model Reply {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  text      String
+  audioUrl  String?
+  // Sakhi/mentor verified answer.
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([postId, createdAt])
+}
+
+model Reaction {
+  id         String @id @default(cuid())
+  targetType String
+  targetId   String
+  userId     String
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind       String
+
+  @@unique([targetType, targetId, userId, kind])
+}
+
+/** Feature flags (admin-controlled runtime switches). Absent = default on. */
+model FeatureFlag {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @default("1")
+  updatedAt DateTime @updatedAt
+}
+
+/** User reports for moderation queue (3+ reports auto-hide). */
+model Report {
+  id         String   @id @default(cuid())
+  reporterId String
+  targetType String
+  targetId   String
+  reason     String   @default("")
+  // OPEN | REVIEWED | DISMISSED
+  status     String   @default("OPEN")
+  createdAt DateTime @default(now())
+
+  @@index([targetType, targetId])
+  @@index([status, createdAt])
+}
+
+model SakhiSession {
+  id          String   @id @default(cuid())
+  sakhiId     String
+  sakhi       User     @relation("SakhiSessions", fields: [sakhiId], references: [id], onDelete: Cascade)
+  womanId     String
+  woman       User     @relation("WomanSessions", fields: [womanId], references: [id], onDelete: Cascade)
+  type        String
+  notes       String?
+  scheduledAt DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind      String
+  payload   String    @default("{}")
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action    String
+  meta      String   @default("{}")
+  createdAt DateTime @default(now())
+}

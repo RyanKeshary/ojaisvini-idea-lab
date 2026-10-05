@@ -1,0 +1,70 @@
+/* Ojasvini design tokens — "Paithani Dawn". Light + dark. */
+:root {
+  --ink: #2a1b2e;
+  --paper: #fff9f0;
+  --turmeric: #f2a900;
+  --madder: #c4304f;
+  --indigo: #2e3a87;
+  --leaf: #2f8f5b;
+  --clay-soft: #f3e3d0;
+  --mist: #e7e1ea;
+
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --card: #fffdf8;
+  --card-fill: var(--clay-soft);
+  --border: var(--mist);
+  --primary: var(--turmeric);
+  --primary-ink: #2a1b2e;
+  --accent: var(--madder);
+  --trust: var(--indigo);
+  --success: var(--leaf);
+
+  --radius-input: 12px;
+  --radius-card: 20px;
+  --radius-sheet: 28px;
+
+  --shadow-float: 0 12px 32px -12px rgb(42 27 46 / 0.28);
+  /* Default (mr/hi/en): Fraunces + Tiro Devanagari display, Mukta UI. */
+  --font-display: var(--font-display-latin, "Fraunces"), var(--font-display-deva, "Tiro Devanagari Hindi"), Georgia, serif;
+  --font-sans: var(--font-sans-deva, "Mukta"), "Noto Sans", system-ui, sans-serif;
+}
+
+/* Per-locale script stacks. Scaffolded locales (gu/ta/te/kn/bn) get full
+   glyph coverage now; typographic tuning ships with their translations. */
+[data-locale="gu"] {
+  --font-display: var(--font-gu, "Noto Sans Gujarati"), "Noto Sans", sans-serif;
+  --font-sans: var(--font-gu, "Noto Sans Gujarati"), "Noto Sans", sans-serif;
+}
+[data-locale="bn"] {
+  --font-display: var(--font-bn, "Noto Sans Bengali"), "Noto Sans", sans-serif;
+  --font-sans: var(--font-bn, "Noto Sans Bengali"), "Noto Sans", sans-serif;
+}
+[data-locale="ta"] {
+  --font-display: var(--font-ta, "Noto Sans Tamil"), "Noto Sans", sans-serif;
+  --font-sans: var(--font-ta, "Noto Sans Tamil"), "Noto Sans", sans-serif;
+}
+[data-locale="te"] {
+  --font-display: var(--font-te, "Noto Sans Telugu"), "Noto Sans", sans-serif;
+  --font-sans: var(--font-te, "Noto Sans Telugu"), "Noto Sans", sans-serif;
+}
+[data-locale="kn"] {
+  --font-display: var(--font-kn, "Noto Sans Kannada"), "Noto Sans", sans-serif;
+  --font-sans: var(--font-kn, "Noto Sans Kannada"), "Noto Sans", sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg: #1b1220;
+  --fg: #f7ecdd;
+  --card: #261826;
+  --card-fill: #33202f;
+  --border: #4a3448;
+  --clay-soft: #3a2534;
+  --mist: #5a4456;
+  --primary: #e0a408;
+  --primary-ink: #1b1220;
+  --accent: #d95770;
+  --trust: #8d97e8;
+  --success: #5cb98a;
+  --shadow-float: 0 12px 32px -12px rgb(0 0 0 / 0.6);
+}
