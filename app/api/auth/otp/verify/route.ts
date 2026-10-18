@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 
   let user = await db.user.findUnique({ where: { phone } });
   if (!user) {
-    if (!create) return err("no-account", 404);
+    if (!create) return err("no-account", 400);
     try {
       phoneSchema.parse(phone);
     } catch {
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     user = await db.user.create({ data: { phone, name: "", role: "WOMAN" } });
     await db.auditLog.create({ data: { actorId: user.id, action: "user.registered", meta: "{}" } });
   }
-  if (user.deletedAt) return err("no-account", 404);
+  if (user.deletedAt) return err("no-account", 400);
   const ticket = await issueTicket(user.id);
   return NextResponse.json({ ok: true, ticket, name: user.name, hasPin: !!user.pinHash });
 }

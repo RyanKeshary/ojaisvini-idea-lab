@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   if (!rl.ok) return err("rate-limited", 429);
 
   const user = await db.user.findUnique({ where: { phone } });
-  if (!user || !user.pinHash || user.deletedAt) return err("no-account", 404);
+  if (!user || !user.pinHash || user.deletedAt) return err("no-account", 400);
   if (user.pinLockedUntil && user.pinLockedUntil.getTime() > Date.now()) {
     return err("pin-locked", 423);
   }

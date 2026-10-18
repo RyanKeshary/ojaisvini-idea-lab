@@ -74,7 +74,12 @@ export async function uploadPhoto(blob: Blob): Promise<string> {
   const form = new FormData();
   form.append("photo", blob, "photo.jpg");
   const r = await fetch("/api/upload", { method: "POST", body: form });
-  const j = (await r.json()) as { ok?: boolean; url?: string; code?: string };
-  if (!r.ok || !j.url) throw new Error(j.code || "upload-failed");
+  let j: { ok?: boolean; url?: string; code?: string; error?: string } = {};
+  try {
+    j = (await r.json()) as { ok?: boolean; url?: string; code?: string; error?: string };
+  } catch {
+    throw new Error(`upload-failed-status-${r.status}`);
+  }
+  if (!r.ok || !j.url) throw new Error(j.code || j.error || "upload-failed");
   return j.url;
 }

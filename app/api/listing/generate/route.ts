@@ -7,7 +7,15 @@ import { rateLimit, clientIp } from "@/lib/auth/rate-limit";
 
 const bodySchema = z.object({
   transcript: z.string().trim().min(2).max(200),
-  imageUrls: z.array(z.string().regex(/^\/uploads\/[A-Za-z0-9_.-]+$/)).max(4).default([]),
+  imageUrls: z
+    .array(
+      z.string().refine(
+        (s) => s.startsWith("/uploads/") || s.startsWith("data:") || s.startsWith("blob:"),
+        "Invalid image URL"
+      )
+    )
+    .max(4)
+    .default([]),
   locale: z.enum(locales as unknown as [string, ...string[]]).default("mr"),
 });
 

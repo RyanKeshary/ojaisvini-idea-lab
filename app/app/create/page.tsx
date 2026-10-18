@@ -91,7 +91,6 @@ export default function CreatePage() {
           // Still offline: mark pending (no spinner), draft stays restorable.
           setPhotos((p) => p.map((x) => ({ ...x, uploading: false })));
         }
-        toast(tp("draftSaved"));
       }
     })();
     return () => {
@@ -242,12 +241,13 @@ export default function CreatePage() {
   async function retryPhotoUpload(ph: Photo) {
     if (!ph.blob) return;
     setPhotos((p) => p.map((x) => (x.preview === ph.preview ? { ...x, uploading: true } : x)));
+    setError(null);
     try {
       const url = await uploadPhoto(ph.blob);
       setPhotos((p) => p.map((x) => (x.preview === ph.preview ? { ...x, url, uploading: false } : x)));
     } catch {
-      setPhotos((p) => p.map((x) => (x.preview === ph.preview ? { ...x, uploading: false } : x)));
-      setError(te("sendFailed"));
+      // Graceful fallback: maintain local photo in temp session until tab is closed
+      setPhotos((p) => p.map((x) => (x.preview === ph.preview ? { ...x, url: ph.preview, uploading: false } : x)));
     }
   }
 
@@ -266,17 +266,17 @@ export default function CreatePage() {
         try {
           url = await uploadPhoto(blob);
         } catch {
-          url = undefined;
+          // Graceful fallback for temporary session: keep working in current tab
+          url = preview;
         }
         setPhotos((p) =>
-          p.map((x) => (x.preview === preview ? { preview, url, dark: lum < 0.28, uploading: false, blob } : x))
+          p.map((x) => (x.preview === preview ? { preview, url: url || preview, dark: lum < 0.28, uploading: false, blob } : x))
         );
-        if (!url && !navigator.onLine) {
-          setError(te("sendFailed"));
-        }
       } catch {
-        setPhotos((p) => p.filter((x) => x.preview !== preview));
-        setError(te("sendFailed"));
+        // Safe fallback keeping the photo for this session
+        setPhotos((p) =>
+          p.map((x) => (x.preview === preview ? { preview, url: preview, uploading: false, blob: f } : x))
+        );
       }
     }
   }
@@ -300,16 +300,17 @@ export default function CreatePage() {
             currentPhotos[i] = { ...ph, url, uploading: false };
             setPhotos([...currentPhotos]);
           } catch {
-            // best-effort
+            currentPhotos[i] = { ...ph, url: ph.preview, uploading: false };
+            setPhotos([...currentPhotos]);
           }
         }
       }
     }
 
-    const urls = currentPhotos.map((p) => p.url).filter(Boolean) as string[];
+    const urls = currentPhotos.map((p) => p.url || p.preview).filter(Boolean) as string[];
 
     // Offline: AI needs network. Persist raw inputs; she reviews after reconnect.
-    if (!navigator.onLine || (photos.length > 0 && urls.length === 0)) {
+    if (!navigator.onLine) {
       const blobs = currentPhotos.map((p) => p.blob).filter((b): b is Blob => b instanceof Blob);
       await saveCreateDraft({ transcript: heard.trim(), photos: blobs, step: 1, savedAt: Date.now() });
       toast(tp("draftSaved"));

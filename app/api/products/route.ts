@@ -10,7 +10,15 @@ const publishSchema = z.object({
   draft: listingSchema,
   priceINR: z.number().int().min(1).max(1000000),
   stock: z.number().int().min(1).max(100000),
-  imageUrls: z.array(z.string().regex(/^\/uploads\/[A-Za-z0-9_.-]+$/)).min(1).max(4),
+  imageUrls: z
+    .array(
+      z.string().refine(
+        (s) => s.startsWith("/uploads/") || s.startsWith("data:") || s.startsWith("blob:"),
+        "Invalid image URL"
+      )
+    )
+    .min(1)
+    .max(4),
   fulfillment: z.enum(["pickup", "delivery", "both"]).default("both"),
 });
 

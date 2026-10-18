@@ -88,8 +88,22 @@ export function mockListing(input: GenerateInput): ListingDraft {
 
 async function imageToBase64(url: string): Promise<{ mediaType: string; data: string } | null> {
   try {
-    // Only local uploads are supported in this route.
+    if (url.startsWith("data:image/")) {
+      const match = url.match(/^data:([^;]+);base64,(.+)$/);
+      if (match) {
+        return { mediaType: match[1], data: match[2] };
+      }
+    }
     if (!url.startsWith("/uploads/")) return null;
+    const filename = url.replace("/uploads/", "");
+    try {
+      const { getUploadedFile } = await import("@/lib/photos/storage");
+      const stored = await getUploadedFile(filename);
+      if (stored) {
+        return { mediaType: stored.mime, data: stored.buf.toString("base64") };
+      }
+    } catch {}
+
     const buf = await readFile(join(process.cwd(), "public", url));
     const ext = url.split(".").pop()?.toLowerCase();
     const mediaType = ext === "png" ? "image/png" : ext === "webp" ? "image/webp" : "image/jpeg";
