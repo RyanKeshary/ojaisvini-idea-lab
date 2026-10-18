@@ -13,6 +13,10 @@ type Msg = { id: string; role: string; content: string; feedback?: number | null
 
 const CHIPS = ["price", "photo", "upi", "scheme"] as const;
 
+function cleanDisplay(content: string): string {
+  return content.replace(/(?:\n|^)\s*(?:\*{0,2})ACTION:\s*[a-zA-Z-]+\s*\|\s*[^\n*]+(?:\*{0,2})\s*$/i, "").trim();
+}
+
 function actionHref(a: Action): string {
   if (a.name === "open-lesson") {
     const key = a.value.includes("-") ? a.value : "upi-1";
@@ -21,6 +25,7 @@ function actionHref(a: Action): string {
   }
   if (a.name === "open-scheme") return "/app/schemes";
   if (a.name === "start-create") return "/app/create";
+  if (a.name === "show-earnings") return "/app/dashboard";
   return "/app/home";
 }
 
@@ -98,6 +103,9 @@ export default function AssistantPage() {
             }
             if (j.done) {
               doneAction = j.action ?? null;
+              if (j.action) {
+                setMsgs((m) => m.map((x) => (x.id === assistantId ? { ...x, action: j.action, content: cleanDisplay(x.content) } : x)));
+              }
               if (j.threadId) {
                 // Refresh ids/feedback state from server (keeps helpful buttons working).
                 fetch(`/api/assistant?threadId=${j.threadId}`)
@@ -156,7 +164,7 @@ export default function AssistantPage() {
     <main className="mx-auto flex min-h-dvh w-full max-w-xl flex-col gap-3 pb-40">
       <h1 className="display px-1 pt-4 text-3xl font-bold">{t("title")}</h1>
       <AuthError message={error} />
-      <div className="flex flex-col gap-2 px-1" aria-live="polite">
+      <div className="flex flex-col gap-3 px-1" aria-live="polite">
         {msgs.length === 0 && (
           <p className="rounded-[20px] border border-dashed p-6 text-center text-base opacity-70" style={{ borderColor: "var(--border)" }}>
             {t("hint")}
@@ -164,31 +172,41 @@ export default function AssistantPage() {
         )}
         {msgs.map((m) =>
           m.role === "user" ? (
-            <p key={m.id} className="max-w-[85%] self-end rounded-[20px] bg-[var(--indigo)] px-4 py-2.5 text-base font-semibold text-white">
+            <p key={m.id} className="max-w-[85%] self-end rounded-[20px] bg-[var(--indigo)] px-4 py-2.5 text-base font-semibold text-white shadow-sm">
               {m.content}
             </p>
           ) : (
-            <div key={m.id} className="flex max-w-[92%] flex-col gap-1 self-start rounded-[20px] border bg-[var(--card)] p-4" style={{ borderColor: "var(--border)" }}>
-              <p className="text-base">{m.content || "…"}</p>
+            <div key={m.id} className="flex max-w-[92%] flex-col gap-1.5 self-start rounded-[20px] border bg-[var(--card)] p-4 shadow-sm" style={{ borderColor: "var(--border)" }}>
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--turmeric)] text-xs font-bold text-[var(--primary-ink)]">
+                  👩‍🏫
+                </span>
+                <span className="text-xs font-bold uppercase tracking-wider opacity-70">Sakhi Didi</span>
+              </div>
+              <p className="text-base leading-relaxed whitespace-pre-wrap">{cleanDisplay(m.content) || "…"}</p>
               {m.action && (
-                <Link href={actionHref(m.action)} className="mt-1 inline-block min-h-[48px] self-start rounded-full bg-[var(--turmeric)] px-4 py-2 text-sm font-bold text-[var(--primary-ink)]">
-                  {t(`actions.${m.action.name}`)}
+                <Link
+                  href={actionHref(m.action)}
+                  className="mt-2 inline-flex min-h-[44px] items-center gap-1.5 self-start rounded-full bg-[var(--turmeric)] px-4 py-2 text-sm font-bold text-[var(--primary-ink)] transition-transform active:scale-95 hover:opacity-90 shadow-sm"
+                >
+                  <span>→</span>
+                  <span>{t.has(`actions.${m.action.name}`) ? t(`actions.${m.action.name}`) : m.action.name}</span>
                 </Link>
               )}
               {m.content && !streaming && (
-                <div className="mt-1 flex items-center gap-1">
-                  <ListenButton text={m.content} compact />
+                <div className="mt-1.5 flex items-center gap-2 pt-1 border-t border-[var(--border)] border-opacity-50">
+                  <ListenButton text={cleanDisplay(m.content)} compact />
                   {m.feedback == null && !m.id.startsWith("a-") && (
-                    <>
-                      <button type="button" onClick={() => void rate(m.id, true)} aria-label="Helpful" className="grid min-h-[48px] min-w-[48px] place-items-center rounded-full border text-lg" style={{ borderColor: "var(--border)" }}>
+                    <div className="flex items-center gap-1 ml-auto">
+                      <button type="button" onClick={() => void rate(m.id, true)} aria-label="Helpful" className="grid h-8 w-8 place-items-center rounded-full border text-sm transition-colors hover:bg-[var(--card-hover)]" style={{ borderColor: "var(--border)" }}>
                         👍
                       </button>
-                      <button type="button" onClick={() => void rate(m.id, false)} aria-label="Not helpful" className="grid min-h-[48px] min-w-[48px] place-items-center rounded-full border text-lg" style={{ borderColor: "var(--border)" }}>
+                      <button type="button" onClick={() => void rate(m.id, false)} aria-label="Not helpful" className="grid h-8 w-8 place-items-center rounded-full border text-sm transition-colors hover:bg-[var(--card-hover)]" style={{ borderColor: "var(--border)" }}>
                         👎
                       </button>
-                    </>
+                    </div>
                   )}
-                  {m.feedback != null && <span className="text-sm opacity-60">{m.feedback === 1 ? "👍" : "👎"}</span>}
+                  {m.feedback != null && <span className="ml-auto text-xs opacity-60">{m.feedback === 1 ? "👍 Helpful" : "👎 Not helpful"}</span>}
                 </div>
               )}
             </div>
@@ -198,14 +216,14 @@ export default function AssistantPage() {
       </div>
       <div className="fixed inset-x-0 bottom-0 z-40 border-t bg-[var(--card)] px-4 pb-[calc(env(safe-area-inset-bottom)+76px)] pt-2" style={{ borderColor: "var(--border)" }}>
         <div className="mx-auto flex w-full max-w-xl flex-col gap-2">
-          <div className="flex gap-1 overflow-x-auto">
+          <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
             {CHIPS.map((c) => (
               <button
                 key={c}
                 type="button"
                 onClick={() => void ask(t(`chips.${c}`))}
                 disabled={streaming}
-                className="shrink-0 rounded-full border-2 px-3 py-2 text-sm font-bold disabled:opacity-50"
+                className="shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold bg-[var(--card)] hover:bg-[var(--card-hover)] active:scale-95 transition-all disabled:opacity-50 text-[var(--primary-ink)]"
                 style={{ borderColor: "var(--border)" }}
               >
                 {t(`chips.${c}`)}

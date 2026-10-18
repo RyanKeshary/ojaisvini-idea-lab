@@ -55,7 +55,10 @@ function isGroqConfigured(): boolean {
 }
 
 export function configuredProvider(): "groq" | "mock" {
-  if ((process.env.AI_PROVIDER || "mock").toLowerCase() === "groq" && isGroqConfigured()) {
+  if (process.env.AI_PROVIDER?.toLowerCase() === "mock") {
+    return "mock";
+  }
+  if (isGroqConfigured()) {
     return "groq";
   }
   return "mock";
@@ -110,25 +113,52 @@ class GroqProvider implements AIProvider {
     fast?: boolean;
     timeoutMs?: number;
   }): Promise<LLMResult> {
-    const res = await this.client.chat.completions.create(
-      {
-        model: input.fast ? MODELS.fast : MODELS.chat,
-        temperature: input.temperature ?? 0.6,
-        max_tokens: input.maxTokens ?? 500,
-        ...(input.json ? { response_format: { type: "json_object" } } : {}),
-        messages: [
-          { role: "system", content: input.system },
-          { role: "user", content: input.userText },
-        ],
-      },
-      { signal: AbortSignal.timeout(input.timeoutMs ?? 8000) }
-    );
-    return {
-      text: res.choices[0]?.message?.content ?? "",
-      model: input.fast ? MODELS.fast : MODELS.chat,
-      promptTokens: res.usage?.prompt_tokens,
-      completionTokens: res.usage?.completion_tokens,
-    };
+    const primary = input.fast ? MODELS.fast : MODELS.chat;
+    try {
+      const res = await this.client.chat.completions.create(
+        {
+          model: primary,
+          temperature: input.temperature ?? 0.6,
+          max_tokens: input.maxTokens ?? 500,
+          ...(input.json ? { response_format: { type: "json_object" } } : {}),
+          messages: [
+            { role: "system", content: input.system },
+            { role: "user", content: input.userText },
+          ],
+        },
+        { signal: AbortSignal.timeout(input.timeoutMs ?? 10000) }
+      );
+      return {
+        text: res.choices[0]?.message?.content ?? "",
+        model: primary,
+        promptTokens: res.usage?.prompt_tokens,
+        completionTokens: res.usage?.completion_tokens,
+      };
+    } catch (err) {
+      if (primary !== MODELS.fast) {
+        console.warn(`[ai] groq chat model ${primary} failed, retrying with ${MODELS.fast}:`, err);
+        const res = await this.client.chat.completions.create(
+          {
+            model: MODELS.fast,
+            temperature: input.temperature ?? 0.6,
+            max_tokens: input.maxTokens ?? 500,
+            ...(input.json ? { response_format: { type: "json_object" } } : {}),
+            messages: [
+              { role: "system", content: input.system },
+              { role: "user", content: input.userText },
+            ],
+          },
+          { signal: AbortSignal.timeout(input.timeoutMs ?? 10000) }
+        );
+        return {
+          text: res.choices[0]?.message?.content ?? "",
+          model: MODELS.fast,
+          promptTokens: res.usage?.prompt_tokens,
+          completionTokens: res.usage?.completion_tokens,
+        };
+      }
+      throw err;
+    }
   }
 
   async transcribe(audio: Buffer, languageHint?: string): Promise<{ text: string; model: string }> {

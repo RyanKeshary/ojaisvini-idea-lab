@@ -91,25 +91,57 @@ export async function POST(req: Request) {
           const { default: Groq } = await import("groq-sdk");
           const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
           const { MODELS } = await import("@/lib/ai/provider");
-          const model = MODELS.chat;
-          const completion = await client.chat.completions.create(
-            {
-              model,
-              temperature: 0.6,
-              max_tokens: 300,
-              messages: [{ role: "system", content: system }, ...prior.slice(-10)],
-              stream: true,
-            },
-            { signal: AbortSignal.timeout(30000) }
-          );
+
+          const candidateModels = [MODELS.chat, MODELS.fast].filter(Boolean);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          let completion: any = null;
+          let activeModel = MODELS.chat;
+          let lastErr: unknown = null;
+
+          for (const m of candidateModels) {
+            try {
+              completion = await client.chat.completions.create(
+                {
+                  model: m,
+                  temperature: 0.6,
+                  max_tokens: 300,
+                  messages: [{ role: "system", content: system }, ...prior.slice(-10)],
+                  stream: true,
+                },
+                { signal: AbortSignal.timeout(20000) }
+              );
+              activeModel = m;
+              break;
+            } catch (err) {
+              lastErr = err;
+              console.warn(`[ai] groq model ${m} failed, trying fallback:`, err);
+            }
+          }
+
+          if (!completion) {
+            throw lastErr || new Error("All Groq models failed");
+          }
+
           let full = "";
+          let streamedClean = "";
           let promptTokens: number | undefined;
           let completionTokens: number | undefined;
           for await (const chunk of completion) {
             const delta = chunk.choices[0]?.delta?.content || "";
             if (delta) {
               full += delta;
-              send({ token: delta });
+              const actionIdx = full.search(/(?:\n|^)\s*(?:\*{0,2})ACTION:/i);
+              if (actionIdx === -1) {
+                send({ token: delta });
+                streamedClean += delta;
+              } else {
+                const cleanPortion = full.slice(0, actionIdx);
+                if (cleanPortion.length > streamedClean.length) {
+                  const unsent = cleanPortion.slice(streamedClean.length);
+                  send({ token: unsent });
+                  streamedClean += unsent;
+                }
+              }
             }
             const usage = (chunk as { x_groq?: { usage?: { prompt_tokens?: number; completion_tokens?: number } } }).x_groq?.usage;
             if (usage) {
@@ -119,9 +151,9 @@ export async function POST(req: Request) {
           }
           const { text, action } = splitAction(full);
           await db.chatMessage.create({
-            data: { threadId, role: "assistant", content: text || full, meta: JSON.stringify({ action: action ?? null, model }) },
+            data: { threadId, role: "assistant", content: text || full, meta: JSON.stringify({ action: action ?? null, model: activeModel }) },
           });
-          logAIUsage({ feature: "assistant.chat", provider: "groq", model, latencyMs: Date.now() - started, promptTokens, completionTokens, userId });
+          logAIUsage({ feature: "assistant.chat", provider: "groq", model: activeModel, latencyMs: Date.now() - started, promptTokens, completionTokens, userId });
           send({ done: true, threadId, action: action ?? null, mocked: false });
         }
       } catch (e) {

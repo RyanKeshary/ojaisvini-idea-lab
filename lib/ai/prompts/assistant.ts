@@ -1,18 +1,33 @@
-/** Versioned prompt: Sakhi Didi business mentor. Safety-first, grounded. */
+/** Versioned prompt: Sakhi Didi business mentor. Safety-first, grounded, empathetic. */
 export function assistantPrompt(opts: { locale: string; context: string }): { system: string } {
   const { locale, context } = opts;
+  const langMap: Record<string, string> = {
+    hi: "Hindi (हिंदी)",
+    mr: "Marathi (मराठी)",
+    en: "English",
+    gu: "Gujarati (ગુજરાતી)",
+    ta: "Tamil (தமிழ்)",
+    te: "Telugu (తెలుగు)",
+    kn: "Kannada (ಕನ್ನಡ)",
+    bn: "Bengali (বাংলা)",
+  };
+  const langName = langMap[locale] || "Hindi";
+
   const system = [
-    "You are Sakhi Didi, a friendly business mentor for rural women entrepreneurs in India.",
-    `Reply ONLY in her language (locale: ${locale}). Under 60 words. Simple everyday words.`,
-    "Ground every answer in her SHOP CONTEXT below when relevant (her products, orders, earnings).",
-    "You may suggest: a lesson (/app/learn), a scheme (/app/schemes), starting a listing (/app/create), or her earnings.",
-    "To trigger an app action, end your reply with exactly one line: ACTION:<name>|<value>",
-    "Actions: open-lesson (value: lesson key like upi-1), open-scheme (value: scheme name), start-create (value: -), show-earnings (value: -).",
-    "Safety: never ask for or repeat OTP, PIN, Aadhaar, bank passwords. Refuse medical/legal/financial guarantees;",
-    "redirect to her Sakhi instead. Never invent scheme amounts or eligibility — say you are not sure and point to /app/schemes.",
-    "Never claim organic/FSSAI/certified about her products.",
-    `SHOP CONTEXT:\n${context}`,
-  ].join(" ");
+    `You are Sakhi Didi, a warm, empowering, highly knowledgeable business mentor for rural women entrepreneurs across India.`,
+    `Tone: Encouraging, practical, respectful ("दीदी" / "सखी"), and friendly. Keep answers concise (under 60 words) and easy to understand.`,
+    `Language: Always converse fluently in ${langName}. If the user addresses you in Roman/Latin script (Hinglish), you can reply in conversational Hinglish or simple ${langName} matching her style.`,
+    `Grounded Advice: Ground your suggestions in her shop context whenever relevant:\n${context}`,
+    `Action Recommendations: Whenever you recommend a specific next step, always place exactly one action tag at the very end of your response on a new line:`,
+    `- For taking or improving product photos: ACTION:open-lesson|photo-1`,
+    `- For pricing or profit margin guidance: ACTION:open-lesson|pricing-1`,
+    `- For UPI or online payments practice: ACTION:open-lesson|upi-1`,
+    `- For government business schemes/loans (MUDRA, Stand-Up India, etc.): ACTION:open-scheme|-`,
+    `- For adding or listing a new product: ACTION:start-create|-`,
+    `- For viewing revenue or earnings: ACTION:show-earnings|-`,
+    `Only output an ACTION tag if relevant to the advice. Never add any text after the ACTION tag.`,
+    `Safety: NEVER ask for, disclose, or repeat passwords, PINs, OTPs, bank accounts, or Aadhaar numbers. Never make financial guarantees. Cheer her on and build her confidence.`,
+  ].join("\n");
   return { system };
 }
 
@@ -21,21 +36,21 @@ export function mockReply(text: string, context: string, locale: string): { repl
   const t = text.toLowerCase();
   const say = (hi: string, mr: string, en: string, gu?: string, ta?: string) =>
     locale === "mr" ? mr : locale === "gu" ? (gu ?? hi) : locale === "ta" ? (ta ?? hi) : locale === "hi" ? hi : en;
-  if (/(kamai|earning|kitna|kin|paisa|earn|kamaani|varuvaai)/.test(t)) {
+  if (/(kamai|earning|kitna|kin|paisa|earn|kamaani|varuvaai|revenue|sales|bikri)/.test(t)) {
     const m = context.match(/revenue ₹(\d+)/);
     const rev = m ? m[1] : "0";
     return {
       reply: say(
-        `Pichhle 30 din mein ₹${rev} ki bikri hui. Details /app/dashboard par dekho.`,
-        `Magil 30 divsat ₹${rev} chi vikri jhali. Tapshil /app/dashboard var paha.`,
-        `₹${rev} revenue in the last 30 days. See details on your dashboard.`,
-        `Chhella 30 divasmaa ₹${rev} nu vechaan. Vigat /app/dashboard par juo.`,
-        `Kadantha 30 naatkalil ₹${rev} virpanai. Vivaram dashboard-il paar.`
+        `Pichhle 30 din mein ₹${rev} ki bikri hui. Details dashboard par dekho!`,
+        `Magil 30 divsat ₹${rev} chi vikri jhali. Tapshil dashboard var paha!`,
+        `₹${rev} revenue in the last 30 days. See details on your dashboard!`,
+        `Chhella 30 divasmaa ₹${rev} nu vechaan. Vigat dashboard par juo!`,
+        `Kadantha 30 naatkalil ₹${rev} virpanai. Vivaram dashboard-il paar!`
       ),
       action: { name: "show-earnings", value: "-" },
     };
   }
-  if (/(photo|tasveer|phoṭo|snapshot)/.test(t)) {
+  if (/(photo|tasveer|phoṭo|snapshot|camera|tasveerein)/.test(t)) {
     return {
       reply: say(
         "Achhi photo: khidki ki roshni, saaf background, seedha phone. Lesson dekho!",
@@ -47,7 +62,7 @@ export function mockReply(text: string, context: string, locale: string): { repl
       action: { name: "open-lesson", value: "photo-1" },
     };
   }
-  if (/(yojana|scheme|loan|karz|mudra|thittam)/.test(t)) {
+  if (/(yojana|scheme|loan|karz|mudra|thittam|subsidy)/.test(t)) {
     return {
       reply: say(
         "Scheme Finder mein Match karo — sirf wahi yojana jo tumhe milegi.",
@@ -59,7 +74,7 @@ export function mockReply(text: string, context: string, locale: string): { repl
       action: { name: "open-scheme", value: "-" },
     };
   }
-  if (/(daam|kimmat|price|rate|bhaav|vilai)/.test(t)) {
+  if (/(daam|kimmat|price|rate|bhaav|vilai|munafa|margin)/.test(t)) {
     return {
       reply: say(
         "Daam = laagat + 30–50% munafa. Aas-paas ka bazaar check karo, sabse saste mat bano.",
@@ -71,7 +86,7 @@ export function mockReply(text: string, context: string, locale: string): { repl
       action: { name: "open-lesson", value: "pricing-1" },
     };
   }
-  if (/(upi|payment|pay)/.test(t)) {
+  if (/(upi|payment|pay|online pay|scanner|qr)/.test(t)) {
     return {
       reply: say(
         "UPI practice lesson mein nakli paise se seekho — koi risk nahin.",
@@ -94,11 +109,21 @@ export function mockReply(text: string, context: string, locale: string): { repl
   };
 }
 
-/** Parse a trailing ACTION:name|value line from a model reply. */
+/** Robustly parse a trailing ACTION:name|value line from a model reply. */
 export function splitAction(reply: string): { text: string; action?: { name: string; value: string } } {
-  const m = reply.match(/ACTION:([a-z-]+)\|([^\n]*)\s*$/);
+  const m = reply.match(/(?:\*{0,2})ACTION:\s*([a-zA-Z-]+)\s*\|\s*([^\n*]+)(?:\*{0,2})\s*$/i);
   if (!m) return { text: reply.trim() };
+  const rawName = m[1].toLowerCase().trim();
+  const value = m[2].trim();
+
+  // Normalize aliases
+  let normalizedName = rawName;
+  if (["lesson", "open-lesson", "photo", "pricing", "upi"].includes(rawName)) normalizedName = "open-lesson";
+  else if (["scheme", "open-scheme", "yojana"].includes(rawName)) normalizedName = "open-scheme";
+  else if (["create", "start-create", "list", "product"].includes(rawName)) normalizedName = "start-create";
+  else if (["earnings", "show-earnings", "sales", "revenue"].includes(rawName)) normalizedName = "show-earnings";
+
   const allowed = ["open-lesson", "open-scheme", "start-create", "show-earnings"];
-  const action = allowed.includes(m[1]) ? { name: m[1], value: m[2].trim() } : undefined;
+  const action = allowed.includes(normalizedName) ? { name: normalizedName, value: value || "-" } : undefined;
   return { text: reply.slice(0, m.index).trim(), action };
 }

@@ -38,6 +38,14 @@ describe("assistant actions + mock replies", () => {
       text: "Try this",
       action: { name: "open-lesson", value: "upi-1" },
     });
+    expect(splitAction("Try this\n**ACTION:open-lesson|pricing-1**")).toEqual({
+      text: "Try this",
+      action: { name: "open-lesson", value: "pricing-1" },
+    });
+    expect(splitAction("Dekho\nAction:scheme|pmegp")).toEqual({
+      text: "Dekho",
+      action: { name: "open-scheme", value: "pmegp" },
+    });
     expect(splitAction("Hello").action).toBeUndefined();
     expect(splitAction("Hi\nACTION:rm-rf|/").action).toBeUndefined();
   });
