@@ -24,10 +24,10 @@ export function VoiceOrb({
 }) {
   const glow =
     state === "success"
-      ? "radial-gradient(circle at 35% 30%, #7fd6a4, #2F8F5B 70%)"
+      ? "radial-gradient(circle at 35% 30%, #7fd6a4, #15803D 70%)"
       : state === "listening"
-        ? "radial-gradient(circle at 35% 30%, #ff8ba0, #C4304F 70%)"
-        : "radial-gradient(circle at 35% 30%, #ffe3a3, #F2A900 62%, #C4304F 130%)";
+        ? "radial-gradient(circle at 35% 30%, #ff8ba0, #C83758 70%)"
+        : "radial-gradient(circle at 35% 30%, #bbf7d0, #0E7468 62%, #134E4A 130%)";
   return (
     <button
       type="button"

@@ -83,7 +83,7 @@ export default async function LandingPage() {
       <section className="relative flex flex-col items-center gap-4 sm:gap-5 text-center pt-1 sm:pt-2" aria-label={t("title")}>
         {/* Glow halo */}
         <div className="relative">
-          <div className="absolute inset-0 -m-6 rounded-full bg-gradient-to-tr from-amber-400/25 via-rose-500/15 to-orange-400/25 blur-2xl pointer-events-none" />
+          <div className="absolute inset-0 -m-6 rounded-full bg-gradient-to-tr from-teal-400/25 via-emerald-500/20 to-cyan-400/25 blur-2xl pointer-events-none" />
           <VoiceOrb state="idle" size={120} label="Ojas listening orb" />
         </div>
 

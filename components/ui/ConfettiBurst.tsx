@@ -19,7 +19,7 @@ export function ConfettiBurst({ fire = true, count = 36 }: { fire?: boolean; cou
       Array.from({ length: count }).map((_, i) => ({
         angle: (i / count) * Math.PI * 2 + Math.random() * 0.4,
         dist: 90 + Math.random() * 90,
-        color: ["#F2A900", "#C4304F", "#2E3A87"][i % 3],
+        color: ["#0E7468", "#C83758", "#1A5A72", "#2DD4BF"][i % 4],
         size: 8 + Math.random() * 8,
       })),
     [count]

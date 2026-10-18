@@ -1,21 +1,22 @@
-/* Ojasvini design tokens — "Paithani Dawn". Light + dark. */
+/* Ojasvini design tokens — #E4F1EE Mint Theme. Light + dark. */
 :root {
-  --ink: #2a1b2e;
-  --paper: #fff9f0;
-  --turmeric: #f2a900;
-  --madder: #c4304f;
-  --indigo: #2e3a87;
-  --leaf: #2f8f5b;
-  --clay-soft: #f3e3d0;
-  --mist: #e7e1ea;
+  --mint-base: #e4f1ee;
+  --ink: #112623;
+  --paper: #e4f1ee;
+  --turmeric: #0e7468;
+  --madder: #c83758;
+  --indigo: #1a5a72;
+  --leaf: #15803d;
+  --clay-soft: #d3e7e2;
+  --mist: #c2ded7;
 
   --bg: var(--paper);
   --fg: var(--ink);
-  --card: #fffdf8;
+  --card: #ffffff;
   --card-fill: var(--clay-soft);
   --border: var(--mist);
   --primary: var(--turmeric);
-  --primary-ink: #2a1b2e;
+  --primary-ink: #ffffff;
   --accent: var(--madder);
   --trust: var(--indigo);
   --success: var(--leaf);
@@ -24,7 +25,7 @@
   --radius-card: 20px;
   --radius-sheet: 28px;
 
-  --shadow-float: 0 12px 32px -12px rgb(42 27 46 / 0.28);
+  --shadow-float: 0 12px 32px -12px rgb(17 38 35 / 0.16);
   /* Default (mr/hi/en): Fraunces + Tiro Devanagari display, Mukta UI. */
   --font-display: var(--font-display-latin, "Fraunces"), var(--font-display-deva, "Tiro Devanagari Hindi"), Georgia, serif;
   --font-sans: var(--font-sans-deva, "Mukta"), "Noto Sans", system-ui, sans-serif;
@@ -54,17 +55,17 @@
 }
 
 [data-theme="dark"] {
-  --bg: #1b1220;
-  --fg: #f7ecdd;
-  --card: #261826;
-  --card-fill: #33202f;
-  --border: #4a3448;
-  --clay-soft: #3a2534;
-  --mist: #5a4456;
-  --primary: #e0a408;
-  --primary-ink: #1b1220;
-  --accent: #d95770;
-  --trust: #8d97e8;
-  --success: #5cb98a;
+  --bg: #0e1b19;
+  --fg: #e4f1ee;
+  --card: #162a27;
+  --card-fill: #1f3834;
+  --border: #2b4e48;
+  --clay-soft: #1f3834;
+  --mist: #335c55;
+  --primary: #2dd4bf;
+  --primary-ink: #0a1816;
+  --accent: #f472b6;
+  --trust: #5eead4;
+  --success: #34d399;
   --shadow-float: 0 12px 32px -12px rgb(0 0 0 / 0.6);
 }
