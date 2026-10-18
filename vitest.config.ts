@@ -9,5 +9,8 @@ export default defineConfig({
   },
   test: {
     include: ["tests/unit/**/*.test.ts"],
+    env: {
+      AI_PROVIDER: "mock",
+    },
   },
 });

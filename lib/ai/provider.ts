@@ -11,8 +11,8 @@ import Groq from "groq-sdk";
  */
 
 export const MODELS = {
-  chat: process.env.GROQ_MODEL_CHAT || "openai/gpt-oss-120b",
-  fast: process.env.GROQ_MODEL_FAST || "openai/gpt-oss-20b",
+  chat: process.env.GROQ_MODEL_CHAT || "qwen/qwen3.8-27b",
+  fast: process.env.GROQ_MODEL_FAST || "qwen/qwen3.8-27b",
   vision: process.env.GROQ_MODEL_VISION || "qwen/qwen3.8-27b",
   stt: process.env.GROQ_MODEL_STT || "whisper-large-v3-turbo",
 } as const;
