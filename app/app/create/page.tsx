@@ -239,6 +239,18 @@ export default function CreatePage() {
     await speak(`${draft.title}. ${draft.description}. ${t("price")}: ${inr(price)}`);
   }
 
+  async function retryPhotoUpload(ph: Photo) {
+    if (!ph.blob) return;
+    setPhotos((p) => p.map((x) => (x.preview === ph.preview ? { ...x, uploading: true } : x)));
+    try {
+      const url = await uploadPhoto(ph.blob);
+      setPhotos((p) => p.map((x) => (x.preview === ph.preview ? { ...x, url, uploading: false } : x)));
+    } catch {
+      setPhotos((p) => p.map((x) => (x.preview === ph.preview ? { ...x, uploading: false } : x)));
+      setError(te("sendFailed"));
+    }
+  }
+
   async function addFiles(files: FileList | null) {
     if (!files) return;
     setError(null);
@@ -250,7 +262,6 @@ export default function CreatePage() {
       try {
         const blob = await compressPhoto(f);
         const lum = await luminance(blob);
-        // Best-effort upload: offline keeps the blob locally for later.
         let url: string | undefined;
         try {
           url = await uploadPhoto(blob);
@@ -271,20 +282,41 @@ export default function CreatePage() {
   }
 
   async function generate() {
-    const urls = photos.map((p) => p.url).filter(Boolean) as string[];
     if (!heard.trim() || photos.length === 0) {
       setError(te("somethingWrong"));
       return;
     }
-    // Offline: AI needs network. Persist raw inputs; she reviews after reconnect.
-    if (!navigator.onLine || urls.length === 0) {
-      const blobs = photos.map((p) => p.blob).filter((b): b is Blob => b instanceof Blob);
-      await saveCreateDraft({ transcript: heard.trim(), photos: blobs, step: 1, savedAt: Date.now() });
-      toast(tp("draftSaved"));
-      return;
-    }
     setBusy(true);
     setError(null);
+
+    // If online, ensure all photo blobs are uploaded before generating
+    let currentPhotos = [...photos];
+    if (navigator.onLine) {
+      for (let i = 0; i < currentPhotos.length; i++) {
+        const ph = currentPhotos[i];
+        if (!ph.url && ph.blob) {
+          try {
+            const url = await uploadPhoto(ph.blob);
+            currentPhotos[i] = { ...ph, url, uploading: false };
+            setPhotos([...currentPhotos]);
+          } catch {
+            // best-effort
+          }
+        }
+      }
+    }
+
+    const urls = currentPhotos.map((p) => p.url).filter(Boolean) as string[];
+
+    // Offline: AI needs network. Persist raw inputs; she reviews after reconnect.
+    if (!navigator.onLine || (photos.length > 0 && urls.length === 0)) {
+      const blobs = currentPhotos.map((p) => p.blob).filter((b): b is Blob => b instanceof Blob);
+      await saveCreateDraft({ transcript: heard.trim(), photos: blobs, step: 1, savedAt: Date.now() });
+      toast(tp("draftSaved"));
+      setBusy(false);
+      return;
+    }
+
     const started = Date.now();
     try {
       const r = await fetch("/api/listing/generate", {
@@ -370,12 +402,7 @@ export default function CreatePage() {
     }
   }
 
-  const uploaded = photos.filter((p) => p.url).length;
-  const pendingUpload = photos.some((p) => !p.url);
-  const pendingBlob = photos.some((p) => !p.blob);
-  const onlineNow = typeof navigator === "undefined" || navigator.onLine;
-  // Online: need finished uploads. Offline: need compressed blobs. Never generate half-ready.
-  const generateBlocked = photos.length === 0 || pendingBlob || (onlineNow && (uploaded === 0 || pendingUpload));
+  const generateBlocked = photos.length === 0 || busy;
   const shopUrl = published ? `/shop/${published.shopSlug}` : "";
   const waShare =
     published != null
@@ -429,10 +456,41 @@ export default function CreatePage() {
           <p className="text-base opacity-70">{t("takePhotoHint")}</p>
           <div className="grid grid-cols-2 gap-2">
             {photos.map((p) => (
-              <div key={p.preview} className="relative overflow-hidden rounded-[12px] border-2" style={{ borderColor: p.dark ? "var(--madder)" : "var(--border)" }}>
+              <div key={p.preview} className="relative overflow-hidden rounded-[12px] border-2 group" style={{ borderColor: p.dark ? "var(--madder)" : "var(--border)" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.preview} alt="" className="aspect-square w-full object-cover" />
-                {p.uploading && !p.url && <span className="absolute inset-0 grid place-items-center bg-black/30 text-white">…</span>}
+                
+                {/* Remove Photo Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPhotos((prev) => prev.filter((x) => x.preview !== p.preview));
+                  }}
+                  className="absolute top-1.5 right-1.5 z-10 grid h-6 w-6 place-items-center rounded-full bg-black/60 text-white text-xs font-bold hover:bg-black/85 transition-all shadow-xs"
+                  aria-label="Remove photo"
+                  title="Remove photo"
+                >
+                  ✕
+                </button>
+
+                {p.uploading && !p.url && (
+                  <span className="absolute inset-0 grid place-items-center bg-black/35 text-white font-bold text-xs">
+                    Uploading…
+                  </span>
+                )}
+                {!p.url && !p.uploading && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      void retryPhotoUpload(p);
+                    }}
+                    className="absolute bottom-1.5 left-1.5 rounded-md bg-amber-600 text-white px-2 py-0.5 text-[10px] font-bold shadow-xs hover:bg-amber-700 transition-colors z-10"
+                  >
+                    Retry ⟳
+                  </button>
+                )}
                 {p.dark && <span className="absolute inset-x-0 bottom-0 bg-black/60 p-1 text-xs font-bold text-white">🔆</span>}
               </div>
             ))}
@@ -441,12 +499,12 @@ export default function CreatePage() {
                 type="button"
                 onClick={() => fileRef.current?.click()}
                 aria-label={t("takePhoto")}
-                className="grid aspect-square w-full place-items-center rounded-[12px] border-2 border-dashed"
+                className="grid aspect-square w-full place-items-center rounded-[12px] border-2 border-dashed hover:border-[var(--turmeric)] transition-colors"
                 style={{ borderColor: "var(--mist)" }}
               >
                 <span className="flex flex-col items-center gap-1 font-bold opacity-70">
                   <Camera aria-hidden size={32} />
-                  {uploaded}/4
+                  {photos.length}/4
                 </span>
               </button>
             )}
@@ -462,7 +520,7 @@ export default function CreatePage() {
             onChange={(e) => void addFiles(e.target.files)}
           />
           <BigButton onClick={() => void generate()} state={busy ? "loading" : "idle"} disabled={generateBlocked}>
-            {pendingUpload && onlineNow ? "… " : ""}{t("reviewTitle")} →
+            {t("reviewTitle")} →
           </BigButton>
         </section>
       )}
