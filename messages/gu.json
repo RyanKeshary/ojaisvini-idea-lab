@@ -143,7 +143,19 @@
       "rateLimited": "Bhaare try thai gayu. Thodu thobho.",
       "pinMismatch": "PIN malto nathi. Fari try karo.",
       "sendFailed": "Code na moklaayo. Fari try karo.",
-      "somethingWrong": "Kaaik atakyu. Fari try karo."
+      "somethingWrong": "Kaaik atakyu. Fari try karo.",
+      "otp-wrong": "Code thodo alag chhe. Ek vaar vadhare try karo.",
+      "otp-expired": "Code purano thai gayo. Navo moklo.",
+      "otp-locked": "Bhaare try thai gayu. Navo code moklo.",
+      "invalid-phone": "Number tapaso. 10 ank joiye.",
+      "invalid-otp": "6 ankno code joiye.",
+      "invalid-pin": "4 ankno PIN joiye.",
+      "no-account": "Aa number par khaatu nathi. Pehla register karo.",
+      "pin-wrong": "PIN thodo alag chhe. Ek vaar vadhare try karo.",
+      "pin-locked": "PIN 15 minute bandh. Pachhi ke OTP thi login karo.",
+      "rate-limited": "Bhaare try thai gayu. Thodu thobho.",
+      "send-failed": "Code na moklaayo. Fari try karo.",
+      "something-wrong": "Kaaik atakyu. Fari try karo."
     }
   },
   "create": {

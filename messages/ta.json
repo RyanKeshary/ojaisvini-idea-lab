@@ -143,7 +143,19 @@
       "rateLimited": "Adhiga muyarchi. Konjam poru.",
       "pinMismatch": "PIN porundhavillai. Meendum muyarchi sei.",
       "sendFailed": "Code anuppa mudiyavillai. Meendum muyarchi sei.",
-      "somethingWrong": "Edho niradhudhu. Meendum muyarchi sei."
+      "somethingWrong": "Edho niradhudhu. Meendum muyarchi sei.",
+      "otp-wrong": "Code konjam veraaga irukku. Innoru thadava muyarchi sei.",
+      "otp-expired": "Code kaalamaanadhu. Pudhiyadhu anuppu.",
+      "otp-locked": "Adhiga muyarchi. Pudhiya code anuppu.",
+      "invalid-phone": "Number-ai paaru. 10 ilakkam vendum.",
+      "invalid-otp": "6 ilakka code vendum.",
+      "invalid-pin": "4 ilakka PIN vendum.",
+      "no-account": "Indha number-il kanakku illai. Mudhalil register sei.",
+      "pin-wrong": "PIN konjam veraaga irukku. Innoru thadava muyarchi sei.",
+      "pin-locked": "PIN 15 nimidam poottu. Pinbu alladhu OTP-aal login sei.",
+      "rate-limited": "Adhiga muyarchi. Konjam poru.",
+      "send-failed": "Code anuppa mudiyavillai. Meendum muyarchi sei.",
+      "something-wrong": "Edho niradhudhu. Meendum muyarchi sei."
     }
   },
   "create": {

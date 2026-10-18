@@ -9,7 +9,7 @@ import { BigButton } from "@/components/ui/BigButton";
 import { OTPInput } from "@/components/ui/OTPInput";
 import { PinPad } from "@/components/ui/PinPad";
 import { StepDots } from "@/components/ui/StepDots";
-import { sendOtpApi, verifyOtpApi, ticketSignIn } from "@/lib/auth/client";
+import { sendOtpApi, verifyOtpApi, ticketSignIn, normalizeAuthError } from "@/lib/auth/client";
 import { normalizePhone } from "@/lib/auth/phone";
 import { setMyPin } from "@/lib/auth/actions";
 
@@ -32,7 +32,7 @@ export default function ForgotPinPage() {
     try {
       const r = await sendOtpApi(phone);
       if (!r.ok) {
-        setError(te((r.code ?? "sendFailed") as "sendFailed"));
+        setError(te(normalizeAuthError(r.code ?? "sendFailed") as any));
         return;
       }
       setDemoOtp(r.demoOtp);
@@ -50,7 +50,8 @@ export default function ForgotPinPage() {
     try {
       const v = await verifyOtpApi(normalizePhone(phone), otp, false);
       if (!v.ok) {
-        setError(te((v as { code: string }).code as "otpWrong"));
+        const code = (v as { code: string }).code;
+        setError(te(normalizeAuthError(code) as any));
         return;
       }
       const s = await ticketSignIn((v as { ticket: string }).ticket);

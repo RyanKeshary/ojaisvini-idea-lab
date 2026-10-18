@@ -143,7 +143,19 @@
       "rateLimited": "Bahut try ho gaya. Thoda rukein.",
       "pinMismatch": "PIN match nahin hua. Dobara try karein.",
       "sendFailed": "Code nahin bheja. Dobara try karein.",
-      "somethingWrong": "Kuch ruk gaya. Dobara try karein."
+      "somethingWrong": "Kuch ruk gaya. Dobara try karein.",
+      "otp-wrong": "Code thoda alag hai. Ek baar aur try karein.",
+      "otp-expired": "Code expire ho gaya. Naya bhejein.",
+      "otp-locked": "Bahut try ho gaya. Naya code bhejein.",
+      "invalid-phone": "Number check karein. 10 ank chahiye.",
+      "invalid-otp": "6 ank ka code chahiye.",
+      "invalid-pin": "4 ank ka PIN chahiye.",
+      "no-account": "Is number par khata nahin. Pehle register karein.",
+      "pin-wrong": "PIN thoda alag hai. Ek baar aur try karein.",
+      "pin-locked": "PIN 15 minute ke liye band. Baad mein ya OTP se login karein.",
+      "rate-limited": "Bahut try ho gaya. Thoda rukein.",
+      "send-failed": "Code nahin bheja. Dobara try karein.",
+      "something-wrong": "Kuch ruk gaya. Dobara try karein."
     }
   },
   "create": {

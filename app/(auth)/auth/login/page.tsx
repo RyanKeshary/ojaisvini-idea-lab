@@ -11,7 +11,7 @@ import { OTPInput } from "@/components/ui/OTPInput";
 import { PinPad } from "@/components/ui/PinPad";
 import { StepDots } from "@/components/ui/StepDots";
 import { ListenButton } from "@/components/voice/ListenButton";
-import { sendOtpApi, verifyOtpApi, verifyPinApi, ticketSignIn } from "@/lib/auth/client";
+import { sendOtpApi, verifyOtpApi, verifyPinApi, ticketSignIn, normalizeAuthError } from "@/lib/auth/client";
 import { normalizePhone } from "@/lib/auth/phone";
 
 function useNext(): string {
@@ -48,7 +48,7 @@ function LoginInner() {
     try {
       const r = await sendOtpApi(phone);
       if (!r.ok) {
-        setError(te((r.code ?? "sendFailed") as "sendFailed"));
+        setError(te(normalizeAuthError(r.code ?? "sendFailed") as any));
         return;
       }
       setDemoOtp(r.demoOtp);
@@ -67,7 +67,8 @@ function LoginInner() {
     try {
       const v = await verifyOtpApi(normalizePhone(phone), otp, false);
       if (!v.ok) {
-        setError(te((v as { code: string }).code as "otpWrong"));
+        const code = (v as { code: string }).code;
+        setError(te(normalizeAuthError(code) as any));
         return;
       }
       const s = await ticketSignIn((v as { ticket: string }).ticket);
@@ -90,7 +91,7 @@ function LoginInner() {
       const v = await verifyPinApi(normalizePhone(phone), pin);
       if (!v.ok) {
         const code = (v as { code: string }).code;
-        setError(te(code as "pinWrong"));
+        setError(te(normalizeAuthError(code) as any));
         setPinErrKey((k) => k + 1);
         setPin("");
         return;

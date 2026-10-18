@@ -5,6 +5,10 @@ import type { NextAuthConfig } from "next-auth";
  * Contains no database or Node.js imports.
  */
 export const authConfig: NextAuthConfig = {
+  secret:
+    process.env.AUTH_SECRET ??
+    process.env.NEXTAUTH_SECRET ??
+    "dev-secret-change-in-production-please-1234567890",
   trustHost: true,
   session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
   pages: { signIn: "/auth/login", error: "/auth/login" },
@@ -21,9 +25,22 @@ export const authConfig: NextAuthConfig = {
       return token;
     },
     async session({ session, token }) {
-      session.user.id = String(token.uid ?? token.sub ?? "");
-      session.user.phone = token.phone as string | undefined;
-      session.user.role = (token.role as string) ?? "WOMAN";
+      if (!session) {
+        return session;
+      }
+      if (!session.user) {
+        session.user = {
+          id: String(token?.uid ?? token?.sub ?? ""),
+          phone: token?.phone as string | undefined,
+          role: (token?.role as string) ?? "WOMAN",
+          name: (token?.name as string) ?? null,
+          email: (token?.email as string) ?? "",
+        } as any;
+      } else {
+        session.user.id = String(token?.uid ?? token?.sub ?? "");
+        session.user.phone = token?.phone as string | undefined;
+        session.user.role = (token?.role as string) ?? "WOMAN";
+      }
       return session;
     },
   },

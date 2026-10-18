@@ -16,7 +16,7 @@ import { ConfettiBurst } from "@/components/ui/ConfettiBurst";
 import { VoiceOrb } from "@/components/voice/VoiceOrb";
 import { ListenButton } from "@/components/voice/ListenButton";
 import { OjasDidi } from "@/components/ui/OjasDidi";
-import { sendOtpApi, verifyOtpApi, ticketSignIn } from "@/lib/auth/client";
+import { sendOtpApi, verifyOtpApi, ticketSignIn, normalizeAuthError } from "@/lib/auth/client";
 import { normalizePhone } from "@/lib/auth/phone";
 import { updateMyName, setMyPin } from "@/lib/auth/actions";
 import { getSTT } from "@/lib/voice/adapters";
@@ -59,7 +59,7 @@ export default function RegisterPage() {
     try {
       const r = await sendOtpApi(phone);
       if (!r.ok) {
-        setError(te((r.code ?? "sendFailed") as "sendFailed"));
+        setError(te(normalizeAuthError(r.code ?? "sendFailed") as any));
         return;
       }
       setDemoOtp(r.demoOtp);
@@ -78,7 +78,8 @@ export default function RegisterPage() {
     try {
       const v = await verifyOtpApi(normalizePhone(phone), otp, true);
       if (!v.ok) {
-        setError(te((v as { code: string }).code as "otpWrong"));
+        const code = (v as { code: string }).code;
+        setError(te(normalizeAuthError(code) as any));
         return;
       }
       const s = await ticketSignIn((v as { ticket: string }).ticket);

@@ -143,7 +143,19 @@
       "rateLimited": "Khup try zhale. Thoda thamba.",
       "pinMismatch": "PIN julat nahi. Parat try kara.",
       "sendFailed": "Code gela nahi. Parat try kara.",
-      "somethingWrong": "Kahi thambala. Parat try kara."
+      "somethingWrong": "Kahi thambala. Parat try kara.",
+      "otp-wrong": "Code thoda vegla aahe. Parat try kara.",
+      "otp-expired": "Code sampala. Navin pathva.",
+      "otp-locked": "Khup try zhale. Navin code pathva.",
+      "invalid-phone": "Number tapasa. 10 ank have.",
+      "invalid-otp": "6 anki code hava.",
+      "invalid-pin": "4 anki PIN hava.",
+      "no-account": "Hya number var khate nahi. Pehle register kara.",
+      "pin-wrong": "PIN thoda vegla aahe. Parat try kara.",
+      "pin-locked": "PIN 15 minute band. Nantar kiva OTP ne login kara.",
+      "rate-limited": "Khup try zhale. Thoda thamba.",
+      "send-failed": "Code gela nahi. Parat try kara.",
+      "something-wrong": "Kahi thambala. Parat try kara."
     }
   },
   "create": {

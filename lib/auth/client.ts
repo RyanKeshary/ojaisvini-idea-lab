@@ -12,6 +12,31 @@ export async function ticketSignIn(ticket: string): Promise<{ ok: boolean; error
 export type VerifyOk = { ok: true; ticket: string; name?: string; hasPin?: boolean; role?: string };
 export type VerifyErr = { ok: false; code: string };
 
+const ERROR_MAP: Record<string, string> = {
+  "otp-wrong": "otpWrong",
+  "otp-expired": "otpExpired",
+  "otp-locked": "otpLocked",
+  "invalid-phone": "invalidPhone",
+  "invalid-otp": "invalidOtp",
+  "invalid-pin": "invalidPin",
+  "invalid-card": "invalidCard",
+  "invalid-upi": "invalidUpi",
+  "invalid-name": "invalidName",
+  "no-account": "noAccount",
+  "pin-wrong": "pinWrong",
+  "pin-locked": "pinLocked",
+  "rate-limited": "rateLimited",
+  "pin-mismatch": "pinMismatch",
+  "send-failed": "sendFailed",
+  "something-wrong": "somethingWrong",
+  "invalid-credentials": "pinWrong",
+};
+
+export function normalizeAuthError(code?: string): string {
+  if (!code) return "somethingWrong";
+  return ERROR_MAP[code] ?? code.replace(/-([a-z])/g, (_, g) => g.toUpperCase());
+}
+
 async function post<T>(url: string, body: unknown): Promise<T> {
   const r = await fetch(url, {
     method: "POST",
