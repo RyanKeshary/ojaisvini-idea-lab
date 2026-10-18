@@ -170,6 +170,39 @@ function LoginInner() {
         </>
       )}
 
+      {/* 1-Click Demo Seller Access */}
+      <div className="mt-1 flex flex-col gap-2 rounded-[16px] border border-dashed p-3.5" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
+        <p className="text-center text-xs font-bold opacity-80">⚡ One-Click Demo Seller</p>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={async () => {
+            setError(null);
+            setBusy(true);
+            try {
+              const v = await verifyPinApi("9820000001", "1234");
+              if (!v.ok) {
+                setError(te("somethingWrong"));
+                return;
+              }
+              const s = await ticketSignIn((v as { ticket: string }).ticket);
+              if (!s.ok) {
+                setError(te("somethingWrong"));
+                return;
+              }
+              router.push(next);
+            } catch {
+              setError(te("somethingWrong"));
+            } finally {
+              setBusy(false);
+            }
+          }}
+          className="flex min-h-[46px] items-center justify-center rounded-[12px] bg-[var(--turmeric)] px-3 text-center text-sm font-bold text-[var(--primary-ink)] shadow-xs transition-transform active:scale-95 disabled:opacity-50 hover:opacity-90"
+        >
+          🏪 Demo Seller (सुनीता ताई / Sunita) →
+        </button>
+      </div>
+
       <AuthError message={error} />
       <Link href="/auth/register" className="min-h-[56px] place-self-center text-base font-bold underline" style={{ color: "var(--indigo)" }}>
         {t("newHere")}

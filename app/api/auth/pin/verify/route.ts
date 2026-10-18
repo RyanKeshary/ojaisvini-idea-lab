@@ -43,5 +43,5 @@ export async function POST(req: Request) {
 }
 
 function err(code: string, status: number) {
-  return NextResponse.json({ code, messageKey: `auth.errors.${code}` }, { status });
+  return NextResponse.json({ ok: false, code, messageKey: `auth.errors.${code}` }, { status });
 }

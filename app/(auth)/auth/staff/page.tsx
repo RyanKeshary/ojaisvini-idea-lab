@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { AuthShell } from "@/components/auth/AuthShell";
 import { AuthError } from "@/components/auth/AuthError";
 import { BigButton } from "@/components/ui/BigButton";
-import { Sheet } from "@/components/ui/Sheet";
 import { staffVerifyApi, ticketSignIn } from "@/lib/auth/client";
 
 export default function StaffLoginPage() {
@@ -16,7 +15,6 @@ export default function StaffLoginPage() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [demoOpen, setDemoOpen] = useState(false);
 
   async function login() {
     setError(null);
@@ -24,7 +22,16 @@ export default function StaffLoginPage() {
     try {
       const v = await staffVerifyApi(email, password);
       if (!v.ok) {
-        setError(te("noAccount"));
+        const code = (v as { code?: string }).code;
+        if (code === "pin-wrong") {
+          setError("Incorrect password. Demo password is: demo1234");
+        } else if (code === "rate-limited") {
+          setError("Too many attempts. Please wait a moment.");
+        } else if (code === "invalid-email") {
+          setError("Please enter a valid email address.");
+        } else {
+          setError("No staff account found for this email. Use sakhi@ojas.demo or admin@ojas.demo");
+        }
         return;
       }
       const s = await ticketSignIn((v as { ticket: string }).ticket);
@@ -49,7 +56,12 @@ export default function StaffLoginPage() {
     try {
       const v = await staffVerifyApi(targetEmail, targetPass);
       if (!v.ok) {
-        setError(te("noAccount"));
+        const code = (v as { code?: string }).code;
+        if (code === "pin-wrong") {
+          setError("Incorrect password. Demo password is: demo1234");
+        } else {
+          setError("Demo staff account error. Please try again.");
+        }
         return;
       }
       const s = await ticketSignIn((v as { ticket: string }).ticket);
@@ -77,10 +89,40 @@ export default function StaffLoginPage() {
           inputMode="email"
           autoComplete="email"
           placeholder="sakhi@ojas.demo or admin@ojas.demo"
-          className="min-h-[64px] rounded-[12px] border-2 bg-[var(--card)] px-4 text-xl"
+          className="min-h-[60px] rounded-[12px] border-2 bg-[var(--card)] px-4 text-lg"
           style={{ borderColor: "var(--border)" }}
         />
       </label>
+
+      {/* Helpful demo account fill pills */}
+      <div className="flex items-center gap-2 -mt-2">
+        <span className="text-xs opacity-60">Demo:</span>
+        <button
+          type="button"
+          onClick={() => {
+            setEmail("sakhi@ojas.demo");
+            setPassword("demo1234");
+            setError(null);
+          }}
+          className="rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-[var(--card)] hover:border-[var(--turmeric)] transition-colors"
+          style={{ borderColor: "var(--border)" }}
+        >
+          sakhi@ojas.demo
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setEmail("admin@ojas.demo");
+            setPassword("demo1234");
+            setError(null);
+          }}
+          className="rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-[var(--card)] hover:border-[var(--turmeric)] transition-colors"
+          style={{ borderColor: "var(--border)" }}
+        >
+          admin@ojas.demo
+        </button>
+      </div>
+
       <label className="flex flex-col gap-1 text-base font-bold">
         {t("password")}
         <input
@@ -88,7 +130,8 @@ export default function StaffLoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           autoComplete="current-password"
-          className="min-h-[64px] rounded-[12px] border-2 bg-[var(--card)] px-4 text-xl"
+          placeholder="demo1234"
+          className="min-h-[60px] rounded-[12px] border-2 bg-[var(--card)] px-4 text-lg"
           style={{ borderColor: "var(--border)" }}
         />
       </label>
@@ -102,7 +145,7 @@ export default function StaffLoginPage() {
             type="button"
             disabled={busy}
             onClick={() => quickLogin("admin@ojas.demo", "demo1234")}
-            className="flex min-h-[52px] items-center justify-center rounded-[12px] bg-[var(--madder)] px-3 text-center text-sm font-bold text-white transition-transform active:scale-95 disabled:opacity-50"
+            className="flex min-h-[52px] items-center justify-center rounded-[12px] bg-[var(--madder)] px-3 text-center text-sm font-bold text-white transition-transform active:scale-95 disabled:opacity-50 hover:opacity-90"
           >
             👑 Admin Access
           </button>
@@ -110,7 +153,7 @@ export default function StaffLoginPage() {
             type="button"
             disabled={busy}
             onClick={() => quickLogin("sakhi@ojas.demo", "demo1234")}
-            className="flex min-h-[52px] items-center justify-center rounded-[12px] bg-[var(--indigo)] px-3 text-center text-sm font-bold text-white transition-transform active:scale-95 disabled:opacity-50"
+            className="flex min-h-[52px] items-center justify-center rounded-[12px] bg-[var(--indigo)] px-3 text-center text-sm font-bold text-white transition-transform active:scale-95 disabled:opacity-50 hover:opacity-90"
           >
             🤝 Sakhi Access
           </button>
@@ -120,8 +163,8 @@ export default function StaffLoginPage() {
       <button
         type="button"
         disabled={busy}
-        onClick={() => quickLogin("admin@ojas.demo", "demo1234")}
-        className="min-h-[48px] text-center text-base font-bold underline transition-opacity active:opacity-60"
+        onClick={() => quickLogin("sakhi@ojas.demo", "demo1234")}
+        className="min-h-[44px] text-center text-base font-bold underline transition-opacity active:opacity-60"
         style={{ color: "var(--indigo)" }}
       >
         {t("demoAccess")} (Auto Login)
