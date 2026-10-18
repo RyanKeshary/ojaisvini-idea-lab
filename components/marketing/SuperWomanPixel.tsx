@@ -106,7 +106,7 @@ export function SuperWomanPixel({ locale = "en" }: SuperWomanPixelProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={handleToggle}
-      className="relative mx-auto w-full max-w-[340px] sm:max-w-[380px] cursor-pointer select-none group focus:outline-hidden"
+      className="relative mx-auto w-full max-w-[310px] sm:max-w-[380px] cursor-pointer select-none group focus:outline-hidden"
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
@@ -130,7 +130,7 @@ export function SuperWomanPixel({ locale = "en" }: SuperWomanPixelProps) {
     >
       {/* Dynamic 3D Card Wrapper */}
       <div
-        className="relative overflow-hidden rounded-[32px] border-2 bg-gradient-to-b from-stone-50 via-amber-50/40 to-emerald-50/30 dark:from-stone-900 dark:via-stone-900/90 dark:to-stone-950 p-5 shadow-xl transition-all duration-300 group-hover:shadow-2xl"
+        className="relative overflow-hidden rounded-2xl sm:rounded-[32px] border-2 bg-gradient-to-b from-stone-50 via-amber-50/40 to-emerald-50/30 dark:from-stone-900 dark:via-stone-900/90 dark:to-stone-950 p-3.5 sm:p-5 shadow-xl transition-all duration-300 group-hover:shadow-2xl"
         style={{
           borderColor: isSuper ? "var(--turmeric)" : "var(--border)",
           transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
@@ -188,7 +188,7 @@ export function SuperWomanPixel({ locale = "en" }: SuperWomanPixelProps) {
         </div>
 
         {/* 3D Pixel Art Canvas/SVG Stage */}
-        <div className="relative z-10 my-2 flex h-[270px] w-full items-center justify-center overflow-visible">
+        <div className="relative z-10 my-2 flex h-[230px] sm:h-[270px] w-full items-center justify-center overflow-visible">
           {/* Burst Particles on Transform */}
           {burstParticles.map((p) => (
             <div

@@ -7,7 +7,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-[1200px]">
       <SideRail />
-      <div className="min-w-0 flex-1 px-4 pb-28 pt-3 lg:px-8 lg:pb-10" id="main-content">
+      <div className="min-w-0 flex-1 px-3 sm:px-4 pb-32 pt-2 sm:pt-3 lg:px-8 lg:pb-10" id="main-content">
         <TopAppBar />
         {children}
       </div>

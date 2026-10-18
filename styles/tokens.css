@@ -1,14 +1,14 @@
 /* Ojasvini design tokens — #E4F1EE Mint Theme. Light + dark. */
 :root {
-  --mint-base: #e4f1ee;
+  --mint-base: #ebf5f2;
   --ink: #112623;
-  --paper: #e4f1ee;
+  --paper: #ebf5f2;
   --turmeric: #0e7468;
   --madder: #c83758;
   --indigo: #1a5a72;
   --leaf: #15803d;
-  --clay-soft: #d3e7e2;
-  --mist: #c2ded7;
+  --clay-soft: #d8ede7;
+  --mist: #c5e4dc;
 
   --bg: var(--paper);
   --fg: var(--ink);

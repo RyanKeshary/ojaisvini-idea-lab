@@ -296,7 +296,7 @@ export default async function LandingPage() {
 
   return (
     <main
-      className="weave-bg mx-auto flex min-h-dvh w-full max-w-6xl flex-col gap-6 sm:gap-8 px-4 sm:px-6 lg:px-8 pb-10 pt-2 sm:pt-4"
+      className="weave-bg mx-auto flex min-h-dvh w-full max-w-6xl flex-col gap-5 sm:gap-7 lg:gap-8 px-3.5 sm:px-6 lg:px-8 pb-12 pt-2 sm:pt-4"
       id="main-content"
     >
       <script
@@ -306,7 +306,7 @@ export default async function LandingPage() {
 
       {/* 1. Sleek, Compact Navigation Header */}
       <header
-        className="sticky top-2 z-30 flex items-center justify-between gap-3 rounded-2xl bg-white/85 dark:bg-stone-900/85 backdrop-blur-md px-3.5 sm:px-4 py-2 border shadow-xs"
+        className="sticky top-2 z-30 flex items-center justify-between gap-2 sm:gap-3 rounded-2xl bg-white/90 dark:bg-stone-900/90 backdrop-blur-md px-3 sm:px-4 py-2 border shadow-xs"
         style={{ borderColor: "var(--border)" }}
       >
         {/* Brand / Logo */}
@@ -339,16 +339,16 @@ export default async function LandingPage() {
         </nav>
 
         {/* Language dropdown & Auth CTAs */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <LanguageChip />
 
           {isAuthed ? (
             <Link
               href={dashboardHref}
-              className="flex min-h-[36px] items-center gap-1.5 rounded-full bg-[var(--turmeric)] px-3.5 text-xs font-bold text-[var(--primary-ink)] shadow-xs transition-transform active:scale-95 shrink-0"
+              className="flex min-h-[36px] items-center gap-1.5 rounded-full bg-[var(--turmeric)] px-3 sm:px-3.5 text-xs font-bold text-[var(--primary-ink)] shadow-xs transition-transform active:scale-95 shrink-0"
             >
               <span>🏪</span>
-              <span className="truncate max-w-[100px] sm:max-w-none">{userName}</span>
+              <span className="truncate max-w-[80px] sm:max-w-none">{userName}</span>
               <span>→</span>
             </Link>
           ) : (
@@ -376,23 +376,23 @@ export default async function LandingPage() {
         className="relative pt-1 sm:pt-3"
         aria-label={t("title")}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center">
           {/* Left Column (Copy, CTAs, Audio Accessibility) */}
-          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-3.5">
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-3 sm:gap-3.5">
             {/* National Initiative Pill */}
             <div
-              className="inline-flex items-center gap-2 rounded-full bg-white/80 dark:bg-stone-900/80 backdrop-blur-xs px-3 py-1 border shadow-xs text-[11px] font-semibold text-stone-700 dark:text-stone-300"
+              className="inline-flex items-center gap-2 rounded-full bg-white/80 dark:bg-stone-900/80 backdrop-blur-xs px-3 py-1 border shadow-xs text-[10px] sm:text-[11px] font-semibold text-stone-700 dark:text-stone-300 max-w-full truncate"
               style={{ borderColor: "var(--border)" }}
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>{copy.initiativePill}</span>
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="truncate">{copy.initiativePill}</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--fg)] leading-[1.12]">
+            <h1 className="display text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--fg)] leading-[1.15]">
               {t("title")}
               <span
-                className="block text-2xl sm:text-3xl lg:text-4xl font-bold mt-1"
+                className="block text-xl sm:text-3xl lg:text-4xl font-bold mt-1"
                 style={{ color: "var(--accent)" }}
               >
                 {c("tagline")}
@@ -400,7 +400,7 @@ export default async function LandingPage() {
             </h1>
 
             {/* Subtitle */}
-            <p className="max-w-[44ch] text-sm sm:text-base opacity-80 leading-snug font-normal">
+            <p className="max-w-[44ch] text-xs sm:text-base opacity-80 leading-snug font-normal">
               {t("subtitle")}
             </p>
 
@@ -553,7 +553,7 @@ export default async function LandingPage() {
             <table className="w-full min-w-[480px] text-left text-xs">
               <thead>
                 <tr className="bg-[var(--clay-soft)]/70 border-b" style={{ borderColor: "var(--border)" }}>
-                  <th className="p-2.5 font-bold text-[var(--primary-ink)]" scope="col">
+                  <th className="p-2.5 font-bold text-[var(--fg)]" scope="col">
                     {t("whyCols.0")}
                   </th>
                   <th className="p-2.5 font-bold opacity-75" scope="col">
