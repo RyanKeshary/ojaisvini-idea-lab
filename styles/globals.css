@@ -46,9 +46,25 @@ h1, h2, h3, .display {
   border-radius: 6px;
 }
 
-/* Woven-pattern backdrop for auth/landing */
+/* Calm ambient backdrop for auth/landing */
 .weave-bg {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cpath d='M0 36h72M36 0v72' stroke='%230E7468' stroke-opacity='0.08'/%3E%3Ccircle cx='36' cy='36' r='7' fill='none' stroke='%2314B8A6' stroke-opacity='0.12'/%3E%3C/svg%3E");
+  background-color: var(--bg);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(14, 116, 104, 0.08) 0px, transparent 45%),
+    radial-gradient(at 100% 100%, rgba(45, 212, 191, 0.08) 0px, transparent 45%),
+    radial-gradient(at 50% 50%, rgba(200, 55, 88, 0.03) 0px, transparent 50%);
+}
+
+.card-simple {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-simple:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(14, 116, 104, 0.28);
 }
 
 /* Skeleton shimmer */

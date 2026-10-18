@@ -17,20 +17,35 @@ export function SideRail() {
     { href: "/app/profile", label: t("more"), icon: <User aria-hidden /> },
   ];
   return (
-    <nav aria-label="Primary" className="hidden w-60 shrink-0 flex-col gap-1 border-r p-4 lg:flex" style={{ borderColor: "var(--border)" }}>
-      <p className="display px-2 py-3 text-2xl font-bold">Ojasvini</p>
-      {items.map((it) => (
-        <Link
-          key={it.href}
-          href={it.href}
-          aria-current={path === it.href ? "page" : undefined}
-          className="flex min-h-[56px] items-center gap-3 rounded-[12px] px-3 text-base font-bold"
-          style={{ background: path === it.href ? "var(--clay-soft)" : "transparent" }}
-        >
-          <span aria-hidden className="text-xl">{it.icon}</span>
-          {it.label}
-        </Link>
-      ))}
+    <nav
+      aria-label="Primary"
+      className="hidden w-64 shrink-0 flex-col gap-1.5 border-r p-5 lg:flex bg-white/40 dark:bg-stone-900/30 backdrop-blur-xs"
+      style={{ borderColor: "var(--border)" }}
+    >
+      <div className="flex items-center gap-2.5 px-3 py-4 mb-2">
+        <span className="h-3 w-3 rounded-full bg-[var(--turmeric)] shadow-xs animate-pulse" />
+        <p className="display text-2xl font-bold tracking-tight text-[var(--fg)]">Ojasvini</p>
+      </div>
+      {items.map((it) => {
+        const isActive = path === it.href;
+        return (
+          <Link
+            key={it.href}
+            href={it.href}
+            aria-current={isActive ? "page" : undefined}
+            className={`flex min-h-[50px] items-center gap-3 rounded-xl px-3.5 text-sm font-bold transition-all duration-150 ${
+              isActive
+                ? "bg-[var(--clay-soft)]/75 text-[var(--turmeric)] shadow-xs"
+                : "text-[var(--fg)] opacity-70 hover:opacity-100 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]"
+            }`}
+          >
+            <span aria-hidden className={`text-lg transition-transform ${isActive ? "scale-110" : ""}`}>
+              {it.icon}
+            </span>
+            <span>{it.label}</span>
+          </Link>
+        );
+      })}
     </nav>
   );
 }
