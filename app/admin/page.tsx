@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { BigButton } from "@/components/ui/BigButton";
 import { AuthError } from "@/components/auth/AuthError";
+import { LanguageChip } from "@/components/ui/LanguageChip";
 import { inr } from "@/lib/utils";
 
 type Tab = "overview" | "users" | "products" | "reports" | "ai" | "flags" | "schemes";
@@ -59,7 +60,10 @@ export default function AdminPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col gap-4 px-4 pb-16 pt-6">
-      <h1 className="display text-4xl font-bold">{t("title")}</h1>
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="display text-3xl sm:text-4xl font-bold">{t("title")}</h1>
+        <LanguageChip />
+      </div>
       <AuthError message={error} />
       <div className="flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label={t("title")}>
         {tabs.map((tb) => (

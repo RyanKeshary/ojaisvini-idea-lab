@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { BigButton } from "@/components/ui/BigButton";
 import { AuthError } from "@/components/auth/AuthError";
 import { ListenButton } from "@/components/voice/ListenButton";
+import { LanguageChip } from "@/components/ui/LanguageChip";
 
 type Mentee = {
   id: string;
@@ -97,7 +98,10 @@ export default function SakhiConsolePage() {
 
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-4 px-4 pb-16 pt-6">
-      <h1 className="display text-4xl font-bold">{t("title")}</h1>
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="display text-3xl sm:text-4xl font-bold">{t("title")}</h1>
+        <LanguageChip />
+      </div>
       <ListenButton text={t("title")} />
       <AuthError message={error} />
 

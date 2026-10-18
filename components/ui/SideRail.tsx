@@ -3,17 +3,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, GraduationCap, Package, Mic, LayoutDashboard, User } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { LanguageChip } from "@/components/ui/LanguageChip";
 
 /** Desktop left side rail (≥1024px). */
 export function SideRail() {
   const t = useTranslations("nav");
+  const td = useTranslations("dashboard");
   const path = usePathname();
   const items = [
     { href: "/app/home", label: t("home"), icon: <Home aria-hidden /> },
     { href: "/app/learn", label: t("learn"), icon: <GraduationCap aria-hidden /> },
     { href: "/app/create", label: t("create"), icon: <Mic aria-hidden /> },
     { href: "/app/orders", label: t("orders"), icon: <Package aria-hidden /> },
-    { href: "/app/dashboard", label: "Dashboard", icon: <LayoutDashboard aria-hidden /> },
+    { href: "/app/dashboard", label: td("title"), icon: <LayoutDashboard aria-hidden /> },
     { href: "/app/profile", label: t("more"), icon: <User aria-hidden /> },
   ];
   return (
@@ -46,6 +48,10 @@ export function SideRail() {
           </Link>
         );
       })}
+
+      <div className="mt-auto pt-4 border-t border-[var(--border)]">
+        <LanguageChip />
+      </div>
     </nav>
   );
 }

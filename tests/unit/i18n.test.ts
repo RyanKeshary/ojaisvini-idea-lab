@@ -24,3 +24,14 @@ describe("i18n parity (hi/mr/en/gu/ta)", () => {
     });
   }
 });
+
+describe("prefs locale sync", () => {
+  it("updates locale and mirrors to state", async () => {
+    const { usePrefs } = await import("@/lib/store/prefs");
+    usePrefs.getState().setLocale("hi", false);
+    expect(usePrefs.getState().locale).toBe("hi");
+    usePrefs.getState().setLocale("en", false);
+    expect(usePrefs.getState().locale).toBe("en");
+  });
+});
+

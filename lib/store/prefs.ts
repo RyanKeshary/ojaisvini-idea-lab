@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import type { Locale } from "@/lib/i18n/config";
 
 export const PREF_COOKIES = ["ojas_locale", "ojas_theme", "ojas_motion"] as const;
@@ -11,7 +11,7 @@ type Prefs = {
   dataSaver: boolean;
   voiceSpeed: number;
   textSize: "base" | "plus" | "plusplus";
-  setLocale: (l: Locale) => void;
+  setLocale: (l: Locale, broadcast?: boolean) => void;
   setTheme: (t: "light" | "dark") => void;
   setReduceMotion: (v: boolean) => void;
   setDataSaver: (v: boolean) => void;
@@ -36,6 +36,17 @@ function syncCookies(p: { locale: Locale; theme: string; reduceMotion: boolean }
   }
 }
 
+function broadcastChange(payload: { type: string; [key: string]: unknown }) {
+  if (typeof window === "undefined") return;
+  try {
+    if (typeof BroadcastChannel !== "undefined") {
+      const bc = new BroadcastChannel("ojas-pref-sync");
+      bc.postMessage(payload);
+      bc.close();
+    }
+  } catch {}
+}
+
 export const usePrefs = create<Prefs>()(
   persist(
     (set, get) => ({
@@ -45,9 +56,16 @@ export const usePrefs = create<Prefs>()(
       dataSaver: false,
       voiceSpeed: 1,
       textSize: "base",
-      setLocale: (locale) => {
+      setLocale: (locale, broadcast = true) => {
         set({ locale });
         syncCookies({ ...get(), locale });
+        if (typeof document !== "undefined") {
+          document.documentElement.lang = locale;
+          document.documentElement.dataset.locale = locale;
+        }
+        if (broadcast) {
+          broadcastChange({ type: "LOCALE_CHANGE", locale });
+        }
       },
       setTheme: (theme) => {
         set({ theme });
@@ -61,6 +79,17 @@ export const usePrefs = create<Prefs>()(
       setVoiceSpeed: (voiceSpeed) => set({ voiceSpeed }),
       setTextSize: (textSize) => set({ textSize }),
     }),
-    { name: "ojas-prefs" }
+    {
+      name: "ojas-prefs",
+      storage: createJSONStorage(() =>
+        typeof window !== "undefined"
+          ? window.localStorage
+          : {
+              getItem: () => null,
+              setItem: () => {},
+              removeItem: () => {},
+            }
+      ),
+    }
   )
 );

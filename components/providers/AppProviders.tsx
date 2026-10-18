@@ -5,7 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import { registerSW } from "@/lib/pwa/install";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { usePrefs } from "@/lib/store/prefs";
+import type { Locale } from "@/lib/i18n/config";
 import en from "@/messages/en.json";
 import hi from "@/messages/hi.json";
 import mr from "@/messages/mr.json";
@@ -14,6 +16,7 @@ import ta from "@/messages/ta.json";
 import te from "@/messages/te.json";
 import kn from "@/messages/kn.json";
 import bn from "@/messages/bn.json";
+
 const bundles: Record<string, unknown> = { en, hi, mr, gu, ta, te, kn, bn };
 
 function merge(base: unknown, over: unknown): unknown {
@@ -45,6 +48,45 @@ function messagesFor(locale: string) {
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const { locale, theme, reduceMotion, dataSaver } = usePrefs();
   const [qc] = useState(() => new QueryClient());
+  const router = useRouter();
+
+  // Real-time synchronization across all open browser tabs
+  useEffect(() => {
+    let bc: BroadcastChannel | null = null;
+    try {
+      if (typeof BroadcastChannel !== "undefined") {
+        bc = new BroadcastChannel("ojas-pref-sync");
+        bc.onmessage = (event) => {
+          if (event.data?.type === "LOCALE_CHANGE" && event.data.locale) {
+            const newLoc = event.data.locale as Locale;
+            if (newLoc && newLoc !== usePrefs.getState().locale) {
+              usePrefs.getState().setLocale(newLoc, false);
+              router.refresh();
+            }
+          }
+        };
+      }
+    } catch {}
+
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "ojas-prefs" && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          const newLoc = parsed.state?.locale as Locale;
+          if (newLoc && newLoc !== usePrefs.getState().locale) {
+            usePrefs.getState().setLocale(newLoc, false);
+            router.refresh();
+          }
+        } catch {}
+      }
+    };
+    window.addEventListener("storage", onStorage);
+
+    return () => {
+      bc?.close();
+      window.removeEventListener("storage", onStorage);
+    };
+  }, [router]);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -59,9 +101,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={qc}>
       <SessionProvider>
-      <NextIntlClientProvider locale={locale} messages={messagesFor(locale)} timeZone="Asia/Kolkata">
-        <MotionConfig reducedMotion={reduceMotion ? "always" : "user"}>{children}</MotionConfig>
-      </NextIntlClientProvider>
+        <NextIntlClientProvider locale={locale} messages={messagesFor(locale)} timeZone="Asia/Kolkata">
+          <MotionConfig reducedMotion={reduceMotion ? "always" : "user"}>{children}</MotionConfig>
+        </NextIntlClientProvider>
       </SessionProvider>
     </QueryClientProvider>
   );
