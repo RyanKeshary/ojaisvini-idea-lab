@@ -1,22 +1,24 @@
 {
   "common": {
-    "tagline": "Bolo. Photo kheencho. Becho.",
-    "listen": "Suno",
-    "back": "Peeche",
-    "help": "Madad",
-    "tryAgain": "Phir koshish karein",
-    "askOjas": "Ojas se poochein",
-    "callSakhi": "Sakhi ko call karein",
-    "confirm": "Pakka karein",
-    "cancel": "Radd karein",
-    "save": "Save karein",
-    "next": "Aage",
-    "skip": "Chhodein",
-    "yes": "Haan",
-    "no": "Nahin",
-    "demoHint": "Demo mode: asli paise nahin, asli SMS nahin."
+    "appName": "Ojasvini",
+    "tagline": "बोलो. फोटो खींचो. बेचो.",
+    "taglineDesc": "ग्रामीण महिला सूक्ष्म उद्यमिता मंच",
+    "listen": "सुनो",
+    "back": "पीछे",
+    "help": "मदद",
+    "tryAgain": "फिर कोशिश करें",
+    "askOjas": "ओजस से पूछें",
+    "callSakhi": "सखी को कॉल करें",
+    "confirm": "पक्का करें",
+    "cancel": "रद्द करें",
+    "save": "सेव करें",
+    "next": "आगे",
+    "skip": "छोड़ें",
+    "yes": "हाँ",
+    "no": "नहीं",
+    "demoHint": "डेमो मोड: असली पैसे नहीं, असली SMS नहीं।"
   },
-  "nav": { "home": "Ghar", "learn": "Seekho", "create": "Naya saaman", "orders": "Order", "more": "Aur" },
+  "nav": { "home": "मुख्यपृष्ठ", "learn": "सीखें", "create": "नया उत्पाद", "orders": "ऑर्डर", "more": "अधिक" },
   "landing": {
     "title": "Ojasvini",
     "subtitle": "Tejasvi, sashakt mahila ghar baithe beche.",
@@ -335,23 +337,34 @@
     "schemesNote": "Scheme create/edit API: /api/admin/schemes."
   },
   "assistant": {
-    "title": "Sakhi Didi",
-    "hint": "Daam, photo, UPI, yojana poocho — bolkar ya likhkar.",
-    "ask": "Sakhi Didi se poochein",
+    "title": "सखी दीदी",
+    "hint": "दाम, फोटो, UPI, सरकारी योजनाओं के बारे में पूछें — बोलकर या लिखकर।",
+    "ask": "सखी दीदी से पूछें...",
     "chips": {
-      "price": "Achaar ka daam kaise lagau?",
-      "photo": "Achhi photo kaise loon?",
-      "upi": "UPI kaise kaam karta hai?",
-      "scheme": "Mujhe kaunsi yojana milegi?"
+      "price": "अचार का दाम कैसे तय करें?",
+      "photo": "अच्छा फोटो कैसे खींचें?",
+      "upi": "UPI पेमेंट कैसे काम करता है?",
+      "scheme": "मुझे कौन सी सरकारी योजना मिलेगी?",
+      "order": "पहली बिक्री कैसे प्राप्त करें?",
+      "whatsapp": "व्हाट्सएप पर सामान कैसे बेचें?"
     },
     "actions": {
-      "open-lesson": "Lesson kholo",
-      "open-scheme": "Yojana dekho",
-      "start-create": "Naya saaman",
-      "show-earnings": "Kamai dekho"
+      "open-lesson": "पाठ खोलें",
+      "open-scheme": "योजनाएं देखें",
+      "start-create": "नया उत्पाद",
+      "show-earnings": "कमाई देखें"
     }
   },
-  "home": { "insights": "Is hafte aapke liye" },
+  "home": {
+    "title": "आज",
+    "subtitle": "आपका दैनिक व्यापार डैशबोर्ड",
+    "firstSale": "३ आसान चरणों में पहली बिक्री",
+    "weekEarnings": "इस हफ्ते की कमाई",
+    "insights": "इस हफ्ते आपके लिए",
+    "progressTitle": "प्रगति यात्रा",
+    "progressSub": "४०% पूर्ण",
+    "listenIntro": "आज का व्यापार डैशबोर्ड। ३ आसान चरणों में पहली बिक्री।"
+  },
   "dashboard": {
     "title": "Dashboard",
     "revenue": "30-din ki kamai",

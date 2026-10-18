@@ -28,10 +28,10 @@ export default function HomePage() {
     <main className="mx-auto flex w-full max-w-xl flex-col gap-5 pt-1">
       <div className="flex items-baseline justify-between border-b pb-3" style={{ borderColor: "var(--border)" }}>
         <div>
-          <h1 className="display text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg)]">आज (Today)</h1>
-          <p className="text-xs sm:text-sm opacity-70 mt-0.5">आपका दैनिक व्यापार डैशबोर्ड</p>
+          <h1 className="display text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg)]">{th("title")}</h1>
+          <p className="text-xs sm:text-sm opacity-70 mt-0.5">{th("subtitle")}</p>
         </div>
-        <ListenButton text="आज का व्यापार डैशबोर्ड. पहली बिक्री 3 आसान चरणों में." compact />
+        <ListenButton text={th("listenIntro")} compact />
       </div>
 
       {/* Voice-First Action Card */}
@@ -42,14 +42,14 @@ export default function HomePage() {
         </div>
         <div className="flex-1 min-w-0">
           <StepDots total={3} current={0} />
-          <p className="mt-2 text-base sm:text-lg font-bold text-[var(--fg)]">First sale in 3 steps</p>
+          <p className="mt-2 text-base sm:text-lg font-bold text-[var(--fg)]">{th("firstSale")}</p>
           <p className="text-xs sm:text-sm opacity-75 mt-0.5">1. {t("create")}</p>
         </div>
       </div>
 
       {/* Earnings Overview */}
       <div className="card-simple p-5 sm:p-6">
-        <EarningsCounter value={2450} label="इस हफ्ते की कमाई (This week's earnings)" />
+        <EarningsCounter value={2450} label={th("weekEarnings")} />
       </div>
 
       {/* AI Business Insights */}
@@ -78,13 +78,13 @@ export default function HomePage() {
       {/* Progress & Quick Assist */}
       <div className="card-simple p-5 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <ProgressRing value={0.4} label="Journey progress" />
+          <ProgressRing value={0.4} label={th("progressTitle")} />
           <div>
-            <p className="text-sm font-bold text-[var(--fg)]">Journey Progress</p>
-            <p className="text-xs opacity-70">40% completed</p>
+            <p className="text-sm font-bold text-[var(--fg)]">{th("progressTitle")}</p>
+            <p className="text-xs opacity-70">{th("progressSub")}</p>
           </div>
         </div>
-        <ListenButton text="इस हफ्ते आपने 2450 रुपये कमाए. पहला कदम: नया सामान जोड़ें." />
+        <ListenButton text={`${th("weekEarnings")}: ₹2,450. ${th("firstSale")}.`} />
       </div>
     </main>
   );

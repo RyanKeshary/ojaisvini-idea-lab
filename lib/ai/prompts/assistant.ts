@@ -31,80 +31,176 @@ export function assistantPrompt(opts: { locale: string; context: string }): { sy
   return { system };
 }
 
-/** Deterministic mock replies (no key): keyword-grounded, always safe. */
+/** Deterministic mock replies (no key or fallback): keyword-grounded, empathetic, multilingual. */
 export function mockReply(text: string, context: string, locale: string): { reply: string; action?: { name: string; value: string } } {
-  const t = text.toLowerCase();
+  const t = text.toLowerCase().trim();
   const say = (hi: string, mr: string, en: string, gu?: string, ta?: string) =>
     locale === "mr" ? mr : locale === "gu" ? (gu ?? hi) : locale === "ta" ? (ta ?? hi) : locale === "hi" ? hi : en;
-  if (/(kamai|earning|kitna|kin|paisa|earn|kamaani|varuvaai|revenue|sales|bikri)/.test(t)) {
-    const m = context.match(/revenue ₹(\d+)/);
-    const rev = m ? m[1] : "0";
+
+  // Greetings & welcomes
+  if (/^(hey|hello|hi|hii|helo|namaste|namaskar|kem cho|vanakkam|salam|pranam|ram ram|shubhadin)/.test(t) || t === "hey" || t === "hi" || t === "hello") {
     return {
       reply: say(
-        `Pichhle 30 din mein ₹${rev} ki bikri hui. Details dashboard par dekho!`,
-        `Magil 30 divsat ₹${rev} chi vikri jhali. Tapshil dashboard var paha!`,
-        `₹${rev} revenue in the last 30 days. See details on your dashboard!`,
-        `Chhella 30 divasmaa ₹${rev} nu vechaan. Vigat dashboard par juo!`,
-        `Kadantha 30 naatkalil ₹${rev} virpanai. Vivaram dashboard-il paar!`
-      ),
-      action: { name: "show-earnings", value: "-" },
-    };
-  }
-  if (/(photo|tasveer|phoṭo|snapshot|camera|tasveerein)/.test(t)) {
-    return {
-      reply: say(
-        "Achhi photo: khidki ki roshni, saaf background, seedha phone. Lesson dekho!",
-        "Changli photo: khidkicha un, swachh background, saral phone. Lesson paha!",
-        "Good photos: window light, clean background, straight phone. Open the lesson!",
-        "Saari photo: baarini light, saaf background, seedho phone. Lesson juo!",
-        "Nalla photo: jannal velichcham, suthamana background, neraana phone. Paadam thira!"
-      ),
-      action: { name: "open-lesson", value: "photo-1" },
-    };
-  }
-  if (/(yojana|scheme|loan|karz|mudra|thittam|subsidy)/.test(t)) {
-    return {
-      reply: say(
-        "Scheme Finder mein Match karo — sirf wahi yojana jo tumhe milegi.",
-        "Scheme Finder madhye Match kara — fakt tyach yojana jya tumhala miltil.",
-        "Use Match me in the Scheme Finder — only schemes you can actually get.",
-        "Scheme Finder maa Match karo — fakt ej yojana je tamane malshe.",
-        "Scheme Finder-il Match sei — unakku kidaikkakkudiyavai mattum."
-      ),
-      action: { name: "open-scheme", value: "-" },
-    };
-  }
-  if (/(daam|kimmat|price|rate|bhaav|vilai|munafa|margin)/.test(t)) {
-    return {
-      reply: say(
-        "Daam = laagat + 30–50% munafa. Aas-paas ka bazaar check karo, sabse saste mat bano.",
-        "Kimmat = kharch + 30–50% napha. Jawalcha bazaar tapasa, sarvat swast naka.",
-        "Price = cost + 30–50% margin. Check nearby rates; don't be the cheapest.",
-        "Bhaav = kharch + 30–50% nafo. Najiknu bazaar tapaso, sauthi sastaa na bano.",
-        "Vilai = selavu + 30–50% laabam. Arugil sandhai paar; migavum malivaaga vendam."
+        "नमस्ते दीदी! मैं सखी दीदी हूँ. आज आपके व्यवसाय में मैं क्या सहायता करूँ? आप मुझसे सामान की सही कीमत, फोटो, WhatsApp पर बिक्री या सरकारी योजनाओं के बारे में पूछ सकती हैं!",
+        "नमस्कार! मी सखी दीदी, तुमची व्यवसाय मार्गदर्शक. आज तुमच्या व्यवसायासाठी मी काय मदत करू? तुम्ही मला उत्पादन किंमत, फोटो काढणे, पहिली ऑर्डर कशी मिळवायची किंवा सरकारी योजनांबद्दल विचारू शकता!",
+        "Hello! I am Sakhi Didi, your personal business mentor. How can I help your micro-enterprise today? Ask me about setting prices, photos, WhatsApp selling, or government schemes!",
+        "નમસ્તે! હું સખી દીદી છું. આજે તમારા બિઝનેસમાં હું શું મદદ કરું? તમે મને ભાવ, ફોટો, WhatsApp વેચાણ કે સરકારી યોજનાઓ વિશે પૂછી શકો છો!",
+        "Vanakkam! Naan Sakhi Didi. Ungal thozhilukku naan enna udhavi seiyattum? Vilai, photo, WhatsApp virpanai patri kelungal!"
       ),
       action: { name: "open-lesson", value: "pricing-1" },
     };
   }
-  if (/(upi|payment|pay|online pay|scanner|qr)/.test(t)) {
+
+  // Help / Questions / Guidance
+  if (t === "?" || /^(help|madad|kya karu|kay karu|guide|guidance|kya karein|start|shuruat)/.test(t)) {
     return {
       reply: say(
-        "UPI practice lesson mein nakli paise se seekho — koi risk nahin.",
-        "UPI practice lesson madhye khotya paishanni shika — kahi risk nahi.",
-        "Learn with fake money in the UPI practice lesson — zero risk.",
-        "UPI practice lesson maa nakli paisaathi sheekho — koi risk nahin.",
-        "UPI practice lesson-il poli panaththaal katru — risk illai."
+        "घबराइए मत दीदी, शुरुआत करना बहुत आसान है! १. उत्पाद का साफ़ फोटो जोड़ें. २. UPI पेमेंट का अभ्यास करें. ३. सरकारी योजनाएं देखें. आप कहाँ से शुरू करना चाहती हैं?",
+        "काळजी करू नका, सुरुवात करणे अगदी सोपे आहे! १. उत्पादनाचा फोटो जोडा. २. UPI पेमेंटचा सराव करा. ३. सरकारी योजना शोधा. आपण कुठून सुरुवात करायची?",
+        "Don't worry, taking the first step is easy! 1. Add your product with photo. 2. Practice UPI payments. 3. Find government schemes. Where would you like to begin?",
+        "ચિંતા ન કરશો, શરૂઆત કરવી ખૂબ સરળ છે! ૧. પ્રોડક્ટનો ફોટો ઉમેરો. ૨. UPI પેમેન્ટ શીખો. ૩. સરકારી યોજનાઓ જુઓ. ક્યાંથી શરૂ કરીએ?",
+        "Kavalai vendaam, thodanguvadhu elidhu! 1. Porul photo ser. 2. UPI pazhagu. 3. Thittangal paar. Engirundhu thodangalaam?"
+      ),
+      action: { name: "start-create", value: "-" },
+    };
+  }
+
+  // Pickle / Food / Cooking / Handicrafts
+  if (/(pickle|achar|lonche|papad|masala|food|khana|jevan|laddu|sweets|mithai|handicraft|silai|tailoring|saree|cloth)/.test(t)) {
+    return {
+      reply: say(
+        "अचार और खाद्य पदार्थों के लिए डिब्बा हमेशा एयरटाइट रखें और बनाने की तारीख लिखें. सामग्री और अपनी मेहनत जोड़कर ३५–४५% मार्जिन पर दाम रखें!",
+        "लोणचे आणि खाद्यपदार्थांसाठी हवाबंद बरणी वापरा आणि बनवल्याची तारीख नक्की टाका. साहित्य आणि तुमची मेहनत धरून ३५–४५% नफा ठेवून किंमत ठरवा!",
+        "For food and pickles, make sure jars are airtight with the preparation date. Price it with a 35–45% margin to cover ingredients and your labor!",
+        "અથાણાં અને ખાધ્ય પદાર્થો માટે હવાચુસ્ત બરણી વાપરો અને તારીખ લખો. સામગ્રી અને મહેનત ગણીને ૩૫–૪૫% નફા સાથે ભાવ નક્કી કરો!",
+        "Oorugai matrum unavugalukku kaatru pugadha moodi payanpaduthavum. Selavu matrum ungal uzhaippudan 35-45% laabam vaithu vilai nirnayam seiyavum!"
+      ),
+      action: { name: "open-lesson", value: "pricing-1" },
+    };
+  }
+
+  // First order / Customers / Selling
+  if (/(first order|pehli order|pahili order|order|customer|grahak|bikri|virpanai|vechan|biko|sell)/.test(t)) {
+    return {
+      reply: say(
+        "पहिला ऑर्डर पाने के लिए: अपनी दुकान की लिंक अपने परिवार और मोहल्ले के WhatsApp ग्रुप में भेजें, चखने के लिए थोड़ा सैंपल दें और ताज़ा माल का भरोसा दें!",
+        "पहिली ऑर्डर मिळवण्यासाठी: तुमच्या दुकानची लिंक कौटुंबिक आणि गावातील WhatsApp ग्रुपवर पाठवा, शेजाऱ्यांना चव चाखायला द्या आणि ताजे उत्पादन देण्याचे सांगा!",
+        "To get your first order: share your shop link in neighborhood WhatsApp groups, offer a small tasting sample, and tell everyone you deliver fresh!",
+        "પહેલો ઓર્ડર મેળવવા માટે: તમારી દુકાનની લિંક WhatsApp ગ્રૂપમાં શેર કરો, થોડું સેમ્પલ આપો અને તાજા માલનો વિશ્વાસ આપો!",
+        "Mudhal order pera: ungal kadai link-ai WhatsApp groups-il share seiyavum, sample koduthu fresh-aana porul enru nambikkai alikkavum!"
+      ),
+      action: { name: "start-create", value: "-" },
+    };
+  }
+
+  // WhatsApp commerce
+  if (/(whatsapp|status|group|share|link)/.test(t)) {
+    return {
+      reply: say(
+        "अपने उत्पाद के साफ़ फोटो और सही दाम अपने WhatsApp स्टेटस और ग्रुप्स में शेयर करें. लोग जान-पहचान की दीदियों से बहुत भरोसे से सामान खरीदते हैं!",
+        "तुमच्या उत्पादनाचे सुंदर फोटो आणि स्पष्ट किंमत WhatsApp स्टेटस आणि ग्रुप्सवर टाका. ओळखीच्या लोकांकडून लोक विश्वासाने खरेदी करतात!",
+        "Post attractive photos and clear prices on your WhatsApp Status and local groups with your direct shop link. People love buying from someone they trust!",
+        "તમારા પ્રોડક્ટના સુંદર ફોટા અને સાચો ભાવ WhatsApp સ્ટેટસ અને ગ્રૂપમાં શેર કરો. ઓળખીતા લોકો પાસેથી ગ્રાહકો ખૂબ વિશ્વાસથી ખરીદે છે!",
+        "Ungal porulin azhagiya photo matrum vilaiyai WhatsApp Status matrum groups-il share seiyavum. Nambikkaiyaana aatkalidam virpanai adhigam nadakkum!"
+      ),
+      action: { name: "start-create", value: "-" },
+    };
+  }
+
+  // Earnings & Revenue
+  if (/(kamai|earning|kitna|kin|paisa|earn|kamaani|varuvaai|revenue|sales|munafa)/.test(t)) {
+    const m = context.match(/revenue ₹(\d+)/);
+    const rev = m ? m[1] : "0";
+    return {
+      reply: say(
+        `पिछले ३० दिनों में ₹${rev} की बिक्री हुई है. विस्तृत ब्यौरा अपने डैशबोर्ड पर देखें!`,
+        `मागील ३० दिवसांत ₹${rev} ची विक्री झाली आहे. सविस्तर तपशील तुमच्या डॅशबोर्डवर पहा!`,
+        `You have generated ₹${rev} in revenue over the last 30 days. See full details on your dashboard!`,
+        `છેલ્લા ૩૦ દિવસમાં ₹${rev} નું વેચાણ થયું છે. વિગત ડેશબોર્ડ પર જુઓ!`,
+        `Kadantha 30 naatkalil ₹${rev} virpanai nadandhulladhu. Vivarangalai dashboard-il paarungal!`
+      ),
+      action: { name: "show-earnings", value: "-" },
+    };
+  }
+
+  // Photo guidance
+  if (/(photo|tasveer|phoṭo|snapshot|camera|tasveerein|chabi)/.test(t)) {
+    return {
+      reply: say(
+        "अच्छी फोटो के नियम: खिड़की की प्राकृतिक रोशनी, साफ़ और सादा बैकग्राउंड, और फोन को सीधा रखें. फोटो का पाठ देखें!",
+        "उत्तम फोटोसाठी: खिडकीचा नैसर्गिक प्रकाश, स्वच्छ साधी पार्श्वभूमी आणि फोन स्थिर धरा. फोटो धडा नक्की पहा!",
+        "Good photo tips: use natural window light, a clean neutral background, and hold the phone steady. Open the lesson!",
+        "સારી ફોટો માટે: બારીનો કુદરતી પ્રકાશ, સાફ બેકગ્રાઉન્ડ અને ફોન સીધો રાખો. ફોટો લેસન જુઓ!",
+        "Nalla photo edukka: jannal iyarkai velicham, suthamana background matrum neraana phone. Paadam thiravum!"
+      ),
+      action: { name: "open-lesson", value: "photo-1" },
+    };
+  }
+
+  // Schemes & Loans
+  if (/(yojana|scheme|loan|karz|mudra|thittam|subsidy|grant|shg|bachat)/.test(t)) {
+    return {
+      reply: say(
+        "प्रधानमंत्री मुद्रा योजना और लखपति दीदी योजना आपके लिए बहुत मददगार हैं. केवल वही योजनाएं देखने के लिए नीचे मैच पर टैप करें!",
+        "पंतप्रधान मुद्रा योजना आणि लखपती दीदी योजना तुमच्यासाठी फायदेशीर आहेत. केवळ पात्र योजना पाहण्यासाठी खाली टॅप करा!",
+        "Pradhan Mantri MUDRA Yojana and Lakhpati Didi schemes are great options. Tap below to find the schemes you qualify for!",
+        "પ્રધાનમંત્રી મુદ્રા યોજના અને લખપતિ દીદી યોજના તમારા માટે ઉત્તમ છે. લાયક યોજનાઓ જોવા નીચે ટેપ કરો!",
+        "Pradhan Mantri MUDRA matrum Lakhpati Didi thittangal migavum nalladhu. Neengal thagudhiyaana thittangalai kaana keezhe thodavum!"
+      ),
+      action: { name: "open-scheme", value: "-" },
+    };
+  }
+
+  // Price & Margin
+  if (/(daam|kimmat|price|rate|bhaav|vilai|margin|profit|laagat|kharch)/.test(t)) {
+    return {
+      reply: say(
+        "दाम = कच्चा माल + पैकिंग + आपकी मेहनत + ३०–५०% मुनाफा. कभी भी सिर्फ़ सस्ता बेचने के लिए अपने हुनर की कीमत कम मत आंकिए!",
+        "किंमत = साहित्य खर्च + पॅकिंग + तुमचा वेळ + ३०–५०% नफा. केवळ स्वस्त विकण्याच्या नादात तुमच्या मेहनतीचे मूल्य कमी करू नका!",
+        "Price = ingredients + packaging + your time + 30–50% profit margin. Never underprice your hard work just to be cheap!",
+        "ભાવ = કાચો માલ + પેકિંગ + તમારી મહેનત + ૩૦–૫૦% નફો. ફક્ત સસ્તું વેચવા માટે તમારી મહેનતને ઓછી ન આંકશો!",
+        "Vilai = selavu + packing + ungal uzhaippu + 30-50% laabam. Migavum malivaaga virka vendam!"
+      ),
+      action: { name: "open-lesson", value: "pricing-1" },
+    };
+  }
+
+  // UPI & Payments
+  if (/(upi|payment|pay|online pay|scanner|qr|bank|khata)/.test(t)) {
+    return {
+      reply: say(
+        "UPI बहुत सुरक्षित और आसान है. हमारे अभ्यास पाठ में बिना किसी डर के डमी पैसों से सीखें ताकि आप भरोसे से पेमेंट ले सकें!",
+        "UPI सुरक्षित आणि सोपे आहे. आमच्या सराव पाठात डमी पैशांनी सराव करा, जेणेकरून आत्मविश्वासाने पेमेंट स्वीकारता येईल!",
+        "UPI is safe, instant, and reliable. Practice with demo coins in our interactive lesson so you can accept payments with total confidence!",
+        "UPI એકદમ સલામત અને સરળ છે. અમારા પ્રેક્ટિસ પાઠમાં ડમી પૈસાથી શીખો જેથી આત્મવિશ્વાસથી પેમેન્ટ સ્વીકારી શકો!",
+        "UPI migavum paadhukaappaanadhu matrum elidhaanadhu. Engal payirchi paadathil poli panathudan pazhagi thunivu pera!"
       ),
       action: { name: "open-lesson", value: "upi-1" },
     };
   }
+
+  // Packaging & Delivery
+  if (/(pack|packing|delivery|box|label|courier|dabba)/.test(t)) {
+    return {
+      reply: say(
+        "साफ़-सुथरे डिब्बे या पाउच का उपयोग करें और उस पर अपने ब्रांड और फोन नंबर का छोटा स्टिकर लगाएं. इससे ग्राहकों का भरोसा बढ़ता है!",
+        "स्वच्छ पाऊच किंवा बरणी वापरा आणि त्यावर तुमचे नाव व फोन नंबरचे छोटे लेबल लावा. यामुळे ग्राहकांचा विश्वास वाढतो!",
+        "Use clean pouches or airtight containers and add a small sticker with your brand name and phone number. Clean packaging builds repeat customers!",
+        "સાફ પાઉચ કે બરણી વાપરો અને તમારા બ્રાન્ડ તથા ફોન નંબરનું સ્ટીકર લગાવો. આનાથી ગ્રાહકોનો ભરોસો વધે છે!",
+        "Suthamana packaging matrum ungal peyar, phone number koodiya sticker otungall. Idhu vaadikkaiyaalargalai adhigarikkum!"
+      ),
+      action: { name: "start-create", value: "-" },
+    };
+  }
+
+  // Default empathetic fallback
   return {
     reply: say(
-      "Main Sakhi Didi hoon — daam, photo, UPI, yojana poocho. Pakka jawab dungi ya sahi jagah bhejungi.",
-      "Mi Sakhi Didi aahe — kimmat, photo, UPI, yojana vichara. Nakki uttar dein kiwa yogya thikani pathven.",
-      "I'm Sakhi Didi — ask about pricing, photos, UPI, schemes. I'll answer or point you right.",
-      "Hu Sakhi Didi chhu — bhaav, photo, UPI, yojana puchho. Pakko javaab aapish ke saachi jagyae moklish.",
-      "Naan Sakhi Didi — vilai, photo, UPI, thittangal kelu. Urudhiyaaga badhil solluven alladhu sariyaana idathukku anuppuven."
+      "मैं सखी दीदी हूँ! आप मुझसे सामान की सही कीमत, सुंदर फोटो, WhatsApp पर बिक्री या सरकारी योजनाओं के बारे में कुछ भी पूछ सकती हैं. आज मैं आपकी क्या सहायता करूँ?",
+      "मी सखी दीदी! उत्पादन किंमत, सुंदर फोटो, WhatsApp वर ऑर्डर मिळवणे किंवा सरकारी योजनांबद्दल मला विचारा. आज तुमच्या व्यवसायासाठी मी काय मदत करू?",
+      "I'm Sakhi Didi! Ask me about setting prices, product photography, WhatsApp orders, or government schemes. How can I support your business right now?",
+      "હું સખી દીદી છું! તમે મને ભાવ, ફોટા, WhatsApp ઓર્ડર કે સરકારી યોજનાઓ વિશે પૂછી શકો છો. આજે હું તમારી શું મદદ કરું?",
+      "Naan Sakhi Didi! Vilai nirnayam, photo, WhatsApp virpanai alladhu arasu thittangal patri ennidamidam kelungal. Indru naan enna udhavi seiyattum?"
     ),
   };
 }

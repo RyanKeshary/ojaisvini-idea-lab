@@ -22,36 +22,36 @@ function ruleInsights(args: {
   const mr = locale === "mr";
   const gu = locale === "gu";
   const money = `₹${revenue}`;
-  if (gu) {
+  if (locale === "mr") {
     return {
-      summary: `Chhella 30 divas: ${orderCount} order, ${money} kamaani.`,
-      s1: pending > 0 ? `${pending} order aagad vadhaarvana chhe — pehla ej pura karo.` : "Badha order time par — khub saras!",
-      s2: top ? `${top} sauthi vadhaare vechaay chhe — teno stock taiyaar raakho.` : "Pehla order maate WhatsApp par link share karo.",
-      s3: lowStock.length > 0 ? `${lowStock[0]} khutva aavyu — fari banaavo.` : lessonsDone < 3 ? "UPI lesson puro karo — payment saral thashe." : "Navo product jodo — dukaan taaji raakho.",
+      summary: `मागील ३० दिवसांत ${orderCount} ऑर्डर्स, ${money} कमाई.`,
+      s1: pending > 0 ? `${pending} ऑर्डर्स पुढे पाठवायचे आहेत — आधी ते पूर्ण करा.` : "सर्व ऑर्डर्स वेळेत पूर्ण — खूप छान!",
+      s2: top ? `${top} सर्वात जास्त विकले जात आहे — त्याचा साठा तयार ठेवा.` : "पहिल्या ऑर्डरसाठी WhatsApp वर लिंक शेअर करा.",
+      s3: lowStock.length > 0 ? `${lowStock[0]} संपत आले आहे — पुन्हा बनवा.` : lessonsDone < 3 ? "UPI धडा पूर्ण करा — पेमेंट सोपे होईल." : "नवीन उत्पादन जोडा — दुकान ताजे ठेवा.",
+    };
+  }
+  if (locale === "hi") {
+    return {
+      summary: `पिछले ३० दिनों में ${orderCount} ऑर्डर्स, ${money} कमाई.`,
+      s1: pending > 0 ? `${pending} ऑर्डर्स आगे बढ़ाने हैं — पहले वही पूरे करें.` : "सभी ऑर्डर्स समय पर — बहुत बढ़िया!",
+      s2: top ? `${top} सबसे ज्यादा बिकता है — उसका स्टॉक तैयार रखें.` : "पहले ऑर्डर के लिए WhatsApp पर लिंक शेयर करें.",
+      s3: lowStock.length > 0 ? `${lowStock[0]} खत्म हो रहा है — दोबारा बनाएं.` : lessonsDone < 3 ? "UPI पाठ पूरा करें — पेमेंट आसान होगा." : "नया उत्पाद जोड़ें — दुकान ताज़ा रखें.",
+    };
+  }
+  if (locale === "gu") {
+    return {
+      summary: `છેલ્લા ૩૦ દિવસ: ${orderCount} ઓર્ડર, ${money} કમાણી.`,
+      s1: pending > 0 ? `${pending} ઓર્ડર આગળ વધારવાના છે — પહેલા એ જ પૂરા કરો.` : "બધા ઓર્ડર સમયસર — ખૂબ સરસ!",
+      s2: top ? `${top} સૌથી વધુ વેચાય છે — તેનો સ્ટોક તૈયાર રાખો.` : "પહેલા ઓર્ડર માટે WhatsApp પર લિંક શેર કરો.",
+      s3: lowStock.length > 0 ? `${lowStock[0]} ખૂટવા આવ્યું — ફરી બનાવો.` : lessonsDone < 3 ? "UPI પાઠ પૂરો કરો — પેમેન્ટ સરળ થશે." : "નવો પ્રોડક્ટ ઉમેરો — દુકાન તાજી રાખો.",
     };
   }
   if (locale === "ta") {
     return {
-      summary: `Kadantha 30 naatkal: ${orderCount} order, ${money} varuvaai.`,
-      s1: pending > 0 ? `${pending} ordergalai nagarthavum — mudhalil avaiyai mudikavum.` : "Ella order-um nerathil — arumai!",
-      s2: top ? `${top} adhigam virkkiradhu — adhai stock-il vai.` : "Mudhal order-kkaaga WhatsApp-il link-ai share sei.",
-      s3: lowStock.length > 0 ? `${lowStock[0]} theerndhu varugiradhu — meendum sei.` : lessonsDone < 3 ? "UPI paadam mudikavum — payment elidhaagum." : "Pudhiya porul ser — kadaiyai fresh-aaga vai.",
-    };
-  }
-  if (mr) {
-    return {
-      summary: `Magil 30 divsat ${orderCount} order, ${money} kamai.`,
-      s1: pending > 0 ? `${pending} order pudhe nyayche aahet — aadhi tech purn kara.` : "Saglya order velat purn — khup chhan!",
-      s2: top ? `${top} sarvat jast viktay — tyacha stock tayyar theva.` : "Pahili order sathi WhatsApp var link share kara.",
-      s3: lowStock.length > 0 ? `${lowStock[0]} sampat aala aahe — punha banva.` : lessonsDone < 3 ? "UPI lesson purna kara — payment sopa hoil." : "Navin product joda — dukaan taja theva.",
-    };
-  }
-  if (hi) {
-    return {
-      summary: `Pichhle 30 din: ${orderCount} order, ${money} kamai.`,
-      s1: pending > 0 ? `${pending} order aage badhane hain — pehle wahi poora karo.` : "Saare order time par — bahut badhiya!",
-      s2: top ? `${top} sabse zyada bikta hai — uska stock ready rakho.` : "Pehle order ke liye WhatsApp par link share karo.",
-      s3: lowStock.length > 0 ? `${lowStock[0]} khatm ho raha — dobara banao.` : lessonsDone < 3 ? "UPI lesson poora karo — payment aasaan hoga." : "Naya product jodo — dukaan taaza rakho.",
+      summary: `கடந்த 30 நாட்கள்: ${orderCount} ஆர்டர்கள், ${money} வருவாய்.`,
+      s1: pending > 0 ? `${pending} ஆர்டர்களை நகர்த்தவும் — முதலில் அவற்றை முடிக்கவும்.` : "எல்லா ஆர்டர்களும் சரியான நேரத்தில் — அற்புதம்!",
+      s2: top ? `${top} அதிகம் விற்கிறது — அதை இருப்பு வைக்கவும்.` : "முதல் ஆர்டருக்காக WhatsApp-ல் லிங்க்கை பகிரவும்.",
+      s3: lowStock.length > 0 ? `${lowStock[0]} தீர்ந்து வருகிறது — மீண்டும் செய்யவும்.` : lessonsDone < 3 ? "UPI பாடம் முடிக்கவும் — கட்டணம் எளிதாகும்." : "புதிய பொருளைச் சேர்க்கவும் — கடையைப் புத்துணர்ச்சியாக வைக்கவும்.",
     };
   }
   return {

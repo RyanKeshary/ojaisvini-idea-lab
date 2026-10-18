@@ -1,6 +1,8 @@
 {
   "common": {
+    "appName": "Ojasvini",
     "tagline": "Speak. Snap. Sell.",
+    "taglineDesc": "Rural Women Micro-Enterprise Platform",
     "listen": "Listen",
     "back": "Back",
     "help": "Help",
@@ -342,7 +344,9 @@
       "price": "How do I price my pickle?",
       "photo": "How to take a good photo?",
       "upi": "How does UPI work?",
-      "scheme": "Which scheme can I get?"
+      "scheme": "Which scheme can I get?",
+      "order": "How to get my first order?",
+      "whatsapp": "How to sell on WhatsApp?"
     },
     "actions": {
       "open-lesson": "Open lesson",
@@ -351,7 +355,16 @@
       "show-earnings": "See earnings"
     }
   },
-  "home": { "insights": "This week for you" },
+  "home": {
+    "title": "Today",
+    "subtitle": "Your daily business dashboard",
+    "firstSale": "First sale in 3 steps",
+    "weekEarnings": "This week's earnings",
+    "insights": "This week for you",
+    "progressTitle": "Journey Progress",
+    "progressSub": "40% completed",
+    "listenIntro": "Today's business dashboard. First sale in 3 easy steps."
+  },
   "dashboard": {
     "title": "Dashboard",
     "revenue": "30-day revenue",

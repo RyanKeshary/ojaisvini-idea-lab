@@ -1,22 +1,24 @@
 {
   "common": {
-    "tagline": "Bolo. Photo paado. Vechn.",
-    "listen": "Sambhalo",
-    "back": "Paachhal",
-    "help": "Madad",
-    "tryAgain": "Fari prayatna karo",
-    "askOjas": "Ojas ne puchho",
-    "callSakhi": "Sakhi ne call karo",
-    "confirm": "Pakku karo",
-    "cancel": "Radd karo",
-    "save": "Save karo",
-    "next": "Aagad",
-    "skip": "Chhodo",
-    "yes": "Haa",
-    "no": "Naa",
-    "demoHint": "Demo mode: khara paisa nahin, khara SMS nahin."
+    "appName": "Ojasvini",
+    "tagline": "બોલો. ફોટો પાડો. વેચો.",
+    "taglineDesc": "ગ્રામીણ મહિલા સૂક્ષ્મ ઉદ્યોગ મંચ",
+    "listen": "સાંભળો",
+    "back": "પાછળ",
+    "help": "મદદ",
+    "tryAgain": "ફરી પ્રયત્ન કરો",
+    "askOjas": "ઓજસને પૂછો",
+    "callSakhi": "સખીને કૉલ કરો",
+    "confirm": "પાકું કરો",
+    "cancel": "રદ કરો",
+    "save": "સાચવો",
+    "next": "આગળ",
+    "skip": "છોડો",
+    "yes": "હા",
+    "no": "ના",
+    "demoHint": "ડેમો મોડ: ખરા પૈસા નથી, ખરો SMS નથી."
   },
-  "nav": { "home": "Ghar", "learn": "Sheekho", "create": "Navo saaman", "orders": "Order", "more": "Vadhare" },
+  "nav": { "home": "મુખ્યપૃષ્ઠ", "learn": "શીખો", "create": "નવું ઉત્પાદન", "orders": "ઑર્ડર્સ", "more": "વધુ" },
   "landing": {
     "title": "Ojasvini",
     "subtitle": "Tejasvi, sashakt mahila ghare betha veche.",
@@ -424,10 +426,12 @@
     "hint": "Bhaav, photo, UPI, yojana puchho — boline ke lakheene.",
     "ask": "Sakhi Didi ne puchho",
     "chips": {
-      "price": "Achaarno bhaav kevi rite laagu?",
-      "photo": "Saari photo kevi rite paadu?",
-      "upi": "UPI kevi rite kaam kare?",
-      "scheme": "Mane kai yojana malshe?"
+      "price": "અથાણાંની કિંમત કેવી રીતે નક્કી કરવી?",
+      "photo": "સારો ફોટો કેવી રીતે લેવો?",
+      "upi": "UPI કેવી રીતે કામ કરે છે?",
+      "scheme": "મને કઈ યોજના મળી શકે?",
+      "order": "પ્રથમ ઓર્ડર કેવી રીતે મેળવવો?",
+      "whatsapp": "વ્હોટ્સએપ પર કેવી રીતે વેચવું?"
     },
     "actions": {
       "open-lesson": "Lesson kholo",
@@ -436,7 +440,16 @@
       "show-earnings": "Kamaani juo"
     }
   },
-  "home": { "insights": "Aa athvaadiye tamaara maate" },
+  "home": {
+    "title": "આજ",
+    "subtitle": "તમારું દૈનિક વ્યવસાય ડેશબોર્ડ",
+    "firstSale": "૩ સરળ પગલાંમાં પ્રથમ વેચાણ",
+    "weekEarnings": "આ અઠવાડિયાની કમાણી",
+    "insights": "આ અઠવાડિયે તમારા માટે",
+    "progressTitle": "પ્રગતિ પ્રવાસ",
+    "progressSub": "૪૦% પૂર્ણ",
+    "listenIntro": "આજનું વ્યવસાય ડેશબોર્ડ. ૩ સરળ પગલાંમાં પ્રથમ વેચાણ."
+  },
   "dashboard": {
     "title": "Dashboard",
     "revenue": "30-divasni kamaani",

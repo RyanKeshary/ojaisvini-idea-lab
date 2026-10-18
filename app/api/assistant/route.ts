@@ -17,7 +17,7 @@ function aiBudget(): number {
 const bodySchema = z.object({
   message: z.string().trim().min(1).max(500),
   threadId: z.string().min(1).max(64).nullish(),
-  locale: z.enum(["hi", "mr", "en", "gu", "ta"]).default("hi"),
+  locale: z.enum(["hi", "mr", "en", "gu", "ta", "te", "kn", "bn"]).default("hi"),
 });
 
 function sse(data: unknown): string {

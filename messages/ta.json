@@ -1,6 +1,8 @@
 {
   "common": {
+    "appName": "Ojasvini",
     "tagline": "Pesu. Photo edu. Vil!",
+    "taglineDesc": "Gramiya pengal nun-thozhil medai",
     "listen": "Kelu",
     "back": "Pinnaal",
     "help": "Udhavi",
@@ -427,7 +429,9 @@
       "price": "Oorugaai vilai eppadi nirnayikka?",
       "photo": "Nalla photo eppadi edukka?",
       "upi": "UPI eppadi velai seiyum?",
-      "scheme": "Enakku endha thittam kidaikkum?"
+      "scheme": "Enakku endha thittam kidaikkum?",
+      "order": "Mudhal order eppadi peruvadhu?",
+      "whatsapp": "WhatsApp-il eppadi virpadhu?"
     },
     "actions": {
       "open-lesson": "Paadam thira",
@@ -436,7 +440,16 @@
       "show-earnings": "Varuvaai paar"
     }
   },
-  "home": { "insights": "Indha vaarathil unakkaaga" },
+  "home": {
+    "title": "Indru",
+    "subtitle": "Ungal dhina vyapaara dashboard",
+    "firstSale": "3 adigalil mudhal virpanai",
+    "weekEarnings": "Indha vaarathil varuvaai",
+    "insights": "Indha vaarathil unakkaaga",
+    "progressTitle": "Payana munnetram",
+    "progressSub": "40% mudindhadhu",
+    "listenIntro": "Indraiya vyapaara dashboard. 3 eliya adigalil mudhal virpanai."
+  },
   "dashboard": {
     "title": "Dashboard",
     "revenue": "30-naal varuvaai",

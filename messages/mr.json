@@ -1,22 +1,24 @@
 {
   "common": {
-    "tagline": "Bola. Photo kadha. Vika.",
-    "listen": "Aika",
-    "back": "Maghe",
-    "help": "Madat",
-    "tryAgain": "Parat prayatna kara",
-    "askOjas": "Ojas la vichara",
-    "callSakhi": "Sakhi la call kara",
-    "confirm": "Nakki kara",
-    "cancel": "Radda kara",
-    "save": "Save kara",
-    "next": "Pudhe",
-    "skip": "Soda",
-    "yes": "Ho",
-    "no": "Nahi",
-    "demoHint": "Demo mode: khare paise nahit, khara SMS nahit."
+    "appName": "Ojasvini",
+    "tagline": "बोला. फोटो काढा. विका.",
+    "taglineDesc": "ग्रामीण महिला सूक्ष्म उद्योग मंच",
+    "listen": "ऐका",
+    "back": "मागे",
+    "help": "मदत",
+    "tryAgain": "पुन्हा प्रयत्न करा",
+    "askOjas": "ओजसला विचारा",
+    "callSakhi": "सखीला कॉल करा",
+    "confirm": "नक्की करा",
+    "cancel": "रद्द करा",
+    "save": "जतन करा",
+    "next": "पुढे",
+    "skip": "सोडा",
+    "yes": "होय",
+    "no": "नाही",
+    "demoHint": "डेमो मोड: खरे पैसे नाहीत, खरा SMS नाही."
   },
-  "nav": { "home": "Ghar", "learn": "Shika", "create": "Navin samaan", "orders": "Order", "more": "Aankhi" },
+  "nav": { "home": "मुख्यपृष्ठ", "learn": "शिका", "create": "नवीन उत्पादन", "orders": "ऑर्डर्स", "more": "अधिक" },
   "landing": {
     "title": "Ojasvini",
     "subtitle": "Tejasvi, sashakt mahila ghar baslya vikate.",
@@ -335,23 +337,34 @@
     "schemesNote": "Scheme create/edit API: /api/admin/schemes."
   },
   "assistant": {
-    "title": "Sakhi Didi",
-    "hint": "Kimmat, photo, UPI, yojana vichara — bolun kiwa lihun.",
-    "ask": "Sakhi Didi la vichara",
+    "title": "सखी दीदी",
+    "hint": "किंमत, फोटो, UPI, योजनांबद्दल विचारा — बोलून किंवा टाईप करून.",
+    "ask": "सखी दीदीला विचारा...",
     "chips": {
-      "price": "Lonchachi kimmat kashi lavu?",
-      "photo": "Changli photo kashi kadhu?",
-      "upi": "UPI kasa chalato?",
-      "scheme": "Mala konti yojana milel?"
+      "price": "लोणच्याची किंमत कशी ठरवावी?",
+      "photo": "उत्पादनाचा चांगला फोटो कसा काढावा?",
+      "upi": "UPI पेमेंट कसे काम करते?",
+      "scheme": "मला कोणती सरकारी योजना मिळेल?",
+      "order": "पहिली ऑर्डर कशी मिळवावी?",
+      "whatsapp": "व्हॉट्सॲपवर विक्री कशी करावी?"
     },
     "actions": {
-      "open-lesson": "Lesson ughada",
-      "open-scheme": "Yojana paha",
-      "start-create": "Navin samaan",
-      "show-earnings": "Kamai paha"
+      "open-lesson": "धडा उघडा",
+      "open-scheme": "योजना पहा",
+      "start-create": "नवीन उत्पादन",
+      "show-earnings": "कमाई पहा"
     }
   },
-  "home": { "insights": "Ha aathvdyat tumchyasathi" },
+  "home": {
+    "title": "आज",
+    "subtitle": "तुमचा दैनिक व्यवसाय डॅशबोर्ड",
+    "firstSale": "३ सोप्या चरणांत पहिली विक्री",
+    "weekEarnings": "या आठवड्यातील कमाई",
+    "insights": "या आठवड्यात तुमच्यासाठी",
+    "progressTitle": "प्रगती प्रवास",
+    "progressSub": "४०% पूर्ण",
+    "listenIntro": "आजचा व्यवसाय डॅशबोर्ड. ३ सोप्या चरणांत पहिली विक्री."
+  },
   "dashboard": {
     "title": "Dashboard",
     "revenue": "30-divsanchi kamai",
