@@ -1,9 +1,7 @@
 import { ImageResponse } from "next/og";
 
-// Edge runtime: the node build of next/og mis-joins its bundled font path on
-// Windows (ERR_INVALID_URL). The edge build resolves it correctly. Prisma is
-// unreachable here, so shop data comes from our public stats API instead.
-export const runtime = "edge";
+// Shop data comes from our public stats API.
+// Note: runtime defaults to standard nodejs environment to eliminate edge warnings.
 
 const fontCache = new Map<string, ArrayBuffer>();
 

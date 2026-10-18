@@ -36,7 +36,7 @@
     "idb": "^8.0.3",
     "lottie-react": "^2.4.0",
     "lucide-react": "^1.48.0",
-    "next": "15.1.6",
+    "next": "^15.1.12",
     "next-auth": "^5.0.0-beta.29",
     "next-intl": "^3.26.3",
     "prisma": "^6.19.3",

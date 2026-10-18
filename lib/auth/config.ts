@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { authConfig } from "./auth.config";
 
 declare module "next-auth" {
   interface User {
@@ -33,9 +34,7 @@ declare module "@auth/core/jwt" {
  * precise errors, no double-verification.
  */
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  trustHost: true,
-  session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
-  pages: { signIn: "/auth/login", error: "/auth/login" },
+  ...authConfig,
   providers: [
     Credentials({
       id: "credentials",
@@ -59,22 +58,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.uid = user.id;
-        token.phone = user.phone;
-        token.role = user.role;
-        if (user.name !== undefined) token.name = user.name;
-        if (user.email !== undefined) token.email = user.email;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      session.user.id = String(token.uid ?? token.sub ?? "");
-      session.user.phone = token.phone;
-      session.user.role = token.role ?? "WOMAN";
-      return session;
-    },
-  },
 });
