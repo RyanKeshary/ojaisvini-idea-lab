@@ -56,14 +56,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale: Locale = (locales as readonly string[]).includes(rawLocale ?? "")
     ? (rawLocale as Locale)
     : "mr";
-  const theme = jar.get("ojas_theme")?.value === "dark" ? "dark" : "light";
   const motion = jar.get("ojas_motion")?.value === "reduced" ? "reduced" : "full";
 
   return (
     <html
       lang={locale}
       data-locale={locale}
-      data-theme={theme}
+      data-theme="light"
       data-motion={motion}
       className={`${display.variable} ${sans.variable} ${devaDisplay.variable} ${gu.variable} ${bn.variable} ${ta.variable} ${te.variable} ${kn.variable}`}
     >

@@ -89,14 +89,14 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   }, [router]);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.theme = "light";
     document.documentElement.dataset.motion = reduceMotion ? "reduced" : "full";
     // Keep <html lang> and per-script font stacks in sync with her language.
     document.documentElement.lang = locale;
     document.documentElement.dataset.locale = locale;
     document.documentElement.dataset.saver = dataSaver ? "1" : "0";
     registerSW();
-  }, [theme, reduceMotion, locale, dataSaver]);
+  }, [reduceMotion, locale, dataSaver]);
 
   return (
     <QueryClientProvider client={qc}>
