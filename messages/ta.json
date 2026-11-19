@@ -18,7 +18,14 @@
     "no": "Illai",
     "demoHint": "Demo mode: nijamana panam illai, nijamana SMS illai."
   },
-  "nav": { "home": "Veedu", "learn": "Katra", "create": "Pudhiya porul", "orders": "Order", "more": "Melun" },
+  "nav": {
+    "home": "Veedu",
+    "learn": "Katra",
+    "create": "Pudhiya porul",
+    "orders": "Order",
+    "more": "Melun",
+    "profile": "சுயவிவரம்"
+  },
   "landing": {
     "title": "Ojasvini",
     "subtitle": "Minnum, sakthiyullaa pen veetilirundhe virkkiraal.",
@@ -35,64 +42,174 @@
     "illustrative": "Field experience-il irundhu illustrative figures.",
     "howTitle": "Eppadi seyalpadugiradhu",
     "steps": [
-      { "t": "Pesu", "d": "Porulin peyarai sollu. Ezhudha vendam." },
-      { "t": "Photo edu", "d": "Photo edu. Naanga listing ezhudhugirom." },
-      { "t": "Vil", "d": "Kadai link-ai share sei. Mudhal order vaangu." }
+      {
+        "t": "Pesu",
+        "d": "Porulin peyarai sollu. Ezhudha vendam."
+      },
+      {
+        "t": "Photo edu",
+        "d": "Photo edu. Naanga listing ezhudhugirom."
+      },
+      {
+        "t": "Vil",
+        "d": "Kadai link-ai share sei. Mudhal order vaangu."
+      }
     ],
     "journeyTitle": "Aval payanam",
     "journey": [
-      { "t": "Discover", "d": "Avala mozhiyl voice onboarding." },
-      { "t": "Katra", "d": "2-nimida paadam: UPI, photo, vilai." },
-      { "t": "Uruvaakku", "d": "Pesu, photo edu, AI listing." },
-      { "t": "Vil", "d": "Neradi kadai, demo payment, order." },
-      { "t": "Valaru", "d": "Varuvaai, thittangal, samudhaayam." }
+      {
+        "t": "Discover",
+        "d": "Avala mozhiyl voice onboarding."
+      },
+      {
+        "t": "Katra",
+        "d": "2-nimida paadam: UPI, photo, vilai."
+      },
+      {
+        "t": "Uruvaakku",
+        "d": "Pesu, photo edu, AI listing."
+      },
+      {
+        "t": "Vil",
+        "d": "Neradi kadai, demo payment, order."
+      },
+      {
+        "t": "Valaru",
+        "d": "Varuvaai, thittangal, samudhaayam."
+      }
     ],
     "featuresTitle": "Ellaame orey idathil",
     "features": [
-      { "t": "Digital skills", "d": "Practice simulator-udan chinna paadangal." },
-      { "t": "Voice assistant", "d": "Ovvoru thiraiyilum thodu, pesu, mudindhadhu." },
-      { "t": "Seller dashboard", "d": "Varuvaai, order, payout — ketukkonga." },
-      { "t": "AI chatbot", "d": "Sakhi Didi business kelvigalukku badhil." },
-      { "t": "Photo-to-listing", "d": "Oru photo muzhhu listing aagividum." },
-      { "t": "Scheme finder", "d": "Avala kidaikkakkudiya thittangal mattum." },
-      { "t": "Community", "d": "Sakhi mentors-udan women-only forum." }
+      {
+        "t": "Digital skills",
+        "d": "Practice simulator-udan chinna paadangal."
+      },
+      {
+        "t": "Voice assistant",
+        "d": "Ovvoru thiraiyilum thodu, pesu, mudindhadhu."
+      },
+      {
+        "t": "Seller dashboard",
+        "d": "Varuvaai, order, payout — ketukkonga."
+      },
+      {
+        "t": "AI chatbot",
+        "d": "Sakhi Didi business kelvigalukku badhil."
+      },
+      {
+        "t": "Photo-to-listing",
+        "d": "Oru photo muzhhu listing aagividum."
+      },
+      {
+        "t": "Scheme finder",
+        "d": "Avala kidaikkakkudiya thittangal mattum."
+      },
+      {
+        "t": "Community",
+        "d": "Sakhi mentors-udan women-only forum."
+      }
     ],
     "whyTitle": "Ojasvini yen veraaga irukkiradhu",
-    "whyCols": ["Ojasvini", "E-commerce apps", "Training portals"],
+    "whyCols": [
+      "Ojasvini",
+      "E-commerce apps",
+      "Training portals"
+    ],
     "why": {
       "rows": [
-        ["Voice-first, padikka vendam", "Padippu + English ketkiradhu", "Theory video, payirchi illai"],
-        ["Photo-ilirundhu neradi kadai", "Manual catalog setup", "Virkave illai"],
-        ["Offline velai seiyum, low-data", "Eppodhum online", "Nagaram, kanagamana video"],
-        ["Katra + vil + thittangal", "Virkka mattum", "Karka mattum"]
+        [
+          "Voice-first, padikka vendam",
+          "Padippu + English ketkiradhu",
+          "Theory video, payirchi illai"
+        ],
+        [
+          "Photo-ilirundhu neradi kadai",
+          "Manual catalog setup",
+          "Virkave illai"
+        ],
+        [
+          "Offline velai seiyum, low-data",
+          "Eppodhum online",
+          "Nagaram, kanagamana video"
+        ],
+        [
+          "Katra + vil + thittangal",
+          "Virkka mattum",
+          "Karka mattum"
+        ]
       ]
     },
     "storyTitle": "Sunita-vai paar: day 1-il irundhu day 30",
     "story": [
-      { "d": "Day 1", "t": "Voice-aal register, Tamil therndheduthaal." },
-      { "d": "Day 3", "t": "Safe simulator-il UPI katraal." },
-      { "d": "Day 7", "t": "Oorugaai photo, kadai publish." },
-      { "d": "Day 15", "t": "Mudhal demo order sathathudan." },
-      { "d": "Day 30", "t": "Varuvaai paarthaal, MUDRA loan kidaithadhu." }
+      {
+        "d": "Day 1",
+        "t": "Voice-aal register, Tamil therndheduthaal."
+      },
+      {
+        "d": "Day 3",
+        "t": "Safe simulator-il UPI katraal."
+      },
+      {
+        "d": "Day 7",
+        "t": "Oorugaai photo, kadai publish."
+      },
+      {
+        "d": "Day 15",
+        "t": "Mudhal demo order sathathudan."
+      },
+      {
+        "d": "Day 30",
+        "t": "Varuvaai paarthaal, MUDRA loan kidaithadhu."
+      }
     ],
     "stats": [
-      { "v": "9/10", "d": "Virpanaigal mozhi online pova thadukkiradhu enkiraargal." },
-      { "v": "1 phone", "d": "Adhigam kudumbathudan pagirndhu." },
-      { "v": "0", "d": "Gramaathil avalukkena digital payirchi." }
+      {
+        "v": "9/10",
+        "d": "Virpanaigal mozhi online pova thadukkiradhu enkiraargal."
+      },
+      {
+        "v": "1 phone",
+        "d": "Adhigam kudumbathudan pagirndhu."
+      },
+      {
+        "v": "0",
+        "d": "Gramaathil avalukkena digital payirchi."
+      }
     ],
     "impactTitle": "Rural Maharashtra-kaaga, India muzhuvadhukkum taiyaar",
     "impactLine": "Quality education (SDG 4) ullaat mozhi micro-lessons moolam; innovation (SDG 9) offline-first commerce moolam.",
     "demoTitle": "Neradi demo try sei",
+    "selfDemoTitle": "ஸ்க்ரோல் செய்து விற்பனை செய்யுங்கள்",
+    "beat1": "பொருள் பட்டியலிடப்பட்டது",
+    "beat2": "உங்கள் கடையில் நேரலை",
+    "beat3": "ஆர்டர் பணம் வந்தது",
     "demoOtpNote": "Demo login: endha phone-um, OTP 123456. Engum nijamana panam illai.",
     "demoLogin": "Demo login try sei",
     "sampleShop": "Maadhiri kadai paar",
     "faq": [
-      { "q": "Unmaiyileye ilavasamaa?", "a": "Aamaam. Karka, listing, virka ilavasam. Demo payment-il nijamana panam illai." },
-      { "q": "Enakku padikka theriyaadhu. Payanpaduthalama?", "a": "Aamaam — adhu dhaan vishayam. Ovvoru thiraiyum voice + icon-aal velai seiyum." },
-      { "q": "Veetil internet illai?", "a": "Velai phone-il save aagum, network vandhadhum sync aagum." },
-      { "q": "Panam eppadi kidaikkum?", "a": "Vaangubavar un UPI-kku pay seivaar. Mudhalil safe simulator-il practice sei." }
+      {
+        "q": "Unmaiyileye ilavasamaa?",
+        "a": "Aamaam. Karka, listing, virka ilavasam. Demo payment-il nijamana panam illai."
+      },
+      {
+        "q": "Enakku padikka theriyaadhu. Payanpaduthalama?",
+        "a": "Aamaam — adhu dhaan vishayam. Ovvoru thiraiyum voice + icon-aal velai seiyum."
+      },
+      {
+        "q": "Veetil internet illai?",
+        "a": "Velai phone-il save aagum, network vandhadhum sync aagum."
+      },
+      {
+        "q": "Panam eppadi kidaikkum?",
+        "a": "Vaangubavar un UPI-kku pay seivaar. Mudhalil safe simulator-il practice sei."
+      }
     ],
-    "footer": "Maharashtra-vil mariyaadhaiyudan uruvaakkiyadhu."
+    "footer": "Maharashtra-vil mariyaadhaiyudan uruvaakkiyadhu.",
+    "heroSub": "ஒரு புகைப்படமும் உங்கள் குரலும் உங்கள் கடையாக மாறும். உங்கள் இணைப்பில் விற்று, UPIயில் பணம் பெறுங்கள். இலவசம், ஆஃப்லைன், உங்கள் மொழியில்.",
+    "filmTitle": "ஓஜஸ்வினியைப் பயன்படுத்துவதைப் பாருங்கள்",
+    "filmDesc": "இயங்கும் செயலி: அது என்ன செய்கிறது, யாருக்கானது.",
+    "demoDesc": "தொடர்ந்து ஸ்க்ரோல் செய்யுங்கள். செயலி ஒரு பொருளைப் பட்டியலிட்டு, ஆர்டரைக் கொண்டு வருகிறது, ஒவ்வொரு படியாக.",
+    "closeLine": "உங்கள் முதல் ஆர்டர் ஒரு புகைப்படத்தை விட அருகில்."
   },
   "auth": {
     "login": "Login sei",
@@ -316,7 +433,12 @@
     "waPrice": "Vilai",
     "waAdd": "Porul ser",
     "photoSim": "Light checklist",
-    "photoTips": ["Porul mela jannal velichcham", "Flash vendam", "Suthamana background", "Phone neraaga"]
+    "photoTips": [
+      "Porul mela jannal velichcham",
+      "Flash vendam",
+      "Suthamana background",
+      "Phone neraaga"
+    ]
   },
   "schemes": {
     "title": "Unakkaana thittangal",
@@ -330,8 +452,20 @@
     "qShg": "Self-help group (SHG)-ilaa?",
     "optShgYes": "Aamaam, member",
     "optShgNo": "Innum illai",
-    "incomeBands": ["₹1L-keezh", "₹1–3L", "₹3L-kku mel", "Skip"],
-    "businesses": ["Food", "Tailoring", "Handicraft", "Farm", "Service", "Vendor"],
+    "incomeBands": [
+      "₹1L-keezh",
+      "₹1–3L",
+      "₹3L-kku mel",
+      "Skip"
+    ],
+    "businesses": [
+      "Food",
+      "Tailoring",
+      "Handicraft",
+      "Farm",
+      "Service",
+      "Vendor"
+    ],
     "eligible": "Idhai nee peralaam",
     "maybe": "Irukkalaam — paar",
     "notEligible": "Unakkillai",
@@ -348,7 +482,16 @@
     "verifiedOn": "Checked",
     "applyHere": "Official site",
     "savedTitle": "Saved thittangal",
-    "filters": ["Ellaam", "Loan", "Subsidy", "Training", "Insurance", "Market", "Savings", "Account"],
+    "filters": [
+      "Ellaam",
+      "Loan",
+      "Subsidy",
+      "Training",
+      "Insurance",
+      "Market",
+      "Savings",
+      "Account"
+    ],
     "reasons": {
       "state": "{want} mattum",
       "gender": "Veru applicant vendum",
@@ -366,7 +509,16 @@
   "community": {
     "title": "Community",
     "subtitle": "Pengal mattum. Kelu, pagirndhu, kondadu.",
-    "rooms": ["Ellaam", "Food", "Handicraft", "Tailoring", "Dairy", "Panam", "Tech udhavi", "Vetri"],
+    "rooms": [
+      "Ellaam",
+      "Food",
+      "Handicraft",
+      "Tailoring",
+      "Dairy",
+      "Panam",
+      "Tech udhavi",
+      "Vetri"
+    ],
     "latest": "Pudhiyavai",
     "popular": "Popular",
     "ask": "Kelu / Pagirndhu",
@@ -405,12 +557,30 @@
     "checkin": "Check-in note sei",
     "notesHint": "Notes (enna pesineergal?)",
     "logBtn": "Note save sei",
-    "types": { "visit": "Visit", "call": "Call", "training": "Training", "followup": "Follow-up", "problem": "Problem" },
-    "stuck": { "no-products": "Innum porul illai", "no-orders": "Innum order illai", "few-lessons": "Paadangal vendum" }
+    "types": {
+      "visit": "Visit",
+      "call": "Call",
+      "training": "Training",
+      "followup": "Follow-up",
+      "problem": "Problem"
+    },
+    "stuck": {
+      "no-products": "Innum porul illai",
+      "no-orders": "Innum order illai",
+      "few-lessons": "Paadangal vendum"
+    }
   },
   "admin": {
     "title": "Admin",
-    "tabs": { "overview": "Overview", "users": "Users", "products": "Products", "reports": "Reports", "ai": "AI usage", "flags": "Flags", "schemes": "Schemes" },
+    "tabs": {
+      "overview": "Overview",
+      "users": "Users",
+      "products": "Products",
+      "reports": "Reports",
+      "ai": "AI usage",
+      "flags": "Flags",
+      "schemes": "Schemes"
+    },
     "search": "Phone alladhu peyar thedu",
     "pause": "Niruthu",
     "restore": "Meettu",

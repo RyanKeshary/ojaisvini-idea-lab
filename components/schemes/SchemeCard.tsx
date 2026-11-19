@@ -86,7 +86,7 @@ export function SchemeCard({ item, saved, onSave }: { item: SchemeListItem; save
       )}
       <div className="mt-3 flex flex-wrap gap-2">
         {!points ? (
-          <button type="button" onClick={explain} disabled={explaining} className="min-h-[48px] rounded-full bg-[var(--indigo)] px-4 text-sm font-bold text-white disabled:opacity-60">
+          <button type="button" onClick={explain} disabled={explaining} className="min-h-[48px] rounded-full bg-[var(--indigo)] px-4 text-sm font-bold text-[var(--primary-ink)] disabled:opacity-60">
             {t("explain")}
           </button>
         ) : (

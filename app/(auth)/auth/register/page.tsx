@@ -128,13 +128,16 @@ export default function RegisterPage() {
     }
     setBusy(true);
     try {
-      const r = await updateMyName(finalName.trim());
-      if (!r.ok) {
-        setError(te((r.error ?? "somethingWrong") as "somethingWrong"));
+      const cleanPhone = normalizePhone(phone);
+      const r = await updateMyName(finalName.trim(), cleanPhone).catch(() => ({ ok: false, error: "somethingWrong" }));
+      if (!r || !r.ok) {
+        setError(te(normalizeAuthError(r?.error ?? "somethingWrong") as any));
         return;
       }
       setName(finalName.trim());
       setStep(3);
+    } catch {
+      setError(te("somethingWrong"));
     } finally {
       setBusy(false);
     }
@@ -154,12 +157,15 @@ export default function RegisterPage() {
     }
     setBusy(true);
     try {
-      const r = await setMyPin(pin);
-      if (!r.ok) {
-        setError(te("somethingWrong"));
+      const cleanPhone = normalizePhone(phone);
+      const r = await setMyPin(pin, cleanPhone).catch(() => ({ ok: false, error: "somethingWrong" }));
+      if (!r || !r.ok) {
+        setError(te(normalizeAuthError(r?.error ?? "somethingWrong") as any));
         return;
       }
       setStep(4);
+    } catch {
+      setError(te("somethingWrong"));
     } finally {
       setBusy(false);
     }

@@ -18,7 +18,14 @@
     "no": "No",
     "demoHint": "Demo mode: no real money, no real SMS."
   },
-  "nav": { "home": "Home", "learn": "Learn", "create": "New product", "orders": "Orders", "more": "More" },
+  "nav": {
+    "home": "Home",
+    "learn": "Learn",
+    "create": "New product",
+    "orders": "Orders",
+    "more": "More",
+    "profile": "Profile"
+  },
   "landing": {
     "title": "Ojasvini",
     "subtitle": "A radiant, powerful woman sells from home.",
@@ -35,64 +42,174 @@
     "illustrative": "Illustrative figures from field experience.",
     "howTitle": "How it works",
     "steps": [
-      { "t": "Speak", "d": "Say the product name. No typing needed." },
-      { "t": "Snap", "d": "Take a photo. We write the listing." },
-      { "t": "Sell", "d": "Share your shop link. Get your first order." }
+      {
+        "t": "Speak",
+        "d": "Say the product name. No typing needed."
+      },
+      {
+        "t": "Snap",
+        "d": "Take a photo. We write the listing."
+      },
+      {
+        "t": "Sell",
+        "d": "Share your shop link. Get your first order."
+      }
     ],
     "journeyTitle": "Her journey",
     "journey": [
-      { "t": "Discover", "d": "Voice onboarding in her language." },
-      { "t": "Learn", "d": "2-minute lessons: UPI, photos, pricing." },
-      { "t": "Create", "d": "Speak, snap, AI listing." },
-      { "t": "Sell", "d": "Live shop, demo payments, orders." },
-      { "t": "Grow", "d": "Earnings, schemes, community." }
+      {
+        "t": "Discover",
+        "d": "Voice onboarding in her language."
+      },
+      {
+        "t": "Learn",
+        "d": "2-minute lessons: UPI, photos, pricing."
+      },
+      {
+        "t": "Create",
+        "d": "Speak, snap, AI listing."
+      },
+      {
+        "t": "Sell",
+        "d": "Live shop, demo payments, orders."
+      },
+      {
+        "t": "Grow",
+        "d": "Earnings, schemes, community."
+      }
     ],
     "featuresTitle": "Everything in one place",
     "features": [
-      { "t": "Digital skills", "d": "Bite-size lessons with practice simulators." },
-      { "t": "Voice assistant", "d": "Tap, speak, done — on every screen." },
-      { "t": "Seller dashboard", "d": "Earnings, orders and payouts, read aloud." },
-      { "t": "AI chatbot", "d": "Sakhi Didi answers business questions." },
-      { "t": "Photo-to-listing", "d": "One photo becomes a full shop listing." },
-      { "t": "Scheme finder", "d": "Only the schemes she qualifies for." },
-      { "t": "Community", "d": "Women-only forum with Sakhi mentors." }
+      {
+        "t": "Digital skills",
+        "d": "Bite-size lessons with practice simulators."
+      },
+      {
+        "t": "Voice assistant",
+        "d": "Tap, speak, done — on every screen."
+      },
+      {
+        "t": "Seller dashboard",
+        "d": "Earnings, orders and payouts, read aloud."
+      },
+      {
+        "t": "AI chatbot",
+        "d": "Sakhi Didi answers business questions."
+      },
+      {
+        "t": "Photo-to-listing",
+        "d": "One photo becomes a full shop listing."
+      },
+      {
+        "t": "Scheme finder",
+        "d": "Only the schemes she qualifies for."
+      },
+      {
+        "t": "Community",
+        "d": "Women-only forum with Sakhi mentors."
+      }
     ],
     "whyTitle": "Why Ojasvini is different",
-    "whyCols": ["Ojasvini", "E-commerce apps", "Training portals"],
+    "whyCols": [
+      "Ojasvini",
+      "E-commerce apps",
+      "Training portals"
+    ],
     "why": {
       "rows": [
-        ["Voice-first, no reading needed", "Assumes literacy, English-first", "Theory videos, no practice"],
-        ["Photo becomes a live shop", "Manual catalog setup", "No selling at all"],
-        ["Works offline, low-data", "Always online", "City-based, heavy video"],
-        ["Learning + selling + schemes", "Selling only", "Learning only"]
+        [
+          "Voice-first, no reading needed",
+          "Assumes literacy, English-first",
+          "Theory videos, no practice"
+        ],
+        [
+          "Photo becomes a live shop",
+          "Manual catalog setup",
+          "No selling at all"
+        ],
+        [
+          "Works offline, low-data",
+          "Always online",
+          "City-based, heavy video"
+        ],
+        [
+          "Learning + selling + schemes",
+          "Selling only",
+          "Learning only"
+        ]
       ]
     },
     "storyTitle": "Meet Sunita: day 1 to day 30",
     "story": [
-      { "d": "Day 1", "t": "Registers by voice, picks Marathi." },
-      { "d": "Day 3", "t": "Learns UPI on the safe simulator." },
-      { "d": "Day 7", "t": "Snaps pickle photos, publishes her shop." },
-      { "d": "Day 15", "t": "First demo order arrives with sound." },
-      { "d": "Day 30", "t": "Checks earnings, finds a MUDRA loan." }
+      {
+        "d": "Day 1",
+        "t": "Registers by voice, picks Marathi."
+      },
+      {
+        "d": "Day 3",
+        "t": "Learns UPI on the safe simulator."
+      },
+      {
+        "d": "Day 7",
+        "t": "Snaps pickle photos, publishes her shop."
+      },
+      {
+        "d": "Day 15",
+        "t": "First demo order arrives with sound."
+      },
+      {
+        "d": "Day 30",
+        "t": "Checks earnings, finds a MUDRA loan."
+      }
     ],
     "stats": [
-      { "v": "9/10", "d": "Sellers say language stops them from going online." },
-      { "v": "1 phone", "d": "Often shared with the whole family." },
-      { "v": "0", "d": "Tailored digital training available in her village." }
+      {
+        "v": "9/10",
+        "d": "Sellers say language stops them from going online."
+      },
+      {
+        "v": "1 phone",
+        "d": "Often shared with the whole family."
+      },
+      {
+        "v": "0",
+        "d": "Tailored digital training available in her village."
+      }
     ],
     "impactTitle": "Built for rural Maharashtra, ready for India",
     "impactLine": "Quality education (SDG 4) through vernacular micro-lessons; innovation and infrastructure (SDG 9) through offline-first commerce.",
     "demoTitle": "Try the live demo",
+    "selfDemoTitle": "Scroll to make a sale",
+    "beat1": "Product listed",
+    "beat2": "Live on your shop",
+    "beat3": "Order paid to you",
     "demoOtpNote": "Demo login: any phone number, OTP 123456. No real money anywhere.",
     "demoLogin": "Try demo login",
     "sampleShop": "See a sample shop",
     "faq": [
-      { "q": "Is it really free?", "a": "Yes. Learning, listing and selling cost nothing. Demo payments move no real money." },
-      { "q": "I cannot read. Can I use it?", "a": "Yes — that is the point. Every screen works by voice and icons, with audio in your language." },
-      { "q": "No internet at home?", "a": "Work saves on your phone and syncs when the network returns." },
-      { "q": "How do I get money?", "a": "Buyers pay to your UPI; payouts settle to your account. Practice first on the safe simulator." }
+      {
+        "q": "Is it really free?",
+        "a": "Yes. Learning, listing and selling cost nothing. Demo payments move no real money."
+      },
+      {
+        "q": "I cannot read. Can I use it?",
+        "a": "Yes — that is the point. Every screen works by voice and icons, with audio in your language."
+      },
+      {
+        "q": "No internet at home?",
+        "a": "Work saves on your phone and syncs when the network returns."
+      },
+      {
+        "q": "How do I get money?",
+        "a": "Buyers pay to your UPI; payouts settle to your account. Practice first on the safe simulator."
+      }
     ],
-    "footer": "Made with respect in Maharashtra."
+    "footer": "Made with respect in Maharashtra.",
+    "heroSub": "Turn a photo and your voice into a live shop. Sell from your own link, get paid by UPI. Free, offline, in your language.",
+    "filmTitle": "See Ojasvini in use",
+    "filmDesc": "The product in motion: what it does and who it is for.",
+    "demoDesc": "Keep scrolling. The app lists a product and lands an order, one step at a time.",
+    "closeLine": "Your first order is one photo away."
   },
   "auth": {
     "login": "Log in",
@@ -281,7 +398,16 @@
   "community": {
     "title": "Community",
     "subtitle": "Women only. Ask, share, celebrate.",
-    "rooms": ["All", "Food", "Handicraft", "Tailoring", "Dairy", "Money", "Tech help", "Wins"],
+    "rooms": [
+      "All",
+      "Food",
+      "Handicraft",
+      "Tailoring",
+      "Dairy",
+      "Money",
+      "Tech help",
+      "Wins"
+    ],
     "latest": "Latest",
     "popular": "Popular",
     "ask": "Ask / Share",
@@ -320,12 +446,30 @@
     "checkin": "Log a check-in",
     "notesHint": "Notes (what did you discuss?)",
     "logBtn": "Save note",
-    "types": { "visit": "Visit", "call": "Call", "training": "Training", "followup": "Follow-up", "problem": "Problem" },
-    "stuck": { "no-products": "No products yet", "no-orders": "No orders yet", "few-lessons": "Needs lessons" }
+    "types": {
+      "visit": "Visit",
+      "call": "Call",
+      "training": "Training",
+      "followup": "Follow-up",
+      "problem": "Problem"
+    },
+    "stuck": {
+      "no-products": "No products yet",
+      "no-orders": "No orders yet",
+      "few-lessons": "Needs lessons"
+    }
   },
   "admin": {
     "title": "Admin",
-    "tabs": { "overview": "Overview", "users": "Users", "products": "Products", "reports": "Reports", "ai": "AI usage", "flags": "Flags", "schemes": "Schemes" },
+    "tabs": {
+      "overview": "Overview",
+      "users": "Users",
+      "products": "Products",
+      "reports": "Reports",
+      "ai": "AI usage",
+      "flags": "Flags",
+      "schemes": "Schemes"
+    },
     "search": "Search phone or name",
     "pause": "Pause",
     "restore": "Restore",
@@ -439,7 +583,12 @@
     "waPrice": "Price",
     "waAdd": "Add item",
     "photoSim": "Light checklist",
-    "photoTips": ["Window light on the product", "No flash", "Clean background", "Phone held straight"]
+    "photoTips": [
+      "Window light on the product",
+      "No flash",
+      "Clean background",
+      "Phone held straight"
+    ]
   },
   "schemes": {
     "title": "Schemes for you",
@@ -453,8 +602,20 @@
     "qShg": "In a self-help group (SHG)?",
     "optShgYes": "Yes, member",
     "optShgNo": "Not yet",
-    "incomeBands": ["Under ₹1L", "₹1–3L", "Above ₹3L", "Skip"],
-    "businesses": ["Food", "Tailoring", "Handicraft", "Farm", "Service", "Vendor"],
+    "incomeBands": [
+      "Under ₹1L",
+      "₹1–3L",
+      "Above ₹3L",
+      "Skip"
+    ],
+    "businesses": [
+      "Food",
+      "Tailoring",
+      "Handicraft",
+      "Farm",
+      "Service",
+      "Vendor"
+    ],
     "eligible": "You can get this",
     "maybe": "Maybe — check",
     "notEligible": "Not for you",
@@ -471,7 +632,16 @@
     "verifiedOn": "Checked",
     "applyHere": "Official site",
     "savedTitle": "Saved schemes",
-    "filters": ["All", "Loan", "Subsidy", "Training", "Insurance", "Market", "Savings", "Account"],
+    "filters": [
+      "All",
+      "Loan",
+      "Subsidy",
+      "Training",
+      "Insurance",
+      "Market",
+      "Savings",
+      "Account"
+    ],
     "reasons": {
       "state": "Only for {want}",
       "gender": "Different applicant needed",

@@ -28,7 +28,7 @@ export function PhotoCoach({ onDone }: { onDone?: () => void }) {
               className="flex min-h-[56px] w-full items-center gap-3 rounded-[12px] border-2 px-3 text-left text-base"
               style={{ borderColor: done[i] ? "var(--leaf)" : "var(--border)", background: done[i] ? "var(--clay-soft)" : "transparent" }}
             >
-              <span aria-hidden className="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2" style={{ borderColor: done[i] ? "var(--leaf)" : "var(--border)", background: done[i] ? "var(--leaf)" : "transparent", color: "#fff" }}>
+              <span aria-hidden className="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2" style={{ borderColor: done[i] ? "var(--leaf)" : "var(--border)", background: done[i] ? "var(--leaf)" : "transparent", color: "var(--primary-ink)" }}>
                 {done[i] ? <Check size={16} /> : null}
               </span>
               {tip}

@@ -1,0 +1,11 @@
+/* The scroll-craft engine stylesheet, placed in Tailwind's base layer.
+   scrollcraft.css is written for a standalone document: it ships its own
+   body ground, caret/focus colours and `button { font: inherit }`, all of
+   which would repaint this site (dark #08090b ground on the mint landing,
+   lime carets in the app, unstyled-size buttons). Unlayered it would outrank
+   everything; in layer(base) it behaves exactly like preflight — globals.css
+   (unlayered) and the utilities layer both stay on top, while the engine's
+   .sc-* class contract is untouched on the elements that carry it.
+   The engine copy itself stays byte-identical; this file only sets cascade
+   position. */
+@import "../scrollcraft/builds/ojasvini-landing/scrollcraft.css" layer(base);

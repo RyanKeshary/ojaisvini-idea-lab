@@ -18,7 +18,14 @@
     "no": "ના",
     "demoHint": "ડેમો મોડ: ખરા પૈસા નથી, ખરો SMS નથી."
   },
-  "nav": { "home": "મુખ્યપૃષ્ઠ", "learn": "શીખો", "create": "નવું ઉત્પાદન", "orders": "ઑર્ડર્સ", "more": "વધુ" },
+  "nav": {
+    "home": "મુખ્યપૃષ્ઠ",
+    "learn": "શીખો",
+    "create": "નવું ઉત્પાદન",
+    "orders": "ઑર્ડર્સ",
+    "more": "વધુ",
+    "profile": "પ્રોફાઇલ"
+  },
   "landing": {
     "title": "Ojasvini",
     "subtitle": "Tejasvi, sashakt mahila ghare betha veche.",
@@ -35,64 +42,174 @@
     "illustrative": "Field experience maanthi illustrative figures.",
     "howTitle": "Kevi rite chaale",
     "steps": [
-      { "t": "Bolo", "d": "Samaanno naam bolo. Lakhavani jaroor nahin." },
-      { "t": "Photo paado", "d": "Photo paado. Ame listing lakhee aapishu." },
-      { "t": "Vecho", "d": "Dukaanno link vaanto. Pehlo order melvo." }
+      {
+        "t": "Bolo",
+        "d": "Samaanno naam bolo. Lakhavani jaroor nahin."
+      },
+      {
+        "t": "Photo paado",
+        "d": "Photo paado. Ame listing lakhee aapishu."
+      },
+      {
+        "t": "Vecho",
+        "d": "Dukaanno link vaanto. Pehlo order melvo."
+      }
     ],
     "journeyTitle": "Temni suffer",
     "journey": [
-      { "t": "Discover", "d": "Potani bhashaamaa voice onboarding." },
-      { "t": "Sheekho", "d": "2-minute lesson: UPI, photo, bhaav." },
-      { "t": "Banaavo", "d": "Bolo, photo paado, AI listing." },
-      { "t": "Vecho", "d": "Live dukaan, demo payment, order." },
-      { "t": "Vadho", "d": "Kamaani, yojana, community." }
+      {
+        "t": "Discover",
+        "d": "Potani bhashaamaa voice onboarding."
+      },
+      {
+        "t": "Sheekho",
+        "d": "2-minute lesson: UPI, photo, bhaav."
+      },
+      {
+        "t": "Banaavo",
+        "d": "Bolo, photo paado, AI listing."
+      },
+      {
+        "t": "Vecho",
+        "d": "Live dukaan, demo payment, order."
+      },
+      {
+        "t": "Vadho",
+        "d": "Kamaani, yojana, community."
+      }
     ],
     "featuresTitle": "Badhu ek j jagyae",
     "features": [
-      { "t": "Digital skills", "d": "Practice simulator saathe naana lesson." },
-      { "t": "Voice assistant", "d": "Darek screen par tap, bolo, thai gayu." },
-      { "t": "Seller dashboard", "d": "Kamaani, order, payout — saambhaline." },
-      { "t": "AI chatbot", "d": "Sakhi Didi business prashnona javaab." },
-      { "t": "Photo-to-listing", "d": "Ek photo aakhi listing bani jaay." },
-      { "t": "Scheme finder", "d": "Fakt e yojana je tamane malshe." },
-      { "t": "Community", "d": "Sakhi mentors saathe women-only forum." }
+      {
+        "t": "Digital skills",
+        "d": "Practice simulator saathe naana lesson."
+      },
+      {
+        "t": "Voice assistant",
+        "d": "Darek screen par tap, bolo, thai gayu."
+      },
+      {
+        "t": "Seller dashboard",
+        "d": "Kamaani, order, payout — saambhaline."
+      },
+      {
+        "t": "AI chatbot",
+        "d": "Sakhi Didi business prashnona javaab."
+      },
+      {
+        "t": "Photo-to-listing",
+        "d": "Ek photo aakhi listing bani jaay."
+      },
+      {
+        "t": "Scheme finder",
+        "d": "Fakt e yojana je tamane malshe."
+      },
+      {
+        "t": "Community",
+        "d": "Sakhi mentors saathe women-only forum."
+      }
     ],
     "whyTitle": "Ojasvini alag kem chhe",
-    "whyCols": ["Ojasvini", "E-commerce apps", "Training portals"],
+    "whyCols": [
+      "Ojasvini",
+      "E-commerce apps",
+      "Training portals"
+    ],
     "why": {
       "rows": [
-        ["Voice-first, vaanchvaani jaroor nahin", "Literacy + English maange chhe", "Theory video, practice nahin"],
-        ["Photo maanthi live dukaan", "Manual catalog setup", "Vechvaanu j nahin"],
-        ["Offline chalshe, low-data", "Hammesshaa online", "Sheherna, bhaari video"],
-        ["Sheekho + vecho + yojana", "Fakt vechvaanu", "Fakt sheekhvaanu"]
+        [
+          "Voice-first, vaanchvaani jaroor nahin",
+          "Literacy + English maange chhe",
+          "Theory video, practice nahin"
+        ],
+        [
+          "Photo maanthi live dukaan",
+          "Manual catalog setup",
+          "Vechvaanu j nahin"
+        ],
+        [
+          "Offline chalshe, low-data",
+          "Hammesshaa online",
+          "Sheherna, bhaari video"
+        ],
+        [
+          "Sheekho + vecho + yojana",
+          "Fakt vechvaanu",
+          "Fakt sheekhvaanu"
+        ]
       ]
     },
     "storyTitle": "Sunita ne malo: day 1 thi day 30",
     "story": [
-      { "d": "Day 1", "t": "Voice thi register, Gujarati pasand karyu." },
-      { "d": "Day 3", "t": "Safe simulator par UPI sheekhya." },
-      { "d": "Day 7", "t": "Achaarnaa photo, dukaan publish." },
-      { "d": "Day 15", "t": "Pehlo demo order avaaj saathe." },
-      { "d": "Day 30", "t": "Kamaani joee, MUDRA loan malyu." }
+      {
+        "d": "Day 1",
+        "t": "Voice thi register, Gujarati pasand karyu."
+      },
+      {
+        "d": "Day 3",
+        "t": "Safe simulator par UPI sheekhya."
+      },
+      {
+        "d": "Day 7",
+        "t": "Achaarnaa photo, dukaan publish."
+      },
+      {
+        "d": "Day 15",
+        "t": "Pehlo demo order avaaj saathe."
+      },
+      {
+        "d": "Day 30",
+        "t": "Kamaani joee, MUDRA loan malyu."
+      }
     ],
     "stats": [
-      { "v": "9/10", "d": "Sellers kahe chhe bhasha online jataa rokhe chhe." },
-      { "v": "1 phone", "d": "Ghanivaar aakhaa kutumb saathe shared." },
-      { "v": "0", "d": "Gaammaa temna maate tailored digital training." }
+      {
+        "v": "9/10",
+        "d": "Sellers kahe chhe bhasha online jataa rokhe chhe."
+      },
+      {
+        "v": "1 phone",
+        "d": "Ghanivaar aakhaa kutumb saathe shared."
+      },
+      {
+        "v": "0",
+        "d": "Gaammaa temna maate tailored digital training."
+      }
     ],
     "impactTitle": "Rural Maharashtra maate, aakhaa India maate taiyaar",
     "impactLine": "Quality education (SDG 4) sthaaneek bhasha micro-lessons thi; innovation (SDG 9) offline-first commerce thi.",
     "demoTitle": "Live demo try karo",
+    "selfDemoTitle": "સ્ક્રોલ કરીને વેચાણ કરો",
+    "beat1": "પ્રોડક્ટ લિસ્ટ થયું",
+    "beat2": "તમારા દુકાનમાં લાઇવ",
+    "beat3": "ઓર્ડરના પૈસા મળ્યા",
     "demoOtpNote": "Demo login: game te phone, OTP 123456. Kyaay khara paisa nahin.",
     "demoLogin": "Demo login try karo",
     "sampleShop": "Sample dukaan juo",
     "faq": [
-      { "q": "Shu kharekhar free chhe?", "a": "Haa. Sheekhvu, listing, vechvu free. Demo payment maa khara paisa nahin." },
-      { "q": "Mane vaanchtaa aavdtu nathi. Vapri shakaay?", "a": "Haa — ej muddo chhe. Dareek screen voice + icon thi chaale chhe." },
-      { "q": "Ghare internet nathi?", "a": "Kaam phone maa save rahe chhe, network aavtaa sync thaay chhe." },
-      { "q": "Paisa kevi rite malshe?", "a": "Buyer tamaari UPI par pay kare chhe. Pehla safe simulator par practice karo." }
+      {
+        "q": "Shu kharekhar free chhe?",
+        "a": "Haa. Sheekhvu, listing, vechvu free. Demo payment maa khara paisa nahin."
+      },
+      {
+        "q": "Mane vaanchtaa aavdtu nathi. Vapri shakaay?",
+        "a": "Haa — ej muddo chhe. Dareek screen voice + icon thi chaale chhe."
+      },
+      {
+        "q": "Ghare internet nathi?",
+        "a": "Kaam phone maa save rahe chhe, network aavtaa sync thaay chhe."
+      },
+      {
+        "q": "Paisa kevi rite malshe?",
+        "a": "Buyer tamaari UPI par pay kare chhe. Pehla safe simulator par practice karo."
+      }
     ],
-    "footer": "Maharashtra maa sammaan saathe banaavyu."
+    "footer": "Maharashtra maa sammaan saathe banaavyu.",
+    "heroSub": "એક ફોટો અને તમારા અવાજથી તમારું દુકાન બનાવો. તમારી લિંક પર વેચો, UPIથી ચૂકવણી મેળવો. મફત, ઑફલાઇન, તમારી ભાષામાં.",
+    "filmTitle": "ઓજસ્વિની વપરતા જુઓ",
+    "filmDesc": "ચાલતું એપ્લિકેશન: તે શું કરે છે અને કોણ માટે છે.",
+    "demoDesc": "સ્ક્રોલ કરતા રહો. એપ્લિકેશન એક પ્રોડક્ટ લિસ્ટ કરે છે અને ઓર્ડર લાવે છે, એક-એક પગલે.",
+    "closeLine": "તમારો પ્રથમ ઓર્ડર એક ફોટો દૂર છે."
   },
   "auth": {
     "login": "Login karo",
@@ -316,7 +433,12 @@
     "waPrice": "Bhaav",
     "waAdd": "Item jodo",
     "photoSim": "Light checklist",
-    "photoTips": ["Product par baarini light", "Flash nahin", "Saaf background", "Phone seedho"]
+    "photoTips": [
+      "Product par baarini light",
+      "Flash nahin",
+      "Saaf background",
+      "Phone seedho"
+    ]
   },
   "schemes": {
     "title": "Tamaara maate yojana",
@@ -330,8 +452,20 @@
     "qShg": "Self-help group (SHG) maa?",
     "optShgYes": "Haa, member",
     "optShgNo": "Haju nahin",
-    "incomeBands": ["₹1L thi ochhu", "₹1–3L", "₹3L thi vadhare", "Skip"],
-    "businesses": ["Food", "Tailoring", "Handicraft", "Farm", "Service", "Vendor"],
+    "incomeBands": [
+      "₹1L thi ochhu",
+      "₹1–3L",
+      "₹3L thi vadhare",
+      "Skip"
+    ],
+    "businesses": [
+      "Food",
+      "Tailoring",
+      "Handicraft",
+      "Farm",
+      "Service",
+      "Vendor"
+    ],
     "eligible": "Aa tamane mali shake",
     "maybe": "Kadaach — tapaso",
     "notEligible": "Tamaara maate nahin",
@@ -348,7 +482,16 @@
     "verifiedOn": "Checked",
     "applyHere": "Official site",
     "savedTitle": "Saved yojana",
-    "filters": ["Badhu", "Loan", "Subsidy", "Training", "Insurance", "Market", "Savings", "Account"],
+    "filters": [
+      "Badhu",
+      "Loan",
+      "Subsidy",
+      "Training",
+      "Insurance",
+      "Market",
+      "Savings",
+      "Account"
+    ],
     "reasons": {
       "state": "Fakt {want} maate",
       "gender": "Alag applicant joiye",
@@ -366,7 +509,16 @@
   "community": {
     "title": "Community",
     "subtitle": "Fakt mahilaao. Puchho, vaanto, ujavo.",
-    "rooms": ["Badhu", "Food", "Handicraft", "Tailoring", "Dairy", "Paisa", "Tech madad", "Jeet"],
+    "rooms": [
+      "Badhu",
+      "Food",
+      "Handicraft",
+      "Tailoring",
+      "Dairy",
+      "Paisa",
+      "Tech madad",
+      "Jeet"
+    ],
     "latest": "Navaa",
     "popular": "Popular",
     "ask": "Puchho / Vaanto",
@@ -405,12 +557,30 @@
     "checkin": "Check-in note karo",
     "notesHint": "Notes (shu vaat thai?)",
     "logBtn": "Note save karo",
-    "types": { "visit": "Visit", "call": "Call", "training": "Training", "followup": "Follow-up", "problem": "Problem" },
-    "stuck": { "no-products": "Haju product nathi", "no-orders": "Haju order nathi", "few-lessons": "Lesson joiye" }
+    "types": {
+      "visit": "Visit",
+      "call": "Call",
+      "training": "Training",
+      "followup": "Follow-up",
+      "problem": "Problem"
+    },
+    "stuck": {
+      "no-products": "Haju product nathi",
+      "no-orders": "Haju order nathi",
+      "few-lessons": "Lesson joiye"
+    }
   },
   "admin": {
     "title": "Admin",
-    "tabs": { "overview": "Overview", "users": "Users", "products": "Products", "reports": "Reports", "ai": "AI usage", "flags": "Flags", "schemes": "Schemes" },
+    "tabs": {
+      "overview": "Overview",
+      "users": "Users",
+      "products": "Products",
+      "reports": "Reports",
+      "ai": "AI usage",
+      "flags": "Flags",
+      "schemes": "Schemes"
+    },
     "search": "Phone ke naam shodho",
     "pause": "Atkaavo",
     "restore": "Paachhu",

@@ -174,7 +174,7 @@ export default function LessonPage() {
             type="button"
             onClick={check}
             disabled={picked === null}
-            className="mt-3 min-h-[56px] w-full rounded-[12px] bg-[var(--indigo)] text-base font-bold text-white disabled:opacity-50"
+            className="mt-3 min-h-[56px] w-full rounded-[12px] bg-[var(--indigo)] text-base font-bold text-[var(--primary-ink)] disabled:opacity-50"
           >
             {t("check")}
           </button>

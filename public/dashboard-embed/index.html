@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ojasvini Seller Dashboard</title>
+<style>
+:root{--bg:#fff;--card:#EBEBEB;--cb:transparent;--bd:#C0C0C0;--tx:#13233b;--mu:#5a6577;--p:#004E98;--s:#3A6EA5;--c:#FF6700;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root[data-theme=dark]{--bg:#0e1522;--card:#141e2f;--cb:#2b3a52;--bd:#2b3a52;--tx:#e8edf5;--mu:#9aa7ba;--p:#6aa6e0;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+h1{font-size:20px;margin:0}h2{font-size:16px;margin:0 0 8px}h3{font-size:14px;margin:0}h4{font-size:12px;margin:0;color:var(--mu);font-weight:600}h5{font-size:10px;margin:0;color:var(--mu);font-weight:500}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh;transition:grid-template-columns .2s}.app.col{grid-template-columns:60px 1fr}
+aside{border-right:1px solid var(--bd);padding:12px 8px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;overflow:auto;background:var(--bg);z-index:30}
+.prof{display:flex;gap:10px;align-items:center;padding:8px;border-radius:10px;cursor:pointer;border:0;background:none;color:inherit;text-align:left;width:100%;position:relative}.prof:hover,.nl:hover{background:var(--card)}
+.av{width:32px;height:32px;border-radius:50%;background:var(--p);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+.nl{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;color:var(--tx);text-decoration:none;font-size:14px;border:0;background:none;width:100%;cursor:pointer;font-family:inherit}
+.nl i{font-style:normal;width:20px;text-align:center;flex:none}.nl.on{background:var(--p);color:#fff}
+.bd{margin-left:auto;background:var(--c);color:#fff;border-radius:99px;font-size:10px;padding:0 6px;font-weight:700}
+.col .nl span,.col .prof>div:not(.av),.col summary span,.col .pop,.col .sub{display:none}.col .bd{position:absolute;margin:-18px 0 0 14px}
+hr{border:0;border-top:1px solid var(--bd);margin:8px 0;width:100%}
+details summary{list-style:none;cursor:pointer}details .sub{padding-left:10px}
+.push{margin-top:auto}.pop{border:1px solid var(--bd);background:var(--card);border-radius:10px;padding:10px;font-size:12px;margin:8px 0}
+main{min-width:0;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:8px;padding:12px 20px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--bg);z-index:20}
+.top h1{flex:1}.pg{padding:20px;max-width:1100px;width:100%}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px}.span2{grid-column:span 2}
+.card{background:var(--card);border:1px solid var(--cb);border-radius:12px;padding:16px}
+.big{font-size:20px;font-weight:700}.mu{color:var(--mu)}.sm{font-size:12px}
+.btn{border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:8px;padding:8px 12px;font:inherit;font-size:14px;cursor:pointer;transition:transform .1s,background .15s;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--card)}.btn:active{transform:scale(.97)}.btn.pri{background:#004E98;color:#fff;border-color:#004E98}.btn.pri:hover{background:#3A6EA5}.btn.cta{background:#FF6700;color:#fff;border-color:#FF6700}.btn.cta:hover{filter:brightness(1.08)}.btn.sm{padding:4px 8px;font-size:12px}.btn[disabled]{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row.sp{justify-content:space-between}
+input,select,textarea{font:inherit;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);width:100%}input[type=radio],input[type=checkbox]{width:auto}input[type=range]{padding:0}
+label{display:block;font-size:12px;color:var(--mu);margin:8px 0 4px}
+table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px 6px;border-bottom:1px solid var(--bd);font-size:12px}
+.tag{font-size:10px;padding:1px 8px;border-radius:99px;border:1px solid var(--bd);white-space:nowrap}.tag.o{background:var(--c);border-color:var(--c);color:#fff}.tag.b{background:var(--s);border-color:var(--s);color:#fff}
+.chip{border:1px solid var(--bd);border-radius:99px;padding:4px 10px;background:var(--bg);color:var(--tx);cursor:pointer;font:inherit;font-size:12px}.chip.on{background:var(--p);color:#fff;border-color:var(--p)}
+.bar{height:8px;border-radius:9px;background:var(--bd);overflow:hidden}.bar>div{height:100%;background:var(--p)}
+.orb{width:84px;height:84px;border-radius:50%;border:0;background:#FF6700;color:#fff;font-size:32px;cursor:pointer;box-shadow:0 0 0 0 #ff670066}.orb.rec{animation:pl 1.2s infinite}@keyframes pl{to{box-shadow:0 0 0 22px #ff670000}}
+.sk{background:linear-gradient(90deg,var(--card),var(--bd),var(--card));background-size:200% 100%;animation:sh 1s infinite;border-radius:10px;height:90px;margin-bottom:16px}@keyframes sh{to{background-position:-200% 0}}
+.priv .money{filter:blur(6px)}
+#toasts{position:fixed;bottom:16px;right:16px;display:flex;flex-direction:column;gap:8px;z-index:100;max-width:calc(100vw - 32px)}
+.toast{background:var(--tx);color:var(--bg);padding:10px 14px;border-radius:10px;font-size:12px;animation:in .2s;display:flex;gap:10px;align-items:center}.toast.err{background:#b3261e;color:#fff}.toast button{background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit}@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.ov{position:fixed;inset:0;background:#0007;display:grid;place-items:center;z-index:60;padding:16px}
+.md{background:var(--bg);border:1px solid var(--bd);border-radius:14px;padding:20px;width:min(520px,100%);max-height:90vh;overflow:auto}
+.lock{position:fixed;inset:0;background:var(--bg);z-index:90;display:grid;place-items:center;text-align:center}
+.keys{display:grid;grid-template-columns:repeat(3,72px);gap:10px;justify-content:center;margin-top:12px}.keys button{height:60px;font-size:20px}
+.tip{position:fixed;z-index:80;background:var(--tx);color:var(--bg);padding:12px;border-radius:10px;max-width:260px;font-size:12px}.ring{outline:3px solid #FF6700;outline-offset:3px;border-radius:10px}
+.pr{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}.pr img,.em{width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--bg);display:grid;place-items:center;font-size:22px;flex:none}
+.menu{display:none}
+@media(max-width:800px){.app,.app.col{grid-template-columns:1fr}aside{position:fixed;left:0;width:250px;transform:translateX(-100%);transition:transform .2s}.app.open aside{transform:none}.menu{display:inline-block}.grid{grid-template-columns:1fr}.span2{grid-column:auto}.pg{padding:14px}.top{padding:10px 14px}.app.col .nl span,.app.col .prof>div:not(.av){display:block}.hide-m{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="app" id="app">
+<aside id="nav"></aside>
+<main><div class="top"><button class="btn menu" data-a="menu" aria-label="Menu">☰</button><button class="btn hide-m" data-a="col" aria-label="Collapse sidebar">⇔</button><h1 id="ttl"></h1>
+<button class="btn" data-a="listen" id="lbtn">🔊 <span id="lt"></span></button><button class="btn cta" data-a="newl" id="newbtn">+ <span id="nt"></span></button><button class="btn" data-a="theme" aria-label="Theme">◐</button></div>
+<div class="pg" id="pg"></div></main></div>
+<div id="toasts" aria-live="polite"></div><div id="ovl"></div>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LS={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const D0={name:'Sunita Tai',slug:'sunita-swad',lang:'en',theme:'',priv:0,pin:'',tour:0,col:0,upi:'',bal:194,pays:[],done:[],
+products:[{id:1,name:'Mango pickle',cat:'Food',price:150,e:'🥭',sync:1},{id:2,name:'Papad (1 kg)',cat:'Food',price:110,e:'🫓',sync:1},{id:3,name:'Cane basket',cat:'Crafts',price:220,e:'🧺',sync:1}],
+orders:[{id:1001,item:'Mango pickle',qty:2,amt:300,pc:'412205',v:'Bhor',st:'new',pay:'UPI'},{id:1002,item:'Papad (1 kg)',qty:1,amt:110,pc:'412205',v:'Bhor',st:'new',pay:'COD'},{id:1003,item:'Cane basket',qty:1,amt:220,pc:'411030',v:'Pune',st:'done',pay:'UPI'}],
+sales:[180,260,220,400,310,520,330],
+posts:[{id:1,by:'Radha Devi',tx:'How do I pack pickle jars so they do not leak in transit?',lk:4,r:[{by:'Meena (Sakhi mentor)',tx:'Use a thin plastic sheet under the lid and wrap each jar in newspaper.'}],me:0},{id:2,by:'Bhavna Ben',tx:'My first order came today from Surat. Keep going, sisters!',lk:11,r:[],me:0}]};
+let S=Object.assign({},D0,LS.g('oj',{}));const save=()=>LS.s('oj',S);
+const T={en:{home:'Home',assistant:'Sakhi AI',create:'Create',products:'Products',orders:'Orders',payouts:'Payouts',schemes:'Schemes',learn:'Learn',community:'Community',insights:'Insights',settings:'Settings',help:'Help',grow:'Grow',listen:'Listen',hi:'Namaste',nw:'New listing'},
+hi:{home:'होम',assistant:'सखी AI',create:'बनाएं',products:'उत्पाद',orders:'ऑर्डर',payouts:'भुगतान',schemes:'योजनाएं',learn:'सीखें',community:'समुदाय',insights:'जानकारी',settings:'सेटिंग्स',help:'मदद',grow:'आगे बढ़ें',listen:'सुनें',hi:'नमस्ते',nw:'नया लिस्टिंग'},
+mr:{home:'होम',assistant:'सखी AI',create:'तयार करा',products:'उत्पादने',orders:'ऑर्डर',payouts:'पेमेंट',schemes:'योजना',learn:'शिका',community:'समुदाय',insights:'माहिती',settings:'सेटिंग्ज',help:'मदत',grow:'प्रगती',listen:'ऐका',hi:'नमस्कार',nw:'नवीन यादी'}};
+const t=k=>(T[S.lang]||T.en)[k]||T.en[k]||k,VL={en:'en-IN',hi:'hi-IN',mr:'mr-IN'};
+const m=n=>`<span class="money">₹${Math.round(n)}</span>`,nNew=()=>S.orders.filter(o=>o.st=='new').length;
+function say(x){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(x);u.lang=VL[S.lang];speechSynthesis.speak(u)}catch(e){toast('Audio not supported on this device','err')}}
+function toast(x,ty,act,fn){const e=document.createElement('div');e.className='toast '+(ty||'');e.textContent=x;if(act){const b=document.createElement('button');b.textContent=act;b.onclick=()=>{fn();e.remove()};e.append(b)}$('#toasts').append(e);setTimeout(()=>e.remove(),act?5000:3200)}
+function modal(h){$('#ovl').innerHTML=`<div class="ov" data-a="mclose"><div class="md" role="dialog" aria-modal="true">${h}</div></div>`}const mx=()=>$('#ovl').innerHTML='';
+function listen(cb){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast('Mic not supported here. Use a sample or type.','err');const r=new R();r.lang=VL[S.lang];r.onresult=e=>cb(e.results[0][0].transcript);r.onerror=()=>toast('Could not hear you. Try again.','err');r.start();toast('Listening…')}
+/* ---------- nav ---------- */
+const NAV=[['home','⌂'],['assistant','💬'],['create','✚'],['products','▦'],['orders','☰'],['payouts','₹']],GR=[['schemes','✦'],['learn','▤'],['community','☺'],['insights','◔']];
+let R='home';
+const lk=([k,i])=>`<a href="#${k}" class="nl ${R==k?'on':''}" title="${t(k)}" ${k=='create'?'id="nav-create"':''}><i>${i}</i><span>${t(k)}</span>${k=='orders'&&nNew()?`<b class="bd">${nNew()}</b>`:''}</a>`;
+function nav(){$('#nav').innerHTML=`<button class="prof" id="prof" data-a="prof" aria-label="Profile menu"><div class="av">${esc(S.name[0])}</div><div><h3>${esc(S.name)}</h3><h5>/shop/${S.slug}</h5></div></button><div id="pm"></div><hr>
+${NAV.map(lk).join('')}<hr><details ${GR.some(g=>g[0]==R)?'open':''} id="grow"><summary class="nl"><i>⊞</i><span>${t('grow')}</span></summary><div class="sub">${GR.map(lk).join('')}</div></details>
+<div class="push"></div>${nNew()?`<div class="pop"><b>${nNew()} orders waiting</b><br><a href="#orders">Review now</a></div>`:''}<hr>${lk(['settings','⚙'])}${lk(['help','?'])}`;
+$('#lt').textContent=t('listen');$('#nt').textContent=t('nw');$('#ttl').textContent=t(R);document.title=t(R)+' · Ojasvini';$('#app').classList.toggle('col',!!S.col);document.body.classList.toggle('priv',!!S.priv)}
+/* ---------- chart ---------- */
+const LB=['6d','5d','4d','3d','2d','1d','Today','+1d','+2d','+3d'];
+function fcast(v){const l=v.slice(-3),a=l.reduce((x,y)=>x+y)/3,sl=(l[2]-l[0])/2;return[1,2,3].map(i=>Math.max(0,Math.round(a+sl*i)))}
+function chart(v){const f=fcast(v),all=[...v,...f],mxv=Math.max(...all,1);return`<svg viewBox="0 0 ${all.length*56} 172" width="100%" role="img" aria-label="Sales for the last 7 days and a 3-day forecast">`+all.map((x,i)=>{const h=x/mxv*130,fc=i>=v.length;return`<g><rect x="${i*56+10}" y="${150-h}" width="36" height="${h}" rx="4" fill="${fc?'none':'var(--p)'}" stroke="${fc?'#FF6700':'none'}" stroke-width="2" stroke-dasharray="${fc?'4 3':'0'}"><title>₹${x}${fc?' (forecast)':''}</title></rect><text x="${i*56+28}" y="166" text-anchor="middle" font-size="10" fill="var(--mu)">${LB[i]}</text></g>`}).join('')+'</svg>'}
+/* ---------- pages ---------- */
+const net=a=>Math.round(a*.88),pend=()=>S.products.filter(p=>!p.sync).length;
+const P={};
+P.home=()=>{const o=S.orders.filter(x=>x.st=='new'),f=fcast(S.sales),tr=f[2]>=S.sales[6]?'rising':'easing';return`<h4>${t('hi')}, ${esc(S.name)}</h4><div class="grid" style="margin-top:8px">
+<div class="card" id="k1"><h4>Available to withdraw</h4><div class="big">${m(S.bal)}</div><h5>After 12% fees</h5><div class="row" style="margin-top:12px"><a class="btn pri" href="#payouts">Withdraw</a></div></div>
+<div class="card"><h4>New orders</h4><div class="big">${o.length}</div><h5>${o.length?m(o.reduce((a,b)=>a+b.amt,0))+' waiting for you':'All caught up'}</h5><div class="row" style="margin-top:12px"><a class="btn pri" href="#orders">${o.length?'Accept orders':'View orders'}</a></div></div>
+<div class="card"><h3>Add a product in 2 minutes</h3><h5>Speak, snap, sell. No typing needed.</h5><div class="row" style="margin-top:12px"><a class="btn cta" href="#create">Start listing</a><button class="btn" data-a="store">Preview my shop</button></div></div>
+<div class="card"><h3>What to do next</h3><p class="sm mu" style="margin:6px 0 10px">${o.length?`Accept your ${o.length} new order${o.length>1?'s':''} first.`:'Share your shop link on WhatsApp to get more orders.'} Sales look ${tr} for the next 3 days.</p><a href="#schemes">Find schemes for you</a></div></div>
+<div class="card" style="margin-bottom:16px"><div class="row sp"><h2>Sales: last 7 days and forecast</h2><h5>Dashed = estimate</h5></div>${chart(S.sales)}<h5>Expected next 3 days: ${f.map(x=>'₹'+x).join(', ')}</h5></div>
+<div class="card"><h2>Recent orders</h2>${S.orders.slice(-4).reverse().map(x=>`<div class="row sp" style="padding:6px 0"><span>${esc(x.item)} × ${x.qty}</span><span class="tag ${x.st=='new'?'o':''}">${x.st}</span></div>`).join('')||'<p class="mu">No orders yet.</p>'}</div>`};
+
+P.assistant=()=>{
+  return `<div class="card" style="margin-bottom:16px">
+    <div class="row sp">
+      <h2>🤖 Sakhi Didi AI Assistant</h2>
+      <span class="tag o">Always Live</span>
+    </div>
+    <p class="sm mu" style="margin:4px 0 12px">Ask any business question in your language — pricing, photos, loans, or schemes.</p>
+    <div id="ai-chat" style="display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;padding:8px 0;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)">
+      <div style="background:var(--card);padding:10px 14px;border-radius:12px;max-width:85%;align-self:flex-start">
+        <b>Sakhi Didi:</b> Namaste! I am your AI business guide. How can I help your shop today?
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <input id="ai-in" placeholder="Ask Sakhi Didi..." style="flex:1" onkeydown="if(event.key==='Enter')A.aiSend()">
+      <button class="btn" data-a="aiMic">🎤</button>
+      <button class="btn pri" data-a="aiSend">Send</button>
+    </div>
+    <div class="row" style="margin-top:10px;gap:6px">
+      <button class="chip" data-a="aiQuick" data-v="How do I increase sales?">💡 More sales</button>
+      <button class="chip" data-a="aiQuick" data-v="What schemes am I eligible for?">🏛️ Schemes</button>
+      <button class="chip" data-a="aiQuick" data-v="How should I price my goods?">🏷️ Pricing</button>
+    </div>
+  </div>`;
+};
+
+/* create */
+let C={t:'',img:'',d:null,busy:0,ok:0};const SAMP=['I make mango pickle','मी आंब्याचं लोणचं बनवते','I weave cane baskets','I stitch blouses'];
+const KW=[[/pickle|लोणच|अचार|achar/i,'Food',120,160,'🥭'],[/papad|पापड/i,'Food',90,120,'🫓'],[/basket|टोकरी|cane/i,'Crafts',180,300,'🧺'],[/saree|साडी|handloom/i,'Crafts',600,1200,'🧵'],[/blouse|stitch|शिल|सिल|tailor/i,'Tailoring',200,400,'🪡'],[/milk|ghee|paneer|दूध|तूप|dairy/i,'Dairy',60,90,'🥛']];
+function draft(){const x=C.t,k=KW.find(r=>r[0].test(x))||[0,'Other',100,200,'📦'],w=x.replace(/^(i make|i weave|i stitch|i sell)\s*/i,'').split(/\s+/).slice(0,4).join(' ')||'My product';
+C.d={name:w[0].toUpperCase()+w.slice(1),cat:k[1],lo:k[2],hi:k[3],e:k[4],price:Math.round((k[2]+k[3])/2/5)*5}}
+P.create=()=>{const d=C.d;return`<div class="card" style="margin-bottom:16px"><h2>1. Say what you make</h2><div class="row"><button class="orb" data-a="mic" aria-label="Speak">🎤</button><div style="flex:1;min-width:200px"><div class="row">${SAMP.map((s,i)=>`<button class="chip" data-a="samp" data-v="${i}">${s}</button>`).join('')}</div><label for="ct">Or type it</label><input id="ct" value="${esc(C.t)}" placeholder="e.g. I make mango pickle" data-i="ctxt"></div></div></div>
+<div class="card" style="margin-bottom:16px;${C.t?'':'opacity:.5'}"><h2>2. Snap a photo</h2><input type="file" accept="image/*" capture="environment" id="ph" ${C.t?'':'disabled'}>${C.img?`<img src="${C.img}" alt="Product photo" style="max-width:160px;border-radius:10px;margin-top:8px">`:''}<div class="row" style="margin-top:8px"><button class="btn" data-a="mk" ${C.t&&!C.busy?'':'disabled'}>${C.img?'Make my listing':'Skip photo and make listing'}</button></div></div>
+${C.busy?'<div class="sk"></div>':''}${d?`<div class="card"><h2>3. Check and publish</h2><div class="row"><div class="em">${C.img?`<img src="${C.img}" alt="">`:d.e}</div><div style="flex:1"><label for="dn">Name</label><input id="dn" value="${esc(d.name)}" data-i="dn"></div></div><div class="row sp" style="margin-top:8px"><span class="tag b">${d.cat}</span><span class="sm mu">Village price band ₹${d.lo} – ₹${d.hi}</span></div><label for="dp">Your price: <b>₹<span id="pv">${d.price}</span></b></label><input type="range" id="dp" min="${Math.max(10,d.lo-40)}" max="${d.hi+60}" step="5" value="${d.price}" data-i="dp">
+<div class="row" style="margin-top:12px"><button class="btn" data-a="hear">🔊 Listen</button><button class="btn cta" data-a="pub">Publish shop</button></div>${C.ok?`<p class="sm" style="margin-top:12px">Published. <a href="https://wa.me/?text=${encodeURIComponent('Buy from my shop: '+location.href.split('#')[0]+'#shop/'+S.slug)}" target="_blank" rel="noopener">Share on WhatsApp</a> · <a href="#" data-a="store">Open storefront</a></p>`:''}</div>`:''}`};
+P.products=()=>`<div class="row sp" style="margin-bottom:12px"><h2>${S.products.length} products</h2><button class="btn cta" data-a="newl">+ Add product</button></div><div class="card">${S.products.map(p=>`<div class="pr"><div class="em">${p.img?`<img src="${p.img}" alt="">`:p.e}</div><div style="flex:1"><h3>${esc(p.name)}</h3><h5>${p.cat} ${p.sync?'':'· waiting to sync'}</h5></div><b>₹${p.price}</b><button class="btn sm" data-a="del" data-v="${p.id}" aria-label="Delete ${esc(p.name)}">Delete</button></div>`).join('')||'<p class="mu">No products yet. Add your first one.</p>'}</div><div style="margin-top:12px"><button class="btn" data-a="store">Preview my shop</button></div>`;
+P.orders=()=>{const act=S.orders.filter(o=>o.st!='done'&&o.st!='declined'),g={};act.forEach(o=>(g[o.pc]=g[o.pc]||[]).push(o));
+return`<div class="card" style="margin-bottom:16px"><h2>Pooled pickup</h2><h5>Orders to the same pincode share one courier pickup and cost less.</h5>${Object.keys(g).map(k=>`<div class="row sp" style="padding:8px 0"><span>${k} · ${g[k].length} order${g[k].length>1?'s':''}</span>${g[k].length>1?`<span class="tag b">Save ~₹${(g[k].length-1)*40}</span><button class="btn sm pri" data-a="pool" data-v="${k}">Book pickup</button>`:'<span class="tag">Single</span>'}</div>`).join('')||'<p class="mu">Nothing to pool yet.</p>'}</div>
+<div class="card" style="overflow:auto"><table><tr><th>Order</th><th>Item</th><th>Amount</th><th>Status</th><th></th></tr>${S.orders.slice().reverse().map(o=>`<tr><td>#${o.id}<br><h5>${esc(o.v)} ${o.pc}</h5></td><td>${esc(o.item)} × ${o.qty}<br><h5>${o.pay}</h5></td><td>${m(o.amt)}</td><td><span class="tag ${o.st=='new'?'o':''}">${o.st}</span></td><td>${o.st=='new'?`<button class="btn sm pri" data-a="acc" data-v="${o.id}">Accept</button> <button class="btn sm" data-a="dec" data-v="${o.id}">Decline</button>`:o.st=='accepted'?`<button class="btn sm" data-a="dlv" data-v="${o.id}">Mark delivered</button>`:''}</td></tr>`).join('')}</table></div>`};
+P.payouts=()=>`<div class="grid"><div class="card"><h4>Available balance</h4><div class="big">${m(S.bal)}</div><label for="up">UPI ID</label><input id="up" value="${esc(S.upi)}" placeholder="name@bank" data-i="upi"><div class="row" style="margin-top:12px"><button class="btn cta" data-a="wd" ${S.bal?'':'disabled'}>Withdraw to UPI</button></div><h5 style="margin-top:8px">Demo only. No real money moves.</h5></div><div class="card"><h2>Payout history</h2>${S.pays.map(p=>`<div class="row sp" style="padding:6px 0"><span>${p.d}</span><b>${m(p.a)}</b><h5>${esc(p.u)}</h5></div>`).join('')||'<p class="mu">No payouts yet.</p>'}</div></div>`;
+/* schemes */
+const SC=[{n:'PM Mudra Yojana',w:'A loan up to ₹10 lakh for small businesses, with no collateral.',e:'You can borrow money to buy materials. Go to a bank with your Aadhaar and tell them your work.',tr:0,need:'loan'},
+{n:'PMFME',w:'Support for small food businesses: a subsidy of up to 35% on equipment.',e:'If you make food, the government pays part of the cost of your machines.',tr:'Food',need:'loan'},
+{n:'Lakhpati Didi',w:'Skill training and credit for self-help group (SHG) women to earn ₹1 lakh a year.',e:'Women in a bachat gat get training and loans to earn more every year.',shg:1,need:'training'},
+{n:'DAY-NRLM (Umed)',w:'SHG formation, bank linkage and market support for rural women.',e:'Join a women savings group. It helps you get loans and find buyers.',shg:1,need:'market'},
+{n:'PM Vishwakarma',w:'Training, toolkit grant and low-interest loans for artisans.',e:'If you make crafts or stitch clothes, you get a free toolkit, training and a cheap loan.',tr:['Crafts','Tailoring'],need:'training'},
+{n:'PMEGP',w:'Subsidy of 25–35% on loans for new micro units.',e:'Starting a small unit? The government returns part of your loan cost.',need:'loan'},
+{n:'Stand-Up India',w:'Bank loans of ₹10 lakh to ₹1 crore for women entrepreneurs.',e:'For a bigger business, a bank can lend you a large amount.',need:'loan'}];
+let Q={tr:'',shg:'',need:'',go:0};
+const sm=s=>(!s.tr||(Array.isArray(s.tr)?s.tr:[s.tr]).includes(Q.tr))&&(!s.shg||Q.shg=='yes')&&(Q.need==''||s.need==Q.need||!s.need);
+const ch=(k,a)=>a.map(([v,l])=>`<button class="chip ${Q[k]==v?'on':''}" data-a="q" data-k="${k}" data-v="${v}">${l}</button>`).join('');
+P.schemes=()=>`<div class="card" style="margin-bottom:16px"><h2>Find schemes for me</h2><label>What do you make?</label><div class="row">${ch('tr',[['Food','🍲 Food'],['Crafts','🧺 Crafts'],['Tailoring','🪡 Tailoring'],['Dairy','🥛 Dairy']])}</div><label>Are you in a self-help group (bachat gat)?</label><div class="row">${ch('shg',[['yes','Yes'],['no','No']])}</div><label>What do you need?</label><div class="row">${ch('need',[['loan','💰 Loan'],['training','📘 Training'],['market','🛒 Buyers']])}</div><div class="row" style="margin-top:12px"><button class="btn pri" data-a="qgo" ${Q.tr&&Q.shg&&Q.need?'':'disabled'}>Show schemes</button></div></div>
+${Q.go?`<div class="card"><h2>${SC.filter(sm).length} schemes match</h2>${SC.filter(sm).map(s=>`<div class="pr" style="display:block"><h3>${s.n}</h3><p class="sm mu" style="margin:4px 0 8px">${s.w}</p><button class="btn sm" data-a="exp" data-v="${SC.indexOf(s)}">🔊 Explain simply</button></div>`).join('')||'<p class="mu">No match. Try other answers.</p>'}<h5>Demo list. Check details with your bank or district office.</h5></div>`:''}`;
+/* learn */
+const LE=[['Photo tips for your products','Crafts',2,'Use daylight near a window and a plain cloth behind the product.'],['Pricing your pickle','Food',3,'Add cost of materials, your time and 20% profit.'],['Packing food safely','Food',3,'Use clean dry jars and seal the lid with tape.'],['Cutting blouse pieces with less waste','Tailoring',3,'Plan the pattern on the cloth before cutting.'],['Selling milk products','Dairy',2,'Keep products cold and deliver the same day.'],['What is UPI and is it safe','All',2,'Never share your PIN. Receiving money needs no PIN.']];
+let LF='All';
+P.learn=()=>{const p=Math.round(S.done.length/LE.length*100);return`<div class="card" style="margin-bottom:16px"><div class="row sp"><h2>Your progress</h2><b>${p}%</b></div><div class="bar"><div style="width:${p}%"></div></div><div class="row" style="margin-top:12px">${['All','Food','Crafts','Tailoring','Dairy'].map(x=>`<button class="chip ${LF==x?'on':''}" data-a="lf" data-v="${x}">${x}</button>`).join('')}</div></div><div class="card">${LE.map((l,i)=>[l,i]).filter(([l])=>LF=='All'||l[1]==LF||l[1]=='All').map(([l,i])=>`<div class="pr"><input type="checkbox" data-a="ld" data-v="${i}" ${S.done.includes(i)?'checked':''} aria-label="Done"><div style="flex:1"><h3>${l[0]}</h3><h5>${l[1]} · ${l[2]} min</h5></div><button class="btn sm" data-a="lsn" data-v="${i}">🔊 Listen</button></div>`).join('')}</div>`};
+P.community=()=>`<div class="card" style="margin-bottom:16px"><h2>Ask the sisters</h2><textarea id="pt" rows="2" placeholder="Write or speak your question"></textarea><div class="row" style="margin-top:8px"><button class="btn" data-a="pmic">🎤 Speak</button><button class="btn pri" data-a="post">Post</button></div></div>${S.posts.map(p=>`<div class="card" style="margin-bottom:12px"><h3>${esc(p.by)}</h3><p style="margin:4px 0">${esc(p.tx)}</p>${p.r.map(r=>`<div class="sm" style="border-left:3px solid var(--c);padding-left:8px;margin:6px 0"><b>${esc(r.by)}</b>: ${esc(r.tx)}</div>`).join('')}<button class="btn sm" data-a="lk" data-v="${p.id}">${p.me?'♥':'♡'} ${p.lk+p.me}</button></div>`).join('')}`;
+const PB={Food:[100,160],Crafts:[150,300],Tailoring:[200,400],Dairy:[60,90],Other:[100,200]};
+P.insights=()=>{const q={};S.orders.forEach(o=>q[o.item]=(q[o.item]||0)+o.qty);const top=Object.entries(q).sort((a,b)=>b[1]-a[1])[0],mq=top?top[1]:1;
+return`<div class="grid"><div class="card"><h2>This week’s advice</h2><p class="sm">${top?`<b>${esc(top[0])}</b> is your best seller (${top[1]} sold). Keep extra stock and put it first in your shop.`:'Get your first order by sharing your shop link.'} ${S.orders.filter(o=>o.st=='new').length>1?'Book a pooled pickup to cut delivery cost.':''}</p></div>
+<div class="card"><h2>Units sold</h2>${Object.entries(q).map(([k,v])=>`<div class="sm">${esc(k)} · ${v}</div><div class="bar" style="margin-bottom:8px"><div style="width:${v/mq*100}%"></div></div>`).join('')||'<p class="mu">No data yet.</p>'}</div>
+<div class="card span2" style="overflow:auto"><h2>Price check</h2><table><tr><th>Product</th><th>Your price</th><th>Village band</th><th>Tip</th></tr>${S.products.map(p=>{const b=PB[p.cat]||PB.Other,s=p.price<b[0]?'Low: you may earn more':p.price>b[1]?'High: buyers may hesitate':'Good';return`<tr><td>${esc(p.name)}</td><td>₹${p.price}</td><td>₹${b[0]}–₹${b[1]}</td><td>${s}</td></tr>`}).join('')}</table></div></div>`};
+P.settings=()=>`<div class="grid"><div class="card"><h2>Language</h2><div class="row">${[['en','English'],['hi','हिंदी'],['mr','मराठी']].map(([k,l])=>`<button class="chip ${S.lang==k?'on':''}" data-a="lang" data-v="${k}">${l}</button>`).join('')}</div><h2 style="margin-top:16px">Privacy</h2><div class="row"><label style="margin:0"><input type="checkbox" data-a="priv" ${S.priv?'checked':''}> Hide money amounts on screen</label></div></div>
+<div class="card"><h2>PIN lock</h2><p class="sm mu">${S.pin?'PIN is on.':'Protect this app on a shared phone.'}</p><label for="np">4-digit PIN</label><input id="np" inputmode="numeric" maxlength="4" placeholder="1234"><div class="row" style="margin-top:12px"><button class="btn pri" data-a="setpin">Save PIN</button>${S.pin?'<button class="btn" data-a="nopin">Remove PIN</button><button class="btn" data-a="lock">Lock now</button>':''}</div></div>
+<div class="card"><h2>Other</h2><div class="row"><button class="btn" data-a="tour0">Replay tour</button><button class="btn" data-a="reset">Reset demo data</button></div></div></div>`;
+P.help=()=>`<div class="card">${[['How do I add a product?','Open Create. Speak or tap a sample, snap a photo, check the price and publish.'],['Can I use this without internet?','Yes. Listings are saved on your phone and sent when you are back online.'],['Is the payment real?','No. This is a demo gateway. Card 4111 1111 1111 1111 with OTP 123456 succeeds.'],['Someone else uses my phone.','Turn on a PIN and hide amounts in Settings.']].map(f=>`<details style="padding:8px 0;border-bottom:1px solid var(--bd)"><summary><h3>${f[0]}</h3></summary><p class="sm mu">${f[1]}</p></details>`).join('')}<div class="row" style="margin-top:12px"><button class="btn pri" data-a="visit">Request a Sakhi visit</button></div></div>`;
+/* ---------- store ---------- */
+let CART={};
+function store(){const tot=Object.entries(CART).reduce((a,[i,q])=>a+q*S.products.find(p=>p.id==i).price,0);modal(`<div class="row sp"><h2>${esc(S.name)}’s shop</h2><button class="btn sm" data-a="mx">Close</button></div>${S.products.filter(p=>p.sync).map(p=>`<div class="pr"><div class="em">${p.img?`<img src="${p.img}" alt="">`:p.e}</div><div style="flex:1"><h3>${esc(p.name)}</h3><h5>₹${p.price}</h5></div><button class="btn sm" data-a="cm" data-v="${p.id}">−</button><b>${CART[p.id]||0}</b><button class="btn sm" data-a="cp" data-v="${p.id}">+</button></div>`).join('')}<div class="row sp" style="margin-top:12px"><b>Total ₹${tot}</b><button class="btn cta" data-a="chk" ${tot?'':'disabled'}>Checkout</button></div>`)}
+function chk(){modal(`<h2>Pay (demo)</h2><label for="pc">Delivery pincode</label><input id="pc" inputmode="numeric" maxlength="6" value="412205"><label>Method</label><label style="color:var(--tx)"><input type="radio" name="pm" value="upi" checked data-a="pmx"> UPI</label><label style="color:var(--tx)"><input type="radio" name="pm" value="card" data-a="pmx"> Card</label><label style="color:var(--tx)"><input type="radio" name="pm" value="cod" data-a="pmx"> Cash on delivery</label><div id="pf"></div><div class="row" style="margin-top:12px"><button class="btn cta" id="pb" data-a="pay">Pay now</button><button class="btn" data-a="store">Back</button></div>`);pmx()}
+function pmx(){const v=$('input[name=pm]:checked').value;$('#pf').innerHTML=v=='upi'?'<label for="upi">UPI ID</label><input id="upi" placeholder="buyer@okhdfcbank">':v=='card'?'<label for="cn">Card number</label><input id="cn" inputmode="numeric" placeholder="4111 1111 1111 1111"><label for="otp">OTP</label><input id="otp" placeholder="123456">':'<p class="sm mu">Pay when the order arrives.</p>'}
+const luhn=n=>/^\d{13,19}$/.test(n)&&[...n].reverse().reduce((a,d,i)=>{d=+d;if(i%2){d*=2;if(d>9)d-=9}return a+d},0)%10==0;
+function pay(){const v=$('input[name=pm]:checked').value;if(v=='upi'&&!/^[\w.-]{2,}@[a-z]{2,}$/i.test($('#upi').value.trim()))return toast('Enter a valid UPI ID like name@bank','err');
+if(v=='card'){const n=$('#cn').value.replace(/\s/g,'');if(!luhn(n))return toast('Card number is not valid','err');if(n=='4000000000000002')return toast('Bank declined the card. Try another card.','err');if(n=='4000000000009995')return toast('Insufficient funds on this card','err');if($('#otp').value!='123456')return toast('Wrong OTP. Use 123456 in this demo.','err')}
+const b=$('#pb');b.disabled=1;b.textContent='Processing…';const pc=$('#pc').value||'412205';
+setTimeout(()=>{Object.entries(CART).forEach(([i,q])=>{const p=S.products.find(x=>x.id==i),id=Math.max(1000,...S.orders.map(o=>o.id))+1;S.orders.push({id,item:p.name,qty:q,amt:p.price*q,pc,v:'Village',st:'new',pay:v.toUpperCase()});S.sales[6]+=p.price*q});CART={};save();modal('<div style="text-align:center"><div style="font-size:48px">✅</div><h2>Payment successful</h2><p class="sm mu">The seller has your order.</p><button class="btn pri" data-a="mx">Done</button></div>');toast('New order received');nav();if(R=='orders'||R=='home')render()},900)}
+/* ---------- actions ---------- */
+function compress(f,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,480/im.width),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.7))};im.src=r.result};r.readAsDataURL(f)}
+const setO=(id,st)=>{const o=S.orders.find(x=>x.id==id);o.st=st;save();nav();render()};
+const A={menu:()=>$('#app').classList.toggle('open'),col:()=>{S.col=S.col?0:1;save();nav()},theme:()=>{const d=document.documentElement;S.theme=d.dataset.theme=='dark'?'light':'dark';d.dataset.theme=S.theme;save()},
+listen:()=>say($('#ttl').textContent+'. '+($('#pg').innerText||'').slice(0,160)),newl:()=>{location.hash='create'},mclose:(e)=>{if(e.target.classList.contains('ov'))mx()},mx,
+prof:()=>{$('#pm').innerHTML=$('#pm').innerHTML?'':`<div class="pop"><button class="nl" data-a="lock"><i>🔒</i><span>Lock now</span></button><button class="nl" data-a="priv2"><i>👁</i><span>${S.priv?'Show':'Hide'} amounts</span></button><button class="nl" data-a="langn"><i>🌐</i><span>Language: ${S.lang.toUpperCase()}</span></button></div>`},
+priv2:()=>{S.priv=S.priv?0:1;save();nav()},langn:()=>{S.lang={en:'hi',hi:'mr',mr:'en'}[S.lang];save();nav();render()},lang:(e,v)=>{S.lang=v;save();nav();render()},priv:(e)=>{S.priv=e.target.checked?1:0;save();nav()},
+mic:()=>{const o=$('.orb');o.classList.add('rec');listen(x=>{C.t=x;o.classList.remove('rec');render()});setTimeout(()=>o.classList.remove('rec'),6000)},samp:(e,v)=>{C.t=SAMP[v];render()},
+mk:()=>{C.busy=1;C.d=null;C.ok=0;render();setTimeout(()=>{draft();C.busy=0;render();say(C.d.name+'. Price between '+C.d.lo+' and '+C.d.hi+' rupees.')},900)},hear:()=>say(C.d.name+', '+C.d.price+' rupees'),
+pub:()=>{const d=C.d;if(!d.name.trim())return toast('Add a product name','err');const on=navigator.onLine;S.products.push({id:Date.now(),name:d.name,cat:d.cat,price:d.price,e:d.e,img:C.img,sync:on?1:0});save();C.ok=1;toast(on?'Published! Your shop is live.':'Offline — saved locally. Will sync later.');nav();render()},
+del:(e,v)=>{const i=S.products.findIndex(p=>p.id==v),p=S.products.splice(i,1)[0];save();render();toast('Product deleted',0,'Undo',()=>{S.products.splice(i,0,p);save();render()})},
+acc:(e,v)=>{const o=S.orders.find(x=>x.id==v);S.bal+=net(o.amt);toast('Order accepted. ₹'+net(o.amt)+' added to balance');setO(v,'accepted')},dec:(e,v)=>{setO(v,'declined');toast('Order declined')},dlv:(e,v)=>{setO(v,'done');toast('Marked delivered')},
+pool:(e,v)=>{const n=S.orders.filter(o=>o.pc==v&&(o.st=='new'||o.st=='accepted')).length;toast(`Pickup booked for ${n} orders. You save ~₹${(n-1)*40}.`)},
+wd:()=>{if(!/^[\w.-]{2,}@[a-z]{2,}$/i.test(S.upi.trim()))return toast('Enter a valid UPI ID first','err');const a=S.bal;S.pays.unshift({d:new Date().toLocaleDateString('en-IN'),a,u:S.upi});S.bal=0;save();toast('₹'+a+' sent to '+S.upi+' (demo)');nav();render()},
+q:(e,v)=>{Q[e.target.dataset.k]=v;Q.go=0;render()},qgo:()=>{Q.go=1;render()},exp:(e,v)=>say(SC[v].n+'. '+SC[v].e),lf:(e,v)=>{LF=v;render()},ld:(e,v)=>{v=+v;S.done=S.done.includes(v)?S.done.filter(x=>x!=v):[...S.done,v];save();render()},lsn:(e,v)=>say(LE[v][0]+'. '+LE[v][3]),
+pmic:()=>listen(x=>{$('#pt').value=x}),post:()=>{const x=$('#pt').value.trim();if(!x)return toast('Write something first','err');S.posts.unshift({id:Date.now(),by:S.name,tx:x,lk:0,r:[],me:0});save();toast('Posted');render()},lk:(e,v)=>{const p=S.posts.find(x=>x.id==v);p.me=p.me?0:1;save();render()},
+setpin:()=>{const v=$('#np').value;if(!/^\d{4}$/.test(v))return toast('PIN must be 4 digits','err');S.pin=v;save();toast('PIN saved');render()},nopin:()=>{S.pin='';save();toast('PIN removed');render()},lock:()=>lock(),
+tour0:()=>{location.hash='home';setTimeout(()=>tour(0),300)},reset:()=>{if(confirm('Reset all demo data?')){localStorage.removeItem('oj');location.reload()}},visit:()=>toast('Request sent. A Sakhi will call you soon.'),
+
+aiMic:()=>{listen(x=>{$('#ai-in').value=x;A.aiSend()})},
+aiQuick:(e,v)=>{$('#ai-in').value=v;A.aiSend()},
+aiSend:async ()=>{
+  const inp = $('#ai-in');
+  const txt = (inp.value||'').trim();
+  if(!txt) return;
+  inp.value = '';
+  const box = $('#ai-chat');
+  box.innerHTML += `<div style="background:var(--p);color:#fff;padding:10px 14px;border-radius:12px;max-width:85%;align-self:flex-end"><b>You:</b> ${esc(txt)}</div>`;
+  box.scrollTop = box.scrollHeight;
+  
+  const botBubble = document.createElement('div');
+  botBubble.style.cssText = 'background:var(--card);padding:10px 14px;border-radius:12px;max-width:85%;align-self:flex-start';
+  botBubble.innerHTML = '<b>Sakhi Didi:</b> Thinking…';
+  box.appendChild(botBubble);
+  box.scrollTop = box.scrollHeight;
+
+  try {
+    const res = await fetch('/api/assistant', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ message: txt, locale: S.lang || 'en' })
+    });
+    if(!res.ok) throw new Error('API error');
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let accumulated = '';
+    botBubble.innerHTML = '<b>Sakhi Didi:</b> ';
+    while(true) {
+      const { value, done } = await reader.read();
+      if(done) break;
+      const chunk = decoder.decode(value);
+      const lines = chunk.split('\n');
+      for(const line of lines) {
+        if(line.startsWith('data: ')) {
+          try {
+            const data = JSON.parse(line.slice(6));
+            if(data.token) {
+              accumulated += data.token;
+              botBubble.innerHTML = '<b>Sakhi Didi:</b> ' + esc(accumulated);
+              box.scrollTop = box.scrollHeight;
+            }
+          } catch(e) {}
+        }
+      }
+    }
+    if(!accumulated) botBubble.innerHTML = '<b>Sakhi Didi:</b> I am here to help you grow your shop!';
+  } catch(e) {
+    botBubble.innerHTML = '<b>Sakhi Didi:</b> I am here to guide you with your shop, schemes, and orders!';
+  }
+},
+store:()=>store(),cm:(e,v)=>{CART[v]=Math.max(0,(CART[v]||0)-1);if(!CART[v])delete CART[v];store()},cp:(e,v)=>{CART[v]=(CART[v]||0)+1;store()},chk,pay,pmx};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el||el.tagName=='INPUT'&&el.type!='radio'&&el.type!='checkbox')return;if(el.tagName=='A')e.preventDefault();const f=A[el.dataset.a];if(f)f(e,el.dataset.v)});
+document.addEventListener('change',e=>{const el=e.target;if(el.dataset.a&&el.type=='checkbox'||el.dataset.a=='pmx'){const f=A[el.dataset.a];if(f)f(e,el.dataset.v)}if(el.id=='ph'&&el.files[0])compress(el.files[0],u=>{C.img=u;render()})});
+document.addEventListener('input',e=>{const i=e.target.dataset.i;if(i=='ctxt')C.t=e.target.value;if(i=='dn')C.d.name=e.target.value;if(i=='dp'){C.d.price=+e.target.value;$('#pv').textContent=C.d.price}if(i=='upi')S.upi=e.target.value;if(i=='ctxt'){const b=document.querySelector('[data-a=mk]');if(b)b.disabled=!C.t.trim()}});
+document.addEventListener('keydown',e=>{if(e.key=='Escape')mx()});
+/* ---------- lock, tour, router ---------- */
+function lock(){if(!S.pin)return toast('Set a PIN in Settings first','err');let v='';const d=document.createElement('div');d.className='lock';d.innerHTML='<div><div class="av" style="margin:auto">🔒</div><h1 style="margin:8px">Enter PIN</h1><h2 id="dots">○○○○</h2><div class="keys"></div></div>';document.body.append(d);const k=d.querySelector('.keys');
+['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(x=>{const b=document.createElement('button');b.className='btn';b.textContent=x;if(!x)b.style.visibility='hidden';b.onclick=()=>{v=x=='⌫'?v.slice(0,-1):(v+x).slice(0,4);d.querySelector('#dots').textContent='●'.repeat(v.length)+'○'.repeat(4-v.length);if(v.length==4){if(v==S.pin)d.remove();else{toast('Wrong PIN','err');v='';d.querySelector('#dots').textContent='○○○○'}}};k.append(b)})}
+const TS=[['#k1','Your earnings and orders at a glance.'],['#newbtn','Start a new listing from anywhere.'],['#nav-create','All your pages are here. Tap an icon to jump.'],['#grow','Schemes, lessons and the sisters community live here.']];
+function tour(i){document.querySelectorAll('.tip').forEach(x=>x.remove());document.querySelectorAll('.ring').forEach(x=>x.classList.remove('ring'));if(i>=TS.length){S.tour=1;save();return}
+let el=$(TS[i][0]);if(!el||!el.offsetParent)el=$('#ttl');el.classList.add('ring');const r=el.getBoundingClientRect(),d=document.createElement('div');d.className='tip';d.innerHTML=`${TS[i][1]}<div class="row sp" style="margin-top:8px"><button class="btn sm" data-t="s">Skip</button><span>${i?'<button class="btn sm" data-t="p">Back</button>':''}<button class="btn sm cta" data-t="n">${i==TS.length-1?'Done':'Next'}</button></span></div>`;d.style.top=Math.min(innerHeight-130,r.bottom+10)+'px';d.style.left=Math.max(8,Math.min(innerWidth-270,r.left))+'px';document.body.append(d);
+d.onclick=e=>{const k=e.target.dataset.t;if(k=='n')tour(i+1);if(k=='p')tour(i-1);if(k=='s'){S.tour=1;save();tour(99)}}}
+function render(){const pg=$('#pg');const y=pg.scrollTop;pg.innerHTML=(P[R]||P.home)();}
+function go(){R=location.hash.slice(1).split('/')[0]||'home';if(!P[R])R='home';$('#app').classList.remove('open');nav();$('#pg').innerHTML='<div class="sk"></div><div class="sk"></div>';setTimeout(()=>{render();scrollTo(0,0)},120)}
+window.addEventListener('hashchange',go);
+window.addEventListener('offline',()=>toast('Offline — saved locally'));
+window.addEventListener('online',()=>{const n=pend();if(!n)return toast('Back online');toast(`Syncing ${n} listing${n>1?'s':''}…`);setTimeout(()=>{S.products.forEach(p=>p.sync=1);save();toast('Synced');if(R=='products')render()},1200)});
+document.documentElement.dataset.theme=S.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+
+// Sync backend products, orders, payouts
+async function syncBackend() {
+  try {
+    const [pRes, oRes, payRes] = await Promise.all([
+      fetch('/api/products').then(r=>r.ok?r.json():null),
+      fetch('/api/orders').then(r=>r.ok?r.json():null),
+      fetch('/api/payouts').then(r=>r.ok?r.json():null)
+    ]);
+    if(pRes && pRes.ok && pRes.products && pRes.products.length > 0) {
+      S.products = pRes.products.map(p => ({
+        id: p.id,
+        name: p.title,
+        cat: 'General',
+        price: p.priceINR,
+        e: '📦',
+        sync: 1,
+        img: p.images && p.images[0] ? p.images[0] : ''
+      }));
+    }
+    if(oRes && oRes.ok && oRes.orders && oRes.orders.length > 0) {
+      S.orders = oRes.orders.map(o => ({
+        id: o.id.slice(-4),
+        item: o.buyerName ? 'Order from ' + o.buyerName : 'Order',
+        qty: 1,
+        amt: o.total,
+        pc: '412205',
+        v: 'Village',
+        st: o.status === 'READY' || o.status === 'DELIVERED' ? 'done' : 'new',
+        pay: o.payStatus === 'PAID' ? 'UPI' : 'COD'
+      }));
+    }
+    if(payRes && payRes.ok) {
+      if(payRes.settledTotal !== undefined) S.bal = payRes.pendingTotal || 194;
+    }
+    save();
+    nav();
+    render();
+  } catch(e) {
+    console.warn('[Dashboard] Local mode fallback:', e);
+  }
+}
+syncBackend();
+
+go();if(S.pin)lock();if(!S.tour)setTimeout(()=>tour(0),700);
+</script></body></html>

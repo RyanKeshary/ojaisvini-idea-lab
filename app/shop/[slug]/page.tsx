@@ -38,11 +38,11 @@ export default async function ShopPage({ params }: { params: Promise<{ slug: str
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col gap-5 px-4 pb-16 pt-6">
       <p>
-        <span className="rounded-full bg-[var(--leaf)] px-3 py-1 text-sm font-bold text-white">{t("liveBadge")}</span>
+        <span className="rounded-full bg-[var(--leaf)] px-3 py-1 text-sm font-bold text-[var(--primary-ink)]">{t("liveBadge")}</span>
       </p>
       <StorefrontHero shopName={shop.name} greeting={shop.bio || ""} />
       <div className="flex flex-wrap gap-2">
-        <a href={waAsk} target="_blank" rel="noreferrer" className="flex min-h-[56px] items-center rounded-full bg-[var(--leaf)] px-5 text-base font-bold text-white">
+        <a href={waAsk} target="_blank" rel="noreferrer" className="flex min-h-[56px] items-center rounded-full bg-[var(--leaf)] px-5 text-base font-bold text-[var(--primary-ink)]">
           {t("askSeller")}
         </a>
         <StatusPill status="LIVE" />

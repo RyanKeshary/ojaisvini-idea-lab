@@ -145,7 +145,7 @@ export default function StaffLoginPage() {
             type="button"
             disabled={busy}
             onClick={() => quickLogin("admin@ojas.demo", "demo1234")}
-            className="flex min-h-[52px] items-center justify-center rounded-[12px] bg-[var(--madder)] px-3 text-center text-sm font-bold text-white transition-transform active:scale-95 disabled:opacity-50 hover:opacity-90"
+            className="flex min-h-[52px] items-center justify-center rounded-[12px] bg-[var(--madder)] px-3 text-center text-sm font-bold text-[var(--primary-ink)] transition-transform active:scale-95 disabled:opacity-50 hover:opacity-90"
           >
             👑 Admin Access
           </button>
@@ -153,7 +153,7 @@ export default function StaffLoginPage() {
             type="button"
             disabled={busy}
             onClick={() => quickLogin("sakhi@ojas.demo", "demo1234")}
-            className="flex min-h-[52px] items-center justify-center rounded-[12px] bg-[var(--indigo)] px-3 text-center text-sm font-bold text-white transition-transform active:scale-95 disabled:opacity-50 hover:opacity-90"
+            className="flex min-h-[52px] items-center justify-center rounded-[12px] bg-[var(--indigo)] px-3 text-center text-sm font-bold text-[var(--primary-ink)] transition-transform active:scale-95 disabled:opacity-50 hover:opacity-90"
           >
             🤝 Sakhi Access
           </button>

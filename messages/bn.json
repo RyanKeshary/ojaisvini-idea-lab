@@ -23,7 +23,8 @@
     "learn": "শিখুন",
     "create": "নতুন পণ্য",
     "orders": "অর্ডার",
-    "more": "আরও"
+    "more": "আরও",
+    "profile": "প্রোফাইল"
   },
   "landing": {
     "title": "Ojasvini",
@@ -178,6 +179,10 @@
     "impactTitle": "Rural Maharashtra ke liye, poore India ke liye taiyaar",
     "impactLine": "Quality education (SDG 4) local bhasha micro-lessons se; innovation (SDG 9) offline-first commerce se.",
     "demoTitle": "Live demo try karo",
+    "selfDemoTitle": "স্ক্রল করে বিক্রি করুন",
+    "beat1": "পণ্য তালিকাভুক্ত হলো",
+    "beat2": "আপনার দোকানে লাইভ",
+    "beat3": "অর্ডারের টাকা এলো",
     "demoOtpNote": "Demo login: koi bhi phone, OTP 123456. Kahin asli paise nahin.",
     "demoLogin": "Demo login try karo",
     "sampleShop": "Sample dukaan dekho",
@@ -199,7 +204,12 @@
         "a": "Buyer tumhari UPI par pay karte hain. Pehle safe simulator par practice karo."
       }
     ],
-    "footer": "Maharashtra mein samman ke saath banaya."
+    "footer": "Maharashtra mein samman ke saath banaya.",
+    "heroSub": "একটা ছবি আর আপনার কণ্ঠে আপনার দোকান। নিজের লিংকে বিক্রি করুন, UPI-তে টাকা নিন। বিনামূল্যে, অফলাইনে, আপনার ভাষায়।",
+    "filmTitle": "ওজস্বিনী ব্যবহার করতে দেখুন",
+    "filmDesc": "চলমান অ্যাপ: এটা কী করে, কার জন্য।",
+    "demoDesc": "স্ক্রল করতে থাকুন। অ্যাপ একটা পণ্য তালিকাভুক্ত করে অর্ডার আনে, প্রতিটি ধাপে।",
+    "closeLine": "আপনার প্রথম অর্ডার একটা ছবি দূরে।"
   },
   "auth": {
     "login": "লগইন",

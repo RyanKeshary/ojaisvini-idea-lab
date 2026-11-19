@@ -27,7 +27,7 @@ export function FakeUpi({ onDone }: { onDone?: () => void }) {
       <AnimatePresence mode="wait">
         {stage === "done" ? (
           <motion.div key="done" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center gap-2 py-4">
-            <span className="grid h-16 w-16 place-items-center rounded-full bg-[var(--leaf)] text-white" aria-hidden>
+            <span className="grid h-16 w-16 place-items-center rounded-full bg-[var(--leaf)] text-[var(--primary-ink)]" aria-hidden>
               <Check size={32} />
             </span>
             <p className="display text-2xl font-bold">{inr(n)}</p>
@@ -63,7 +63,7 @@ export function FakeUpi({ onDone }: { onDone?: () => void }) {
               type="button"
               onClick={send}
               disabled={stage === "sending"}
-              className="min-h-[64px] rounded-[20px] bg-[var(--leaf)] text-lg font-bold text-white disabled:opacity-60"
+              className="min-h-[64px] rounded-[20px] bg-[var(--leaf)] text-lg font-bold text-[var(--primary-ink)] disabled:opacity-60"
             >
               {stage === "sending" ? "…" : `${t("upiSend")} ${inr(Number.isFinite(n) ? n : 0)}`}
             </button>

@@ -4,25 +4,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ListenButton } from "@/components/voice/ListenButton";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { inr } from "@/lib/utils";
-
-type Note = {
-  id: string;
-  kind: string;
-  payload: { orderId?: string; total?: number; net?: number; items?: number; buyer?: string };
-  read: boolean;
-  createdAt: string;
-};
-
-function describe(n: Note): string {
-  if (n.kind === "new-order") {
-    return `🧺 New order ${inr(n.payload.total || 0)}${n.payload.buyer ? ` — ${n.payload.buyer}` : ""}`;
-  }
-  if (n.kind === "payout-ready") {
-    return `💰 Payout ready: ${inr(n.payload.net || 0)}`;
-  }
-  return `• ${n.kind}`;
-}
+import { describeNotification, type Notification as Note } from "@/lib/notifications";
 
 /** In-app inbox with spoken summary. Web Push needs prod VAPID infra (deferred). */
 export default function NotificationsPage() {
@@ -65,14 +47,14 @@ export default function NotificationsPage() {
           </button>
         )}
       </div>
-      <ListenButton text={items.map(describe).join(". ") || t("empty")} />
+      <ListenButton text={items.map(describeNotification).join(". ") || t("empty")} />
       {items.length === 0 ? (
         <EmptyState icon="🔔" title={t("empty")} />
       ) : (
         <ul className="flex flex-col gap-2">
           {items.map((n) => (
             <li key={n.id} className="rounded-[20px] border bg-[var(--card)] p-4" style={{ borderColor: n.read ? "var(--border)" : "var(--turmeric)" }}>
-              <p className="text-base">{describe(n)}</p>
+              <p className="text-base">{describeNotification(n)}</p>
               <div className="mt-1 flex items-center justify-between">
                 <span className="text-xs opacity-60">{new Date(n.createdAt).toLocaleDateString()}</span>
                 {n.payload.orderId && (

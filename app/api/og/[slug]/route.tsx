@@ -59,13 +59,13 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: "#E4F1EE",
+        background: "#EBEBEB",
         fontFamily: face ? "OG" : "sans-serif",
       }}
     >
-      <div style={{ width: 120, height: 120, borderRadius: 60, background: "#0E7468" }} />
-      <div style={{ fontSize: 64, fontWeight: 700, color: "#112623", marginTop: 24 }}>{name}</div>
-      <div style={{ fontSize: 32, color: "#C83758", marginTop: 8 }}>{sub}</div>
+      <div style={{ width: 120, height: 120, borderRadius: 60, background: "#004E98" }} />
+      <div style={{ fontSize: 64, fontWeight: 700, color: "#0F1D33", marginTop: 24 }}>{name}</div>
+      <div style={{ fontSize: 32, color: "#B34700", marginTop: 8 }}>{sub}</div>
     </div>
   );
 

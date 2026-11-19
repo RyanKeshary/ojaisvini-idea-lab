@@ -66,7 +66,7 @@ export function AudioNote({ onReady }: { onReady: (url: string | null) => void }
         </button>
       )}
       {recording && (
-        <button type="button" onClick={stop} className="flex min-h-[56px] items-center gap-2 rounded-[12px] px-4 text-base font-bold text-white" style={{ background: "var(--madder)" }} aria-label={t("stop")}>
+        <button type="button" onClick={stop} className="flex min-h-[56px] items-center gap-2 rounded-[12px] px-4 text-base font-bold text-[var(--primary-ink)]" style={{ background: "var(--madder)" }} aria-label={t("stop")}>
           <Square size={18} aria-hidden /> ● ● ●
         </button>
       )}

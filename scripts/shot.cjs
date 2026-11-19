@@ -7,13 +7,21 @@
  * the session on every request, so protected routes render authenticated.
  */
 const puppeteer = require("puppeteer-core");
+const fs = require("fs");
+
+// Chrome moved from Windows-only path to per-OS lookup so visual QA runs anywhere.
+const CHROME_CANDIDATES =
+  process.platform === "win32"
+    ? ["C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"]
+    : ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "/usr/bin/google-chrome", "/usr/bin/chromium"];
+const chromePath = process.env.CHROME_PATH || CHROME_CANDIDATES.find((p) => fs.existsSync(p));
 
 (async () => {
   const [url, out, w, h, locale = "mr", theme = "light", motion = "full", waitMs = "2500", full = "1", loginPhone = ""] =
     process.argv.slice(2);
   const prefs = { locale, theme, reduceMotion: motion === "reduced", voiceSpeed: 1, textSize: "base" };
   const browser = await puppeteer.launch({
-    executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    executablePath: chromePath,
     headless: "new",
     args: ["--no-sandbox", "--disable-dev-shm-usage", "--force-device-scale-factor=1"],
   });

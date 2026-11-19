@@ -3,7 +3,7 @@ import { getUploadedFile } from "@/lib/photos/storage";
 
 export async function GET(
   _req: Request,
-  { params }: { params: Promise<{ name: string }> | { name: string } }
+  { params }: { params: Promise<{ name: string }> }
 ) {
   try {
     const resolvedParams = await Promise.resolve(params);

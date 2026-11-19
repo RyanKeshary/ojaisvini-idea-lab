@@ -33,7 +33,7 @@ export function WaCatalog({ onDone }: { onDone?: () => void }) {
           <input value={price} onChange={(e) => setPrice(e.target.value.replace(/\D/g, "").slice(0, 6))} inputMode="numeric" className={field} style={{ borderColor: "var(--border)" }} />
         </label>
       </div>
-      <button type="button" onClick={add} className="mt-2 min-h-[56px] w-full rounded-[12px] bg-[var(--leaf)] text-base font-bold text-white">
+      <button type="button" onClick={add} className="mt-2 min-h-[56px] w-full rounded-[12px] bg-[var(--leaf)] text-base font-bold text-[var(--primary-ink)]">
         {t("waAdd")}
       </button>
       {items.length > 0 && (

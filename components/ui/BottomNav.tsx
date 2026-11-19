@@ -18,7 +18,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-40 border-t bg-white/85 dark:bg-[#101e1c]/85 backdrop-blur-xl pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(17,38,35,0.05)]"
+      className="fixed inset-x-0 bottom-0 z-40 border-t bg-white/85 dark:bg-[#18202b]/85 backdrop-blur-xl pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(15,29,51,0.05)]"
       style={{ borderColor: "var(--border)" }}
     >
       <ul className="mx-auto grid max-w-lg grid-cols-5">

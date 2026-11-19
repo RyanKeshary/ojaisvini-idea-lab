@@ -68,7 +68,7 @@ export function BuyBox({
         href={waOrder}
         target="_blank"
         rel="noreferrer"
-        className="flex min-h-[64px] items-center justify-center rounded-[20px] bg-[var(--leaf)] px-6 text-lg font-bold text-white"
+        className="flex min-h-[64px] items-center justify-center rounded-[20px] bg-[var(--leaf)] px-6 text-lg font-bold text-[var(--primary-ink)]"
       >
         {orderLabel}
       </a>

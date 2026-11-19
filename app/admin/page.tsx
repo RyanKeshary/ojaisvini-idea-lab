@@ -224,7 +224,7 @@ function ReportsView({ data, act, t }: { data: { reports?: ReportRow[]; flagged?
             <button type="button" onClick={() => act("/api/admin/reports", { reportId: r.id, action: "dismiss" })} className="min-h-[48px] rounded-full border px-3 text-sm font-bold" style={{ borderColor: "var(--border)" }}>
               {t("dismiss")}
             </button>
-            <button type="button" onClick={() => act("/api/admin/reports", { reportId: r.id, action: "hide" })} className="min-h-[48px] rounded-full bg-[var(--madder)] px-3 text-sm font-bold text-white">
+            <button type="button" onClick={() => act("/api/admin/reports", { reportId: r.id, action: "hide" })} className="min-h-[48px] rounded-full bg-[var(--madder)] px-3 text-sm font-bold text-[var(--primary-ink)]">
               {t("hide")}
             </button>
           </div>

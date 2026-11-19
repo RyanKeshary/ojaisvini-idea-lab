@@ -18,7 +18,14 @@
     "no": "नहीं",
     "demoHint": "डेमो मोड: असली पैसे नहीं, असली SMS नहीं।"
   },
-  "nav": { "home": "मुख्यपृष्ठ", "learn": "सीखें", "create": "नया उत्पाद", "orders": "ऑर्डर", "more": "अधिक" },
+  "nav": {
+    "home": "मुख्यपृष्ठ",
+    "learn": "सीखें",
+    "create": "नया उत्पाद",
+    "orders": "ऑर्डर",
+    "more": "अधिक",
+    "profile": "प्रोफ़ाइल"
+  },
   "landing": {
     "title": "Ojasvini",
     "subtitle": "Tejasvi, sashakt mahila ghar baithe beche.",
@@ -35,64 +42,174 @@
     "illustrative": "Field experience se illustrative figures.",
     "howTitle": "Kaise kaam karta hai",
     "steps": [
-      { "t": "Bolo", "d": "Samaan ka naam bolo. Likhne ki zaroorat nahin." },
-      { "t": "Photo lo", "d": "Photo lo. Hum listing likh denge." },
-      { "t": "Becho", "d": "Dukaan ka link baanto. Pehla order pao." }
+      {
+        "t": "Bolo",
+        "d": "Samaan ka naam bolo. Likhne ki zaroorat nahin."
+      },
+      {
+        "t": "Photo lo",
+        "d": "Photo lo. Hum listing likh denge."
+      },
+      {
+        "t": "Becho",
+        "d": "Dukaan ka link baanto. Pehla order pao."
+      }
     ],
     "journeyTitle": "Unka safar",
     "journey": [
-      { "t": "Discover", "d": "Apni bhasha mein voice onboarding." },
-      { "t": "Seekho", "d": "2-minute lesson: UPI, photo, daam." },
-      { "t": "Banao", "d": "Bolo, photo lo, AI listing." },
-      { "t": "Becho", "d": "Live dukaan, demo payment, order." },
-      { "t": "Badho", "d": "Kamai, yojana, community." }
+      {
+        "t": "Discover",
+        "d": "Apni bhasha mein voice onboarding."
+      },
+      {
+        "t": "Seekho",
+        "d": "2-minute lesson: UPI, photo, daam."
+      },
+      {
+        "t": "Banao",
+        "d": "Bolo, photo lo, AI listing."
+      },
+      {
+        "t": "Becho",
+        "d": "Live dukaan, demo payment, order."
+      },
+      {
+        "t": "Badho",
+        "d": "Kamai, yojana, community."
+      }
     ],
     "featuresTitle": "Sab kuch ek jagah",
     "features": [
-      { "t": "Digital skills", "d": "Practice simulator ke saath chhote lesson." },
-      { "t": "Voice assistant", "d": "Har screen par tap, bolo, ho gaya." },
-      { "t": "Seller dashboard", "d": "Kamai, order, payout — sunkar." },
-      { "t": "AI chatbot", "d": "Sakhi Didi business sawalon ka jawab." },
-      { "t": "Photo-to-listing", "d": "Ek photo poori listing ban jaati hai." },
-      { "t": "Scheme finder", "d": "Sirf wahi yojana jo tumhe mile." },
-      { "t": "Community", "d": "Sakhi mentors ke saath women-only forum." }
+      {
+        "t": "Digital skills",
+        "d": "Practice simulator ke saath chhote lesson."
+      },
+      {
+        "t": "Voice assistant",
+        "d": "Har screen par tap, bolo, ho gaya."
+      },
+      {
+        "t": "Seller dashboard",
+        "d": "Kamai, order, payout — sunkar."
+      },
+      {
+        "t": "AI chatbot",
+        "d": "Sakhi Didi business sawalon ka jawab."
+      },
+      {
+        "t": "Photo-to-listing",
+        "d": "Ek photo poori listing ban jaati hai."
+      },
+      {
+        "t": "Scheme finder",
+        "d": "Sirf wahi yojana jo tumhe mile."
+      },
+      {
+        "t": "Community",
+        "d": "Sakhi mentors ke saath women-only forum."
+      }
     ],
     "whyTitle": "Ojasvini alag kyun hai",
-    "whyCols": ["Ojasvini", "E-commerce apps", "Training portals"],
+    "whyCols": [
+      "Ojasvini",
+      "E-commerce apps",
+      "Training portals"
+    ],
     "why": {
       "rows": [
-        ["Voice-first, padhna zaroori nahin", "Literacy + English maangte hain", "Theory video, practice nahin"],
-        ["Photo se live dukaan", "Manual catalog setup", "Bechna hi nahin"],
-        ["Offline chalega, low-data", "Hamesha online", "Sheher wale, bhaari video"],
-        ["Seekho + becho + yojana", "Sirf bechna", "Sirf seekhna"]
+        [
+          "Voice-first, padhna zaroori nahin",
+          "Literacy + English maangte hain",
+          "Theory video, practice nahin"
+        ],
+        [
+          "Photo se live dukaan",
+          "Manual catalog setup",
+          "Bechna hi nahin"
+        ],
+        [
+          "Offline chalega, low-data",
+          "Hamesha online",
+          "Sheher wale, bhaari video"
+        ],
+        [
+          "Seekho + becho + yojana",
+          "Sirf bechna",
+          "Sirf seekhna"
+        ]
       ]
     },
     "storyTitle": "Milo Sunita se: day 1 se day 30",
     "story": [
-      { "d": "Day 1", "t": "Voice se register, Marathi chuni." },
-      { "d": "Day 3", "t": "Safe simulator par UPI seekha." },
-      { "d": "Day 7", "t": "Achaar ki photo, dukaan publish." },
-      { "d": "Day 15", "t": "Pehla demo order awaaz ke saath." },
-      { "d": "Day 30", "t": "Kamai dekhi, MUDRA loan mila." }
+      {
+        "d": "Day 1",
+        "t": "Voice se register, Marathi chuni."
+      },
+      {
+        "d": "Day 3",
+        "t": "Safe simulator par UPI seekha."
+      },
+      {
+        "d": "Day 7",
+        "t": "Achaar ki photo, dukaan publish."
+      },
+      {
+        "d": "Day 15",
+        "t": "Pehla demo order awaaz ke saath."
+      },
+      {
+        "d": "Day 30",
+        "t": "Kamai dekhi, MUDRA loan mila."
+      }
     ],
     "stats": [
-      { "v": "9/10", "d": "Sellers kehti hain bhasha online jaane se rokti hai." },
-      { "v": "1 phone", "d": "Aksar poore parivaar ke saath shared." },
-      { "v": "0", "d": "Gaon mein unke liye tailored digital training." }
+      {
+        "v": "9/10",
+        "d": "Sellers kehti hain bhasha online jaane se rokti hai."
+      },
+      {
+        "v": "1 phone",
+        "d": "Aksar poore parivaar ke saath shared."
+      },
+      {
+        "v": "0",
+        "d": "Gaon mein unke liye tailored digital training."
+      }
     ],
     "impactTitle": "Rural Maharashtra ke liye, poore India ke liye taiyaar",
     "impactLine": "Quality education (SDG 4) local bhasha micro-lessons se; innovation (SDG 9) offline-first commerce se.",
     "demoTitle": "Live demo try karo",
+    "selfDemoTitle": "स्क्रॉल करके बिक्री करें",
+    "beat1": "प्रोडक्ट लिस्ट हुआ",
+    "beat2": "आपकी दुकान पर लाइव",
+    "beat3": "ऑर्डर का पैसा मिला",
     "demoOtpNote": "Demo login: koi bhi phone, OTP 123456. Kahin asli paise nahin.",
     "demoLogin": "Demo login try karo",
     "sampleShop": "Sample dukaan dekho",
     "faq": [
-      { "q": "Kya sach mein free hai?", "a": "Haan. Seekhna, listing, bechna free. Demo payment mein asli paise nahin." },
-      { "q": "Main padh nahin sakti. Use kar paungi?", "a": "Haan — yahi point hai. Har screen voice + icon se chalti hai." },
-      { "q": "Ghar par internet nahin?", "a": "Kaam phone mein save rehta hai, network aate hi sync." },
-      { "q": "Paise kaise milenge?", "a": "Buyer tumhari UPI par pay karte hain. Pehle safe simulator par practice karo." }
+      {
+        "q": "Kya sach mein free hai?",
+        "a": "Haan. Seekhna, listing, bechna free. Demo payment mein asli paise nahin."
+      },
+      {
+        "q": "Main padh nahin sakti. Use kar paungi?",
+        "a": "Haan — yahi point hai. Har screen voice + icon se chalti hai."
+      },
+      {
+        "q": "Ghar par internet nahin?",
+        "a": "Kaam phone mein save rehta hai, network aate hi sync."
+      },
+      {
+        "q": "Paise kaise milenge?",
+        "a": "Buyer tumhari UPI par pay karte hain. Pehle safe simulator par practice karo."
+      }
     ],
-    "footer": "Maharashtra mein samman ke saath banaya."
+    "footer": "Maharashtra mein samman ke saath banaya.",
+    "heroSub": "एक फ़ोटो और अपनी आवाज़ से अपनी दुकान बनाएँ। अपने लिंक पर बेचें, UPI से भुगतान पाएँ। मुफ़्त, ऑफ़लाइन, अपनी भाषा में।",
+    "filmTitle": "ओजस्विनी को काम करते देखें",
+    "filmDesc": "चलती हुई ऐप: यह क्या करती है और किसके लिए है।",
+    "demoDesc": "स्क्रॉल करते रहें। ऐप एक प्रोडक्ट लिस्ट करती है और ऑर्डर लाती है, एक-एक कदम पर।",
+    "closeLine": "आपका पहला ऑर्डर एक फ़ोटो दूर है।"
   },
   "auth": {
     "login": "Login karein",
@@ -281,7 +398,16 @@
   "community": {
     "title": "Community",
     "subtitle": "Sirf mahilayein. Poocho, baanto, khushiyaan.",
-    "rooms": ["Sab", "Food", "Handicraft", "Tailoring", "Dairy", "Paise", "Tech madad", "Jeet"],
+    "rooms": [
+      "Sab",
+      "Food",
+      "Handicraft",
+      "Tailoring",
+      "Dairy",
+      "Paise",
+      "Tech madad",
+      "Jeet"
+    ],
     "latest": "Naye",
     "popular": "Popular",
     "ask": "Poocho / Baanto",
@@ -320,12 +446,30 @@
     "checkin": "Check-in note karo",
     "notesHint": "Notes (kya baat hui?)",
     "logBtn": "Note save karo",
-    "types": { "visit": "Visit", "call": "Call", "training": "Training", "followup": "Follow-up", "problem": "Problem" },
-    "stuck": { "no-products": "Abhi product nahin", "no-orders": "Abhi order nahin", "few-lessons": "Lesson chahiye" }
+    "types": {
+      "visit": "Visit",
+      "call": "Call",
+      "training": "Training",
+      "followup": "Follow-up",
+      "problem": "Problem"
+    },
+    "stuck": {
+      "no-products": "Abhi product nahin",
+      "no-orders": "Abhi order nahin",
+      "few-lessons": "Lesson chahiye"
+    }
   },
   "admin": {
     "title": "Admin",
-    "tabs": { "overview": "Overview", "users": "Users", "products": "Products", "reports": "Reports", "ai": "AI usage", "flags": "Flags", "schemes": "Schemes" },
+    "tabs": {
+      "overview": "Overview",
+      "users": "Users",
+      "products": "Products",
+      "reports": "Reports",
+      "ai": "AI usage",
+      "flags": "Flags",
+      "schemes": "Schemes"
+    },
     "search": "Phone ya naam dhoondo",
     "pause": "Roko",
     "restore": "Wapas",
@@ -439,7 +583,12 @@
     "waPrice": "Daam",
     "waAdd": "Item jodein",
     "photoSim": "Light checklist",
-    "photoTips": ["Product par khidki ki roshni", "Flash nahin", "Saaf background", "Phone seedha"]
+    "photoTips": [
+      "Product par khidki ki roshni",
+      "Flash nahin",
+      "Saaf background",
+      "Phone seedha"
+    ]
   },
   "schemes": {
     "title": "Aapke liye yojana",
@@ -453,8 +602,20 @@
     "qShg": "Self-help group (SHG) mein?",
     "optShgYes": "Haan, member",
     "optShgNo": "Abhi nahin",
-    "incomeBands": ["₹1L se kam", "₹1–3L", "₹3L se zyada", "Skip"],
-    "businesses": ["Food", "Tailoring", "Handicraft", "Farm", "Service", "Vendor"],
+    "incomeBands": [
+      "₹1L se kam",
+      "₹1–3L",
+      "₹3L se zyada",
+      "Skip"
+    ],
+    "businesses": [
+      "Food",
+      "Tailoring",
+      "Handicraft",
+      "Farm",
+      "Service",
+      "Vendor"
+    ],
     "eligible": "Ye aapko mil sakta hai",
     "maybe": "Shayad — check karo",
     "notEligible": "Aapke liye nahin",
@@ -471,7 +632,16 @@
     "verifiedOn": "Checked",
     "applyHere": "Official site",
     "savedTitle": "Saved yojana",
-    "filters": ["Sab", "Loan", "Subsidy", "Training", "Insurance", "Market", "Savings", "Account"],
+    "filters": [
+      "Sab",
+      "Loan",
+      "Subsidy",
+      "Training",
+      "Insurance",
+      "Market",
+      "Savings",
+      "Account"
+    ],
     "reasons": {
       "state": "Sirf {want} ke liye",
       "gender": "Alag applicant chahiye",

@@ -49,7 +49,7 @@ export function DownloadAppButton({
         width: 260,
         margin: 2,
         color: {
-          dark: "#143731",
+          dark: "#0F1D33",
           light: "#FFFFFF",
         },
       })
@@ -101,15 +101,15 @@ export function DownloadAppButton({
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Ojasvini App</title>
-  <meta name="theme-color" content="#143731">
+  <meta name="theme-color" content="#0F1D33">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="refresh" content="0; url=${origin}/">
   <script>window.location.href = "${origin}/";</script>
 </head>
-<body style="font-family:sans-serif;text-align:center;padding:40px;background:#E4F1EE;color:#143731;">
+<body style="font-family:sans-serif;text-align:center;padding:40px;background:#EBEBEB;color:#0F1D33;">
   <h2>Opening Ojasvini...</h2>
-  <p><a href="${origin}/" style="color:#007A78;font-weight:bold;">Click here if not redirected automatically</a></p>
+  <p><a href="${origin}/" style="color:#004E98;font-weight:bold;">Click here if not redirected automatically</a></p>
 </body>
 </html>`;
       const blob = new Blob([htmlContent], { type: "text/html" });

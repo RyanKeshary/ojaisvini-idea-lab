@@ -26,8 +26,8 @@ export function VoiceOrb({
     state === "success"
       ? "radial-gradient(circle at 35% 30%, #7fd6a4, #15803D 70%)"
       : state === "listening"
-        ? "radial-gradient(circle at 35% 30%, #ff8ba0, #C83758 70%)"
-        : "radial-gradient(circle at 35% 30%, #bbf7d0, #0E7468 62%, #134E4A 130%)";
+        ? "radial-gradient(circle at 35% 30%, #ffb08a, #FF6700 70%)"
+        : "radial-gradient(circle at 35% 30%, #bbd7f2, #004E98 62%, #003366 130%)";
   return (
     <button
       type="button"

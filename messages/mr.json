@@ -18,7 +18,14 @@
     "no": "नाही",
     "demoHint": "डेमो मोड: खरे पैसे नाहीत, खरा SMS नाही."
   },
-  "nav": { "home": "मुख्यपृष्ठ", "learn": "शिका", "create": "नवीन उत्पादन", "orders": "ऑर्डर्स", "more": "अधिक" },
+  "nav": {
+    "home": "मुख्यपृष्ठ",
+    "learn": "शिका",
+    "create": "नवीन उत्पादन",
+    "orders": "ऑर्डर्स",
+    "more": "अधिक",
+    "profile": "प्रोफाइल"
+  },
   "landing": {
     "title": "Ojasvini",
     "subtitle": "Tejasvi, sashakt mahila ghar baslya vikate.",
@@ -35,64 +42,174 @@
     "illustrative": "Field experience madhun illustrative figures.",
     "howTitle": "Kasa kaam karta",
     "steps": [
-      { "t": "Bola", "d": "Vastuche naav bola. Lihaychi garaj nahi." },
-      { "t": "Photo kadha", "d": "Photo kadha. Aamhi listing lihu." },
-      { "t": "Vika", "d": "Dukan link share kara. Pahili order ghya." }
+      {
+        "t": "Bola",
+        "d": "Vastuche naav bola. Lihaychi garaj nahi."
+      },
+      {
+        "t": "Photo kadha",
+        "d": "Photo kadha. Aamhi listing lihu."
+      },
+      {
+        "t": "Vika",
+        "d": "Dukan link share kara. Pahili order ghya."
+      }
     ],
     "journeyTitle": "Ticha pravas",
     "journey": [
-      { "t": "Discover", "d": "Swatachya bhashet voice onboarding." },
-      { "t": "Shika", "d": "2-minite lesson: UPI, photo, kimmat." },
-      { "t": "Banva", "d": "Bola, photo kadha, AI listing." },
-      { "t": "Vika", "d": "Live dukaan, demo payment, order." },
-      { "t": "Vadha", "d": "Kamai, yojana, community." }
+      {
+        "t": "Discover",
+        "d": "Swatachya bhashet voice onboarding."
+      },
+      {
+        "t": "Shika",
+        "d": "2-minite lesson: UPI, photo, kimmat."
+      },
+      {
+        "t": "Banva",
+        "d": "Bola, photo kadha, AI listing."
+      },
+      {
+        "t": "Vika",
+        "d": "Live dukaan, demo payment, order."
+      },
+      {
+        "t": "Vadha",
+        "d": "Kamai, yojana, community."
+      }
     ],
     "featuresTitle": "Sagla ekach thikani",
     "features": [
-      { "t": "Digital skills", "d": "Practice simulator sah lahan lesson." },
-      { "t": "Voice assistant", "d": "Pratyek screen var tap, bola, jhala." },
-      { "t": "Seller dashboard", "d": "Kamai, order, payout — aikun." },
-      { "t": "AI chatbot", "d": "Sakhi Didi business prashnanchi uttara." },
-      { "t": "Photo-to-listing", "d": "Ek photo purna listing bante." },
-      { "t": "Scheme finder", "d": "Fakta tyach yojana jya tumhala miltil." },
-      { "t": "Community", "d": "Sakhi mentors sah women-only forum." }
+      {
+        "t": "Digital skills",
+        "d": "Practice simulator sah lahan lesson."
+      },
+      {
+        "t": "Voice assistant",
+        "d": "Pratyek screen var tap, bola, jhala."
+      },
+      {
+        "t": "Seller dashboard",
+        "d": "Kamai, order, payout — aikun."
+      },
+      {
+        "t": "AI chatbot",
+        "d": "Sakhi Didi business prashnanchi uttara."
+      },
+      {
+        "t": "Photo-to-listing",
+        "d": "Ek photo purna listing bante."
+      },
+      {
+        "t": "Scheme finder",
+        "d": "Fakta tyach yojana jya tumhala miltil."
+      },
+      {
+        "t": "Community",
+        "d": "Sakhi mentors sah women-only forum."
+      }
     ],
     "whyTitle": "Ojasvini vegli ka aahe",
-    "whyCols": ["Ojasvini", "E-commerce apps", "Training portals"],
+    "whyCols": [
+      "Ojasvini",
+      "E-commerce apps",
+      "Training portals"
+    ],
     "why": {
       "rows": [
-        ["Voice-first, vachan garaj nahi", "Literacy + English magtat", "Theory video, practice nahi"],
-        ["Photo pasun live dukaan", "Manual catalog setup", "Viknach nahi"],
-        ["Offline chalel, low-data", "Nehmi online", "Shahari, jad video"],
-        ["Shika + vika + yojana", "Fakta vikna", "Fakta shikna"]
+        [
+          "Voice-first, vachan garaj nahi",
+          "Literacy + English magtat",
+          "Theory video, practice nahi"
+        ],
+        [
+          "Photo pasun live dukaan",
+          "Manual catalog setup",
+          "Viknach nahi"
+        ],
+        [
+          "Offline chalel, low-data",
+          "Nehmi online",
+          "Shahari, jad video"
+        ],
+        [
+          "Shika + vika + yojana",
+          "Fakta vikna",
+          "Fakta shikna"
+        ]
       ]
     },
     "storyTitle": "Sunita la bheta: day 1 te day 30",
     "story": [
-      { "d": "Day 1", "t": "Voice ne register, Marathi nivdli." },
-      { "d": "Day 3", "t": "Safe simulator var UPI shikali." },
-      { "d": "Day 7", "t": "Lonchacha photo, dukaan publish." },
-      { "d": "Day 15", "t": "Pahili demo order aavazasah." },
-      { "d": "Day 30", "t": "Kamai pahili, MUDRA loan milala." }
+      {
+        "d": "Day 1",
+        "t": "Voice ne register, Marathi nivdli."
+      },
+      {
+        "d": "Day 3",
+        "t": "Safe simulator var UPI shikali."
+      },
+      {
+        "d": "Day 7",
+        "t": "Lonchacha photo, dukaan publish."
+      },
+      {
+        "d": "Day 15",
+        "t": "Pahili demo order aavazasah."
+      },
+      {
+        "d": "Day 30",
+        "t": "Kamai pahili, MUDRA loan milala."
+      }
     ],
     "stats": [
-      { "v": "9/10", "d": "Sellers mhantat bhasha online jayla adavte." },
-      { "v": "1 phone", "d": "Sahasa purna kutumbasah shared." },
-      { "v": "0", "d": "Gavat tichyasathi tailored digital training." }
+      {
+        "v": "9/10",
+        "d": "Sellers mhantat bhasha online jayla adavte."
+      },
+      {
+        "v": "1 phone",
+        "d": "Sahasa purna kutumbasah shared."
+      },
+      {
+        "v": "0",
+        "d": "Gavat tichyasathi tailored digital training."
+      }
     ],
     "impactTitle": "Rural Maharashtra sathi, sampurna India sathi taiyaar",
     "impactLine": "Quality education (SDG 4) sthanik bhashetil micro-lessons madhun; innovation (SDG 9) offline-first commerce madhun.",
     "demoTitle": "Live demo try kara",
+    "selfDemoTitle": "स्क्रोल करून विक्री करा",
+    "beat1": "प्रॉडक्ट लिस्ट झाला",
+    "beat2": "तुमच्या दुकानावर लाईव्ह",
+    "beat3": "ऑर्डरचे पैसे मिळाले",
     "demoOtpNote": "Demo login: kontahe phone, OTP 123456. Kuthehi khare paise nahit.",
     "demoLogin": "Demo login try kara",
     "sampleShop": "Sample dukaan paha",
     "faq": [
-      { "q": "Kharch free aahe ka?", "a": "Ho. Shikna, listing, vikna free. Demo payment madhye khare paise nahit." },
-      { "q": "Mala vachta yet nahi. Vapru shaken ka?", "a": "Ho — hech mudda aahe. Pratyek screen voice + icon ne chalte." },
-      { "q": "Ghari internet nahi?", "a": "Kaam phone madhye save rahta, network aalyavar sync hota." },
-      { "q": "Paise kase miltil?", "a": "Buyer tumchya UPI var pay kartat. Aadhi safe simulator var practice kara." }
+      {
+        "q": "Kharch free aahe ka?",
+        "a": "Ho. Shikna, listing, vikna free. Demo payment madhye khare paise nahit."
+      },
+      {
+        "q": "Mala vachta yet nahi. Vapru shaken ka?",
+        "a": "Ho — hech mudda aahe. Pratyek screen voice + icon ne chalte."
+      },
+      {
+        "q": "Ghari internet nahi?",
+        "a": "Kaam phone madhye save rahta, network aalyavar sync hota."
+      },
+      {
+        "q": "Paise kase miltil?",
+        "a": "Buyer tumchya UPI var pay kartat. Aadhi safe simulator var practice kara."
+      }
     ],
-    "footer": "Maharashtrat sanmanane banavla."
+    "footer": "Maharashtrat sanmanane banavla.",
+    "heroSub": "एका फोटो आणि तुमच्या आवाजाने तुमची दुकान तयार करा. स्वतःच्या लिंकवर विका, UPIने पैसे मिळवा. मोफत, ऑफलाइन, तुमच्या भाषेत.",
+    "filmTitle": "ओजस्विणी वापरताना पहा",
+    "filmDesc": "चालणारी अ‍ॅप: ती काय करते आणि कोणासाठी.",
+    "demoDesc": "स्क्रोल करत राहा. अ‍ॅप एक प्रॉडक्ट लिस्ट करते आणि ऑर्डर आणते, एक-एक पायरीवर.",
+    "closeLine": "तुमचा पहिला ऑर्डर एका फोटोवर आहे."
   },
   "auth": {
     "login": "Login kara",
@@ -281,7 +398,16 @@
   "community": {
     "title": "Community",
     "subtitle": "Fakta mahila. Vichara, share kara, anand kara.",
-    "rooms": ["Sagla", "Food", "Handicraft", "Tailoring", "Dairy", "Paise", "Tech madat", "Yash"],
+    "rooms": [
+      "Sagla",
+      "Food",
+      "Handicraft",
+      "Tailoring",
+      "Dairy",
+      "Paise",
+      "Tech madat",
+      "Yash"
+    ],
     "latest": "Navin",
     "popular": "Popular",
     "ask": "Vichara / Share kara",
@@ -320,12 +446,30 @@
     "checkin": "Check-in note kara",
     "notesHint": "Notes (kay bolna jhala?)",
     "logBtn": "Note save kara",
-    "types": { "visit": "Visit", "call": "Call", "training": "Training", "followup": "Follow-up", "problem": "Problem" },
-    "stuck": { "no-products": "Ajun product nahi", "no-orders": "Ajun order nahi", "few-lessons": "Lesson havet" }
+    "types": {
+      "visit": "Visit",
+      "call": "Call",
+      "training": "Training",
+      "followup": "Follow-up",
+      "problem": "Problem"
+    },
+    "stuck": {
+      "no-products": "Ajun product nahi",
+      "no-orders": "Ajun order nahi",
+      "few-lessons": "Lesson havet"
+    }
   },
   "admin": {
     "title": "Admin",
-    "tabs": { "overview": "Overview", "users": "Users", "products": "Products", "reports": "Reports", "ai": "AI usage", "flags": "Flags", "schemes": "Schemes" },
+    "tabs": {
+      "overview": "Overview",
+      "users": "Users",
+      "products": "Products",
+      "reports": "Reports",
+      "ai": "AI usage",
+      "flags": "Flags",
+      "schemes": "Schemes"
+    },
     "search": "Phone kiwa naav shodha",
     "pause": "Thambva",
     "restore": "Parat",
@@ -439,7 +583,12 @@
     "waPrice": "Kimmat",
     "waAdd": "Item joda",
     "photoSim": "Light checklist",
-    "photoTips": ["Product var khidkicha un", "Flash nako", "Swachh background", "Phone saral"]
+    "photoTips": [
+      "Product var khidkicha un",
+      "Flash nako",
+      "Swachh background",
+      "Phone saral"
+    ]
   },
   "schemes": {
     "title": "Tumchyasathi yojana",
@@ -453,8 +602,20 @@
     "qShg": "Self-help group (SHG) madhye?",
     "optShgYes": "Ho, member",
     "optShgNo": "Ajun nahi",
-    "incomeBands": ["₹1L khali", "₹1–3L", "₹3L var", "Skip"],
-    "businesses": ["Food", "Tailoring", "Handicraft", "Farm", "Service", "Vendor"],
+    "incomeBands": [
+      "₹1L khali",
+      "₹1–3L",
+      "₹3L var",
+      "Skip"
+    ],
+    "businesses": [
+      "Food",
+      "Tailoring",
+      "Handicraft",
+      "Farm",
+      "Service",
+      "Vendor"
+    ],
     "eligible": "He tumhala milu shakta",
     "maybe": "Kadhachit — tapasa",
     "notEligible": "Tumchyasathi nahi",
@@ -471,7 +632,16 @@
     "verifiedOn": "Checked",
     "applyHere": "Official site",
     "savedTitle": "Saved yojana",
-    "filters": ["Sagla", "Loan", "Subsidy", "Training", "Insurance", "Market", "Savings", "Account"],
+    "filters": [
+      "Sagla",
+      "Loan",
+      "Subsidy",
+      "Training",
+      "Insurance",
+      "Market",
+      "Savings",
+      "Account"
+    ],
     "reasons": {
       "state": "Fakta {want} sathi",
       "gender": "Vegla applicant hava",

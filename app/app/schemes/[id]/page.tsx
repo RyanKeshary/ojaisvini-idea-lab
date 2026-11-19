@@ -89,7 +89,7 @@ export default function SchemeDetailPage() {
                 className="flex min-h-[56px] w-full items-center gap-3 rounded-[12px] border-2 px-3 text-left text-base"
                 style={{ borderColor: checks[d] ? "var(--leaf)" : "var(--border)" }}
               >
-                <span aria-hidden className="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2" style={{ borderColor: checks[d] ? "var(--leaf)" : "var(--border)", background: checks[d] ? "var(--leaf)" : "transparent", color: "#fff" }}>
+                <span aria-hidden className="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2" style={{ borderColor: checks[d] ? "var(--leaf)" : "var(--border)", background: checks[d] ? "var(--leaf)" : "transparent", color: "var(--primary-ink)" }}>
                   {checks[d] ? <Check size={16} /> : null}
                 </span>
                 {d}

@@ -38,7 +38,7 @@ export function BigButton({
         "flex min-h-[58px] sm:min-h-[62px] w-full items-center justify-center gap-3 rounded-2xl px-6 text-base sm:text-lg font-bold disabled:opacity-60 transition-all duration-150 cursor-pointer",
         variant === "primary" && "bg-[var(--turmeric)] text-[var(--primary-ink)] shadow-md hover:opacity-95 hover:shadow-lg",
         variant === "secondary" && "border border-[var(--border)] bg-[var(--card)] text-[var(--fg)] shadow-xs hover:border-[var(--turmeric)] hover:shadow-sm",
-        variant === "danger" && "bg-[var(--madder)] text-white shadow-md hover:opacity-95",
+        variant === "danger" && "bg-[var(--madder)] text-[var(--primary-ink)] shadow-md hover:opacity-95",
         variant === "ghost" && "bg-transparent text-[var(--trust)] underline-offset-4 hover:underline"
       )}
     >

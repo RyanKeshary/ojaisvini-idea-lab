@@ -5,7 +5,7 @@ export function PaymentSheet({ total, demo = true }: { total: number; demo?: boo
   return (
     <div className="rounded-[20px] border bg-[var(--card)] p-5" style={{ borderColor: "var(--border)" }}>
       {demo && (
-        <p className="mb-2 inline-block rounded-full bg-[var(--indigo)] px-3 py-1 text-sm font-bold text-white">
+        <p className="mb-2 inline-block rounded-full bg-[var(--indigo)] px-3 py-1 text-sm font-bold text-[var(--primary-ink)]">
           Demo mode: no real money
         </p>
       )}

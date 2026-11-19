@@ -44,7 +44,7 @@ export function PostCard({ post }: { post: FeedPost }) {
         <span className="rounded-full bg-[var(--clay-soft)] px-2 py-0.5 font-bold">{post.room}</span>
         <span className="opacity-60">{post.type}</span>
         {post.authorRole && (
-          <span className="rounded-full bg-[var(--indigo)] px-2 py-0.5 text-xs font-bold text-white">{post.authorRole}</span>
+          <span className="rounded-full bg-[var(--indigo)] px-2 py-0.5 text-xs font-bold text-[var(--primary-ink)]">{post.authorRole}</span>
         )}
       </div>
       <Link href={`/app/community/${post.id}`} className="mt-1 block text-base">

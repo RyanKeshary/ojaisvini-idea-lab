@@ -172,7 +172,7 @@ export default function PayPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-xl flex-col gap-4 px-4 pb-16 pt-6">
-      <p role="note" className="inline-block self-start rounded-full bg-[var(--indigo)] px-4 py-1.5 text-base font-bold text-white">
+      <p role="note" className="inline-block self-start rounded-full bg-[var(--indigo)] px-4 py-1.5 text-base font-bold text-[var(--primary-ink)]">
         {t("demoPay")}
       </p>
       <h1 className="display text-3xl font-bold">{shopName}</h1>
@@ -295,7 +295,7 @@ export default function PayPage() {
           <motion.section
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center gap-3 rounded-[20px] bg-[var(--leaf)] p-6 text-center text-white"
+            className="flex flex-col items-center gap-3 rounded-[20px] bg-[var(--leaf)] p-6 text-center text-[var(--primary-ink)]"
             aria-label={t("paySuccess")}
           >
             <motion.svg width="72" height="72" viewBox="0 0 72 72" aria-hidden>

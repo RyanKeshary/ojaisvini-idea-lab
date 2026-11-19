@@ -1,14 +1,23 @@
-/* Ojasvini design tokens — #E4F1EE Mint Theme. Light + dark. */
+/* Ojasvini design tokens — blue / orange / gray system. Light + dark.
+   Palette (user-specified): primary #004E98, secondary #3A6EA5,
+   highlight+CTA #FF6700, light surface #EBEBEB, borders #C0C0C0.
+   Legacy variable names (--turmeric/--madder/--mint-base/…) are kept: ~30
+   files reference them and renaming buys nothing visible. */
 :root {
-  --mint-base: #ebf5f2;
-  --ink: #112623;
-  --paper: #ebf5f2;
-  --turmeric: #0e7468;
-  --madder: #c83758;
-  --indigo: #1a5a72;
+  --mint-base: #ebebeb;
+  /* Derived: dark navy ink. The brief gave no ink; navy keeps the blue
+     family and clears 14:1 on the #EBEBEB ground. */
+  --ink: #0f1d33;
+  --paper: #ebebeb;
+  --turmeric: #004e98;
+  /* Text-safe orange: #FF6700 as small text on light gray is 2.4:1 (fails
+     AA), so text/badge fills use this burnt tone; #FF6700 lives in --cta
+     for button fills and big highlights. */
+  --madder: #b34700;
+  --indigo: #3a6ea5;
   --leaf: #15803d;
-  --clay-soft: #d8ede7;
-  --mist: #c5e4dc;
+  --clay-soft: #f4f4f4;
+  --mist: #c0c0c0;
 
   --bg: var(--paper);
   --fg: var(--ink);
@@ -21,13 +30,18 @@
   --trust: var(--indigo);
   --success: var(--leaf);
 
+  /* The user's exact highlight/CTA orange. Dark ink on it clears AA in
+     both themes; white does not (2.9:1). */
+  --cta: #ff6700;
+  --cta-ink: #101623;
+
   --radius-input: 14px;
   --radius-card: 22px;
   --radius-sheet: 28px;
 
-  --shadow-card: 0 2px 8px -1px rgb(17 38 35 / 0.04), 0 1px 3px -1px rgb(17 38 35 / 0.03);
-  --shadow-card-hover: 0 12px 24px -4px rgb(17 38 35 / 0.08), 0 4px 8px -2px rgb(17 38 35 / 0.03);
-  --shadow-float: 0 14px 34px -10px rgb(14 116 104 / 0.22);
+  --shadow-card: 0 2px 8px -1px rgb(15 29 51 / 0.05), 0 1px 3px -1px rgb(15 29 51 / 0.04);
+  --shadow-card-hover: 0 12px 24px -4px rgb(15 29 51 / 0.10), 0 4px 2px -1px rgb(15 29 51 / 0.04);
+  --shadow-float: 0 14px 34px -10px rgb(0 78 152 / 0.25);
   /* Default (mr/hi/en): Fraunces + Tiro Devanagari display, Mukta UI. */
   --font-display: var(--font-display-latin, "Fraunces"), var(--font-display-deva, "Tiro Devanagari Hindi"), Georgia, serif;
   --font-sans: var(--font-sans-deva, "Mukta"), "Noto Sans", system-ui, sans-serif;
@@ -57,17 +71,25 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0e1b19;
-  --fg: #e4f1ee;
-  --card: #162a27;
-  --card-fill: #1f3834;
-  --border: #2b4e48;
-  --clay-soft: #1f3834;
-  --mist: #335c55;
-  --primary: #2dd4bf;
-  --primary-ink: #0a1816;
-  --accent: #f472b6;
-  --trust: #5eead4;
+  --bg: #10151d;
+  --fg: #e7eaef;
+  --card: #18202b;
+  --card-fill: #212b38;
+  --border: #333e4d;
+  --clay-soft: #212b38;
+  --mist: #47536a;
+  /* Primary flips lighter so it reads as text on the dark cards, and the
+     ink on primary fills flips dark for the same reason (white on this
+     blue would be 2.6:1). */
+  --turmeric: #6ba8de;
+  --primary: #6ba8de;
+  --primary-ink: #0b1220;
+  --madder: #ff8c42;
+  --accent: #ff8c42;
+  --indigo: #7fb3e8;
+  --trust: #7fb3e8;
   --success: #34d399;
+  --cta: #ff6700;
+  --cta-ink: #101623;
   --shadow-float: 0 12px 32px -12px rgb(0 0 0 / 0.6);
 }
