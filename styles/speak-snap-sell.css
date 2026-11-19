@@ -29,8 +29,8 @@
   background: var(--bg);
   color: var(--ink);
   font: 500 15px/1.6 var(--san);
-  overflow-x: hidden;
   position: relative;
+  width: 100%;
 }
 
 .landing-body h1,
