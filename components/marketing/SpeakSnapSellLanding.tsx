@@ -286,7 +286,7 @@ export default function SpeakSnapSellLanding() {
                   <div className="landing-sc">
                     <h4>Sunita’s Swad</h4>
                     <h5>Your shop is live</h5>
-                    <div className="landing-url">ojasvini.app/shop/sunita-swad</div>
+                    <div className="landing-url">ojaisvini-idea-lab.vercel.app/shop/sunita-swad</div>
                     <div className="landing-qr" />
                     <span className="landing-pbn">Share on WhatsApp</span>
                   </div>

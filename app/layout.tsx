@@ -31,7 +31,7 @@ const te = Noto_Sans_Telugu({ subsets: ["latin", "telugu"], weight: ["400", "700
 const kn = Noto_Sans_Kannada({ subsets: ["latin", "kannada"], weight: ["400", "700"], variable: "--font-kn", display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ojaisvini.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ojaisvini-idea-lab.vercel.app"),
   title: "Ojasvini — Bolo. Photo kheencho. Becho.",
   description: "Voice-first selling for rural women entrepreneurs. Speak. Snap. Sell.",
   manifest: "/manifest.webmanifest",
