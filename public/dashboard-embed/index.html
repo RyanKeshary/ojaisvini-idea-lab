@@ -46,7 +46,23 @@ table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px 6px;
 .tip{position:fixed;z-index:80;background:var(--tx);color:var(--bg);padding:12px;border-radius:10px;max-width:260px;font-size:12px}.ring{outline:3px solid #FF6700;outline-offset:3px;border-radius:10px}
 .pr{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}.pr img,.em{width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--bg);display:grid;place-items:center;font-size:22px;flex:none}
 .menu{display:none}
-@media(max-width:800px){.app,.app.col{grid-template-columns:1fr}aside{position:fixed;left:0;width:250px;transform:translateX(-100%);transition:transform .2s}.app.open aside{transform:none}.menu{display:inline-block}.grid{grid-template-columns:1fr}.span2{grid-column:auto}.pg{padding:14px}.top{padding:10px 14px}.app.col .nl span,.app.col .prof>div:not(.av){display:block}.hide-m{display:none}}
+@media(max-width:800px){
+  .app,.app.col{grid-template-columns:1fr}
+  aside{position:fixed;left:0;top:0;bottom:0;width:280px;transform:translateX(-100%);transition:transform .25s ease-out;box-shadow:0 0 40px rgba(0,0,0,0.3);z-index:100}
+  .app.open aside{transform:none}
+  .menu{display:inline-flex}
+  .grid{grid-template-columns:1fr;gap:12px}
+  .span2{grid-column:auto}
+  .pg{padding:14px;width:100%}
+  .top{padding:10px 14px}
+  .app.col .nl span,.app.col .prof>div:not(.av){display:block}
+  .hide-m{display:none}
+  .card{padding:14px;border-radius:12px}
+  .top h1{font-size:16px}
+  .btn{padding:7px 10px;font-size:13px}
+  .row{gap:6px}
+  table{display:block;overflow-x:auto}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
 <div class="app" id="app">
