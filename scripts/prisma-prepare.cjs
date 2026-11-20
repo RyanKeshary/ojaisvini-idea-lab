@@ -35,8 +35,9 @@ if (dbUrl.startsWith('postgres://') || dbUrl.startsWith('postgresql://')) {
   }
 }
 
-// Push schema changes on Vercel unless explicitly disabled with SKIP_PRISMA_DB_PUSH=1
-if (process.env.VERCEL && process.env.SKIP_PRISMA_DB_PUSH !== '1') {
+// In serverless environments (like Vercel), direct PostgreSQL port 5432 is often IPv6-only
+// and unreachable from build runners. Only run prisma db push when explicitly requested with RUN_PRISMA_DB_PUSH=1.
+if (process.env.VERCEL && process.env.RUN_PRISMA_DB_PUSH === '1') {
   try {
     console.log('[prisma-prepare] Running prisma db push on Vercel...');
     execSync('npx prisma db push --skip-generate --accept-data-loss', {
