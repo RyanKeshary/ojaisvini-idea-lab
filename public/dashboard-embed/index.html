@@ -71,6 +71,11 @@ table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px 6px;
 <div class="app" id="app">
 <aside id="nav"></aside>
 <main><div class="top"><button class="btn menu" data-a="menu" aria-label="Menu">☰</button><button class="btn hide-m" data-a="col" aria-label="Collapse sidebar">⇔</button><h1 id="ttl"></h1>
+<div class="row" style="gap:4px;margin-right:8px" id="lang-switch">
+  <button class="btn sm" data-a="lang" data-v="en" id="btn-lang-en">EN</button>
+  <button class="btn sm" data-a="lang" data-v="hi" id="btn-lang-hi">हिंदी</button>
+  <button class="btn sm" data-a="lang" data-v="mr" id="btn-lang-mr">मराठी</button>
+</div>
 <button class="btn" data-a="listen" id="lbtn">🔊 <span id="lt"></span></button><button class="btn cta" data-a="newl" id="newbtn">+ <span id="nt"></span></button></div>
 <div class="pg" id="pg"></div></main></div>
 <div id="toasts" aria-live="polite"></div><div id="ovl"></div>
@@ -99,7 +104,8 @@ const lk=([k,i])=>`<a href="#${k}" class="nl ${R==k?'on':''}" title="${t(k)}" ${
 function nav(){$('#nav').innerHTML=`<button class="prof" id="prof" data-a="prof" aria-label="Profile menu"><div class="av">${esc(S.name[0])}</div><div><h3>${esc(S.name)}</h3><h5>/shop/${S.slug}</h5></div></button><div id="pm"></div><hr>
 ${NAV.map(lk).join('')}<hr><details ${GR.some(g=>g[0]==R)?'open':''} id="grow"><summary class="nl"><i>⊞</i><span>${t('grow')}</span></summary><div class="sub">${GR.map(lk).join('')}</div></details>
 <div class="push"></div>${nNew()?`<div class="pop"><b>${nNew()} orders waiting</b><br><a href="#orders">Review now</a></div>`:''}<hr>${lk(['profile','👤'])}${lk(['settings','⚙'])}${lk(['help','?'])}`;
-$('#lt').textContent=t('listen');$('#nt').textContent=t('nw');$('#ttl').textContent=t(R);document.title=t(R)+' · Ojasvini';$('#app').classList.toggle('col',!!S.col);document.body.classList.toggle('priv',!!S.priv)}
+$('#lt').textContent=t('listen');$('#nt').textContent=t('nw');$('#ttl').textContent=t(R);document.title=t(R)+' · Ojasvini';$('#app').classList.toggle('col',!!S.col);document.body.classList.toggle('priv',!!S.priv);
+['en','hi','mr'].forEach(l=>{const b=$('#btn-lang-'+l);if(b){b.classList.toggle('pri',S.lang===l);b.style.fontWeight=S.lang===l?'700':'400'}})}
 /* ---------- chart ---------- */
 const LB=['6d','5d','4d','3d','2d','1d','Today','+1d','+2d','+3d'];
 function fcast(v){const l=v.slice(-3),a=l.reduce((x,y)=>x+y)/3,sl=(l[2]-l[0])/2;return[1,2,3].map(i=>Math.max(0,Math.round(a+sl*i)))}

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Package, ShoppingBag, ArrowRight, Clock, Store, CheckCircle2, ChevronRight, Globe } from "lucide-react";
 import { inr } from "@/lib/utils";
+import { usePrefs } from "@/lib/store/prefs";
+import type { Locale } from "@/lib/i18n/config";
 
 type LangKey = "en" | "hi" | "mr";
 
@@ -88,25 +90,30 @@ type ShopItem = {
 };
 
 export default function BuyerDashboardPage() {
+  const { locale, setLocale } = usePrefs();
   const [lang, setLang] = useState<LangKey>("en");
   const [orders, setOrders] = useState<OrderItem[]>([]);
   const [shops, setShops] = useState<ShopItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Load language preference from localStorage if set
+  // Sync with global store & localStorage
   useEffect(() => {
     try {
       const savedLang = localStorage.getItem("buyer_lang") as LangKey;
       if (savedLang && (savedLang === "en" || savedLang === "hi" || savedLang === "mr")) {
         setLang(savedLang);
+      } else if (locale === "mr" || locale === "hi" || locale === "en") {
+        setLang(locale as LangKey);
       }
     } catch {}
-  }, []);
+  }, [locale]);
 
   const changeLang = (l: LangKey) => {
     setLang(l);
     try {
       localStorage.setItem("buyer_lang", l);
+      // also update global app locale for consistent cookies & html attributes
+      setLocale(l as Locale);
     } catch {}
   };
 
