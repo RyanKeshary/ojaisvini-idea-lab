@@ -151,23 +151,23 @@ P.orders=()=>{const act=S.orders.filter(o=>o.st!='done'&&o.st!='declined'),g={};
 return`<div class="card" style="margin-bottom:16px"><h2>Pooled pickup</h2><h5>Orders to the same pincode share one courier pickup and cost less.</h5>${Object.keys(g).map(k=>`<div class="row sp" style="padding:8px 0"><span>${k} · ${g[k].length} order${g[k].length>1?'s':''}</span>${g[k].length>1?`<span class="tag b">Save ~₹${(g[k].length-1)*40}</span><button class="btn sm pri" data-a="pool" data-v="${k}">Book pickup</button>`:'<span class="tag">Single</span>'}</div>`).join('')||'<p class="mu">Nothing to pool yet.</p>'}</div>
 <div class="card" style="overflow:auto"><table><tr><th>Order</th><th>Item</th><th>Amount</th><th>Status</th><th></th></tr>${S.orders.slice().reverse().map(o=>`<tr><td>#${o.id}<br><h5>${esc(o.v)} ${o.pc}</h5></td><td>${esc(o.item)} × ${o.qty}<br><h5>${o.pay}</h5></td><td>${m(o.amt)}</td><td><span class="tag ${o.st=='new'?'o':''}">${o.st}</span></td><td>${o.st=='new'?`<button class="btn sm pri" data-a="acc" data-v="${o.id}">Accept</button> <button class="btn sm" data-a="dec" data-v="${o.id}">Decline</button>`:o.st=='accepted'?`<button class="btn sm" data-a="dlv" data-v="${o.id}">Mark delivered</button>`:''}</td></tr>`).join('')}</table></div>`};
 P.payouts=()=>`<div class="grid"><div class="card"><h4>Available balance</h4><div class="big">${m(S.bal)}</div><label for="up">UPI ID</label><input id="up" value="${esc(S.upi)}" placeholder="name@bank" data-i="upi"><div class="row" style="margin-top:12px"><button class="btn cta" data-a="wd" ${S.bal?'':'disabled'}>Withdraw to UPI</button></div><h5 style="margin-top:8px">Demo only. No real money moves.</h5></div><div class="card"><h2>Payout history</h2>${S.pays.map(p=>`<div class="row sp" style="padding:6px 0"><span>${p.d}</span><b>${m(p.a)}</b><h5>${esc(p.u)}</h5></div>`).join('')||'<p class="mu">No payouts yet.</p>'}</div></div>`;
-/* schemes */
+
 const ARTICLES = {
   'PM Mudra Yojana': {
     title: 'Pradhan Mantri MUDRA Yojana (PMMY)',
     category: 'Collateral-Free Micro Enterprise Loan',
     authority: 'Ministry of Finance, Government of India',
-    tagline: 'Collateral-free institutional credit up to ₹10 Lakhs for small micro-enterprises and women entrepreneurs.',
-    overview: 'Pradhan Mantri MUDRA Yojana (PMMY) was established to provide non-farm micro and small enterprises with structured, collateral-free credit through Commercial Banks, Regional Rural Banks (RRBs), and Micro Finance Institutions (MFIs). For rural women engaged in home-based processing, weaving, stitching, small shops, or services, MUDRA provides vital seed and working capital without demanding property collateral.',
+    tagline: 'Collateral-free institutional credit up to ₹10 Lakhs for micro-enterprises and women entrepreneurs.',
+    overview: 'Pradhan Mantri MUDRA Yojana (PMMY) provides non-farm micro and small enterprises with structured, collateral-free credit through Commercial Banks, Regional Rural Banks (RRBs), and Micro Finance Institutions (MFIs). For rural women engaged in food processing, weaving, stitching, small shops, or village services, MUDRA provides vital seed and working capital without demanding property collateral.',
     tiers: [
-      { name: 'Shishu', limit: 'Loans up to ₹50,000', desc: 'Ideal for initial setup, sewing machines, small kitchen apparatus, or seed stock.' },
+      { name: 'Shishu', limit: 'Loans up to ₹50,000', desc: 'Ideal for initial setup, sewing machines, small apparatus, or seed inventory.' },
       { name: 'Kishore', limit: 'Loans ₹50,000 to ₹5,00,000', desc: 'Designed for scaling production, buying raw material in bulk, and workshop expansion.' },
       { name: 'Tarun', limit: 'Loans ₹5,00,000 to ₹10,00,000', desc: 'For enterprise maturation, commercial automation, and regional retail distribution.' }
     ],
     benefits: [
       '100% collateral-free and third-party-guarantee free loan.',
       'Zero upfront processing fees for Shishu and Kishore loan tiers.',
-      'Flexible repayment tenure between 3 to 5 years tailored to cash flow.',
+      'Flexible repayment tenure between 3 to 5 years tailored to your cash flow.',
       'Mudra RuPay Debit Card issued for seamless working capital drawdowns.'
     ],
     eligibility: [
@@ -222,7 +222,7 @@ const ARTICLES = {
     category: 'Rural Women Micro-Enterprise & Sustainable Wealth Creation',
     authority: 'Ministry of Rural Development (MoRD) / DAY-NRLM',
     tagline: 'Empowering Self-Help Group (SHG) women to achieve an annual sustainable income of ₹1 Lakh or more.',
-    overview: 'Lakhpati Didi is India’s flagship economic initiative dedicated to transitioning 3 crore rural women from subsistence work into sustainable nano-entrepreneurs earning at least ₹1,00,000 annually. Through organized Bachat Gats (Self-Help Groups), women receive livelihood diversification support, subsidized bank credit lines, enterprise coaching, and digital commerce tools.',
+    overview: 'Lakhpati Didi is India flagship economic initiative dedicated to transitioning 3 crore rural women from subsistence work into sustainable nano-entrepreneurs earning at least ₹1,00,000 annually. Through organized Bachat Gats (Self-Help Groups), women receive livelihood diversification support, subsidized bank credit lines, enterprise coaching, and digital commerce tools.',
     tiers: [
       { name: 'Livelihood Planning', limit: 'Household Investment Plan (HIP)', desc: 'Custom roadmaps matching local trade, seasonality, and household capacity.' },
       { name: 'Community Investment Support', limit: 'Revolving low-interest fund', desc: 'Immediate capital for raw materials, craft inputs, seeds, or poultry/dairy.' },
@@ -318,7 +318,7 @@ const ARTICLES = {
     category: 'Credit-Linked Capital Subsidy for Micro-Enterprises',
     authority: 'Khadi & Village Industries Commission (KVIC) / MoMSME',
     tagline: 'Up to 35% government subsidy on bank loans for setting up new manufacturing and service businesses.',
-    overview: 'PMEGP is India’s premier credit-linked subsidy initiative aimed at fostering self-employment and micro-enterprises. For rural women entrepreneurs, the scheme provides exceptional advantages: women are classified as special category beneficiaries, qualifying for the maximum 35% capital subsidy on total project costs with only a 5% promoter equity requirement.',
+    overview: 'PMEGP is India premier credit-linked subsidy initiative aimed at fostering self-employment and micro-enterprises. For rural women entrepreneurs, the scheme provides exceptional advantages: women are classified as special category beneficiaries, qualifying for the maximum 35% capital subsidy on total project costs with only a 5% promoter equity requirement.',
     tiers: [
       { name: 'Manufacturing Sector', limit: 'Project cost up to ₹50 Lakhs', desc: 'Ideal for food packaging, garment fabrication, flour mills, spice grinding, and crafts.' },
       { name: 'Service / Commercial', limit: 'Project cost up to ₹20 Lakhs', desc: 'Ideal for custom tailoring centers, rural laundry hubs, catering, and mobile repair.' }
@@ -376,16 +376,6 @@ const ARTICLES = {
   }
 };
 
-const SC=[
-  {n:'PM Mudra Yojana',w:'A loan up to ₹10 lakh for small businesses, with no collateral.',e:'You can borrow money to buy materials. Go to a bank with your Aadhaar and tell them your work.',tr:0,need:'loan'},
-  {n:'PMFME',w:'Support for small food businesses: a subsidy of up to 35% on equipment.',e:'If you make food, the government pays part of the cost of your machines.',tr:'Food',need:'loan'},
-  {n:'Lakhpati Didi',w:'Skill training and credit for self-help group (SHG) women to earn ₹1 lakh a year.',e:'Women in a bachat gat get training and loans to earn more every year.',shg:1,need:'training'},
-  {n:'DAY-NRLM (Umed)',w:'SHG formation, bank linkage and market support for rural women.',e:'Join a women savings group. It helps you get loans and find buyers.',shg:1,need:'market'},
-  {n:'PM Vishwakarma',w:'Training, toolkit grant and low-interest loans for artisans.',e:'If you make crafts or stitch clothes, you get a free toolkit, training and a cheap loan.',tr:['Crafts','Tailoring'],need:'training'},
-  {n:'PMEGP',w:'Subsidy of 25–35% on loans for new micro units.',e:'Starting a small unit? The government returns part of your loan cost.',need:'loan'},
-  {n:'Stand-Up India',w:'Bank loans of ₹10 lakh to ₹1 crore for women entrepreneurs.',e:'For a bigger business, a bank can lend you a large amount.',need:'loan'}
-];
-
 function showSchemeArticle(key) {
   const a = ARTICLES[key] || {
     title: key,
@@ -394,82 +384,87 @@ function showSchemeArticle(key) {
     tagline: 'Empowering women entrepreneurs with capital and training.',
     overview: 'Check official government guidelines or consult your local bank branch for complete details.',
     tiers: [],
-    benefits: ['Low-interest or collateral-free financial support.','Government approved training and subsidies.'],
+    benefits: ['Low-interest or collateral-free financial support.', 'Government approved training and subsidies.'],
     eligibility: ['Indian women entrepreneurs aged 18 and above.'],
-    documents: ['Aadhaar Card','Bank Passbook','Passport Photographs'],
+    documents: ['Aadhaar Card', 'Bank Passbook', 'Passport Photographs'],
     howToApply: 'Visit your nearest bank or district administrative office.',
     link: 'https://www.india.gov.in'
   };
 
-  const h = `
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px;border-bottom:1px solid var(--bd);padding-bottom:12px">
-      <div>
-        <span class="tag b" style="margin-bottom:6px;display:inline-block">${esc(a.category)}</span>
-        <h2 style="font-size:22px;margin:4px 0 2px;line-height:1.25">${esc(a.title)}</h2>
-        <p class="sm mu" style="margin:0">${esc(a.authority)}</p>
-      </div>
-      <button class="btn sm" data-a="mx" style="flex:none;font-size:16px;line-height:1;padding:6px 10px" aria-label="Close">✕</button>
-    </div>
+  const h = '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px;border-bottom:1px solid var(--bd);padding-bottom:12px">' +
+    '<div>' +
+      '<span class="tag b" style="margin-bottom:6px;display:inline-block">' + esc(a.category) + '</span>' +
+      '<h2 style="font-size:22px;margin:4px 0 2px;line-height:1.25">' + esc(a.title) + '</h2>' +
+      '<p class="sm mu" style="margin:0">' + esc(a.authority) + '</p>' +
+    '</div>' +
+    '<button class="btn sm" data-a="mx" style="flex:none;font-size:16px;line-height:1;padding:6px 10px" aria-label="Close">✕</button>' +
+  '</div>' +
 
-    <div style="background:var(--card);padding:12px 14px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--p)">
-      <p style="font-weight:600;margin:0 0 4px;color:var(--tx)">💡 ${esc(a.tagline)}</p>
-    </div>
+  '<div style="background:var(--card);padding:12px 14px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--p)">' +
+    '<p style="font-weight:600;margin:0 0 4px;color:var(--tx)">💡 ' + esc(a.tagline) + '</p>' +
+  '</div>' +
 
-    <div style="line-height:1.6;font-size:14px;margin-bottom:20px;color:var(--tx)">
-      <h3 style="margin:0 0 6px;font-size:16px">📖 Overview & Purpose</h3>
-      <p style="margin:0 0 14px">${esc(a.overview)}</p>
+  '<div style="line-height:1.6;font-size:14px;margin-bottom:20px;color:var(--tx)">' +
+    '<h3 style="margin:0 0 6px;font-size:16px">📖 Overview & Purpose</h3>' +
+    '<p style="margin:0 0 14px">' + esc(a.overview) + '</p>' +
 
-      ${a.tiers && a.tiers.length ? `
-        <h3 style="margin:16px 0 8px;font-size:16px">📊 Support Categories & Limits</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:10px;margin-bottom:16px">
-          ${a.tiers.map(t => `
-            <div style="background:var(--bg);border:1px solid var(--bd);padding:10px 12px;border-radius:10px">
-              <span class="tag o" style="font-size:11px;font-weight:700">${esc(t.name)}</span>
-              <div style="font-weight:700;margin:6px 0 2px;color:var(--p)">${esc(t.limit)}</div>
-              <p class="sm mu" style="margin:0">${esc(t.desc)}</p>
-            </div>
-          `).join('')}
-        </div>
-      ` : ''}
+    (a.tiers && a.tiers.length ? (
+      '<h3 style="margin:16px 0 8px;font-size:16px">📊 Support Categories & Limits</h3>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:10px;margin-bottom:16px">' +
+        a.tiers.map(function(t) {
+          return '<div style="background:var(--bg);border:1px solid var(--bd);padding:10px 12px;border-radius:10px">' +
+            '<span class="tag o" style="font-size:11px;font-weight:700">' + esc(t.name) + '</span>' +
+            '<div style="font-weight:700;margin:6px 0 2px;color:var(--p)">' + esc(t.limit) + '</div>' +
+            '<p class="sm mu" style="margin:0">' + esc(t.desc) + '</p>' +
+          '</div>';
+        }).join('') +
+      '</div>'
+    ) : '') +
 
-      <h3 style="margin:16px 0 6px;font-size:16px">✨ Key Benefits & Subsidies</h3>
-      <ul style="margin:0 0 16px;padding-left:20px">
-        ${a.benefits.map(b => `<li style="margin-bottom:6px">${esc(b)}</li>`).join('')}
-      </ul>
+    '<h3 style="margin:16px 0 6px;font-size:16px">✨ Key Benefits & Subsidies</h3>' +
+    '<ul style="margin:0 0 16px;padding-left:20px">' +
+      a.benefits.map(function(b) { return '<li style="margin-bottom:6px">' + esc(b) + '</li>'; }).join('') +
+    '</ul>' +
 
-      <h3 style="margin:16px 0 6px;font-size:16px">✅ Eligibility Criteria</h3>
-      <ul style="margin:0 0 16px;padding-left:20px">
-        ${a.eligibility.map(e => `<li style="margin-bottom:6px">${esc(e)}</li>`).join('')}
-      </ul>
+    '<h3 style="margin:16px 0 6px;font-size:16px">✅ Eligibility Criteria</h3>' +
+    '<ul style="margin:0 0 16px;padding-left:20px">' +
+      a.eligibility.map(function(e) { return '<li style="margin-bottom:6px">' + esc(e) + '</li>'; }).join('') +
+    '</ul>' +
 
-      <h3 style="margin:16px 0 6px;font-size:16px">📄 Required Documents</h3>
-      <div style="background:var(--card);padding:12px;border-radius:10px;margin-bottom:16px">
-        <ul style="margin:0;padding-left:18px">
-          ${a.documents.map(d => `<li style="margin-bottom:4px"><b>${esc(d)}</b></li>`).join('')}
-        </ul>
-      </div>
+    '<h3 style="margin:16px 0 6px;font-size:16px">📄 Required Documents</h3>' +
+    '<div style="background:var(--card);padding:12px;border-radius:10px;margin-bottom:16px">' +
+      '<ul style="margin:0;padding-left:18px">' +
+        a.documents.map(function(d) { return '<li style="margin-bottom:4px"><b>' + esc(d) + '</b></li>'; }).join('') +
+      '</ul>' +
+    '</div>' +
 
-      <h3 style="margin:16px 0 6px;font-size:16px">🚀 Step-by-Step Application Process</h3>
-      <p style="margin:0 0 16px">${esc(a.howToApply)}</p>
-    </div>
+    '<h3 style="margin:16px 0 6px;font-size:16px">🚀 Step-by-Step Application Process</h3>' +
+    '<p style="margin:0 0 16px">' + esc(a.howToApply) + '</p>' +
+  '</div>' +
 
-    <div class="row sp" style="border-top:1px solid var(--bd);padding-top:14px">
-      <a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="btn pri" style="display:inline-flex;align-items:center;gap:6px">
-        Official Portal & Application ↗
-      </a>
-      <button class="btn" data-a="exp" data-v="${SC.findIndex(s=>s.n===key)}" style="display:inline-flex;align-items:center;gap:6px">
-        🔊 Listen summary
-      </button>
-    </div>
-  `;
+  '<div class="row sp" style="border-top:1px solid var(--bd);padding-top:14px">' +
+    '<a href="' + esc(a.link) + '" target="_blank" rel="noopener noreferrer" class="btn pri" style="display:inline-flex;align-items:center;gap:6px">' +
+      'Official Portal & Application ↗' +
+    '</a>' +
+    '<button class="btn" data-a="mx">Close</button>' +
+  '</div>';
+
   modal(h);
 }
 
+/* schemes */
+const SC=[{n:'PM Mudra Yojana',w:'A loan up to ₹10 lakh for small businesses, with no collateral.',e:'You can borrow money to buy materials. Go to a bank with your Aadhaar and tell them your work.',tr:0,need:'loan'},
+{n:'PMFME',w:'Support for small food businesses: a subsidy of up to 35% on equipment.',e:'If you make food, the government pays part of the cost of your machines.',tr:'Food',need:'loan'},
+{n:'Lakhpati Didi',w:'Skill training and credit for self-help group (SHG) women to earn ₹1 lakh a year.',e:'Women in a bachat gat get training and loans to earn more every year.',shg:1,need:'training'},
+{n:'DAY-NRLM (Umed)',w:'SHG formation, bank linkage and market support for rural women.',e:'Join a women savings group. It helps you get loans and find buyers.',shg:1,need:'market'},
+{n:'PM Vishwakarma',w:'Training, toolkit grant and low-interest loans for artisans.',e:'If you make crafts or stitch clothes, you get a free toolkit, training and a cheap loan.',tr:['Crafts','Tailoring'],need:'training'},
+{n:'PMEGP',w:'Subsidy of 25–35% on loans for new micro units.',e:'Starting a small unit? The government returns part of your loan cost.',need:'loan'},
+{n:'Stand-Up India',w:'Bank loans of ₹10 lakh to ₹1 crore for women entrepreneurs.',e:'For a bigger business, a bank can lend you a large amount.',need:'loan'}];
 let Q={tr:'',shg:'',need:'',go:0};
 const sm=s=>(!s.tr||(Array.isArray(s.tr)?s.tr:[s.tr]).includes(Q.tr))&&(!s.shg||Q.shg=='yes')&&(Q.need==''||s.need==Q.need||!s.need);
 const ch=(k,a)=>a.map(([v,l])=>`<button class="chip ${Q[k]==v?'on':''}" data-a="q" data-k="${k}" data-v="${v}">${l}</button>`).join('');
 P.schemes=()=>`<div class="card" style="margin-bottom:16px"><h2>Find schemes for me</h2><label>What do you make?</label><div class="row">${ch('tr',[['Food','🍲 Food'],['Crafts','🧺 Crafts'],['Tailoring','🪡 Tailoring'],['Dairy','🥛 Dairy']])}</div><label>Are you in a self-help group (bachat gat)?</label><div class="row">${ch('shg',[['yes','Yes'],['no','No']])}</div><label>What do you need?</label><div class="row">${ch('need',[['loan','💰 Loan'],['training','📘 Training'],['market','🛒 Buyers']])}</div><div class="row" style="margin-top:12px"><button class="btn pri" data-a="qgo" ${Q.tr&&Q.shg&&Q.need?'':'disabled'}>Show schemes</button></div></div>
-${Q.go?`<div class="card"><h2>${SC.filter(sm).length} schemes match</h2>${SC.filter(sm).map(s=>`<div class="pr" style="display:block;cursor:pointer;border-radius:12px;padding:12px;margin-bottom:8px;background:var(--card);transition:transform .15s ease,box-shadow .15s ease" data-a="sart" data-v="${esc(s.n)}"><div class="row sp" style="align-items:flex-start"><div><h3 style="color:var(--p);text-decoration:underline;margin:0 0 4px">${esc(s.n)} ↗</h3><p class="sm mu" style="margin:2px 0 8px">${esc(s.w)}</p></div><span class="tag b" style="font-size:11px">📖 Read article</span></div><div class="row" style="margin-top:6px" onclick="event.stopPropagation()"><button class="btn sm" data-a="exp" data-v="${SC.indexOf(s)}">🔊 Explain simply</button><button class="btn sm pri" data-a="sart" data-v="${esc(s.n)}">View full guide</button></div></div>`).join('')||'<p class="mu">No match. Try other answers.</p>'}<h5>Demo list. Tap any scheme card or button to read its in-depth article and eligibility checklist.</h5></div>`:''};
+${Q.go?`<div class="card"><h2>${SC.filter(sm).length} schemes match</h2>${SC.filter(sm).map(s=>`<div class="pr" style="display:block"><div style="cursor:pointer" data-a="sart" data-v="${esc(s.n)}"><div class="row sp"><h3 style="color:var(--p);text-decoration:underline">${s.n} ↗</h3><span class="tag b" style="font-size:11px">📖 Article</span></div><p class="sm mu" style="margin:4px 0 8px">${s.w}</p></div><div class="row" style="margin-top:4px"><button class="btn sm" data-a="exp" data-v="${SC.indexOf(s)}">🔊 Explain simply</button><button class="btn sm pri" data-a="sart" data-v="${esc(s.n)}">View full guide</button></div></div>`).join('')||'<p class="mu">No match. Try other answers.</p>'}<h5>Demo list. Check details with your bank or district office.</h5></div>`:''}`;
 /* learn */
 const LE=[['Photo tips for your products','Crafts',2,'Use daylight near a window and a plain cloth behind the product.'],['Pricing your pickle','Food',3,'Add cost of materials, your time and 20% profit.'],['Packing food safely','Food',3,'Use clean dry jars and seal the lid with tape.'],['Cutting blouse pieces with less waste','Tailoring',3,'Plan the pattern on the cloth before cutting.'],['Selling milk products','Dairy',2,'Keep products cold and deliver the same day.'],['What is UPI and is it safe','All',2,'Never share your PIN. Receiving money needs no PIN.']];
 let LF='All';
@@ -549,7 +544,7 @@ del:(e,v)=>{const i=S.products.findIndex(p=>p.id==v),p=S.products.splice(i,1)[0]
 acc:(e,v)=>{const o=S.orders.find(x=>x.id==v);S.bal+=net(o.amt);toast('Order accepted. ₹'+net(o.amt)+' added to balance');setO(v,'accepted')},dec:(e,v)=>{setO(v,'declined');toast('Order declined')},dlv:(e,v)=>{setO(v,'done');toast('Marked delivered')},
 pool:(e,v)=>{const n=S.orders.filter(o=>o.pc==v&&(o.st=='new'||o.st=='accepted')).length;toast(`Pickup booked for ${n} orders. You save ~₹${(n-1)*40}.`)},
 wd:()=>{if(!/^[\w.-]{2,}@[a-z]{2,}$/i.test(S.upi.trim()))return toast('Enter a valid UPI ID first','err');const a=S.bal;S.pays.unshift({d:new Date().toLocaleDateString('en-IN'),a,u:S.upi});S.bal=0;save();toast('₹'+a+' sent to '+S.upi+' (demo)');nav();render()},
-sart:(e,v)=>{showSchemeArticle(v)},q:(e,v)=>{Q[e.target.dataset.k]=v;Q.go=0;render()},qgo:()=>{Q.go=1;render()},exp:(e,v)=>{const i=+v;say(SC[i]?SC[i].n+'. '+SC[i].e:'')},lf:(e,v)=>{LF=v;render()},ld:(e,v)=>{v=+v;S.done=S.done.includes(v)?S.done.filter(x=>x!=v):[...S.done,v];save();render()},lsn:(e,v)=>say(LE[v][0]+'. '+LE[v][3]),
+q:(e,v)=>{Q[e.target.dataset.k]=v;Q.go=0;render()},qgo:()=>{Q.go=1;render()},sart:(e,v)=>showSchemeArticle(v),exp:(e,v)=>say(SC[v].n+'. '+SC[v].e),lf:(e,v)=>{LF=v;render()},ld:(e,v)=>{v=+v;S.done=S.done.includes(v)?S.done.filter(x=>x!=v):[...S.done,v];save();render()},lsn:(e,v)=>say(LE[v][0]+'. '+LE[v][3]),
 pmic:()=>listen(x=>{$('#pt').value=x}),post:()=>{const x=$('#pt').value.trim();if(!x)return toast('Write something first','err');S.posts.unshift({id:Date.now(),by:S.name,tx:x,lk:0,r:[],me:0});save();toast('Posted');render()},lk:(e,v)=>{const p=S.posts.find(x=>x.id==v);p.me=p.me?0:1;save();render()},
 setpin:()=>{const v=$('#np').value;if(!/^\d{4}$/.test(v))return toast('PIN must be 4 digits','err');S.pin=v;save();toast('PIN saved');render()},nopin:()=>{S.pin='';save();toast('PIN removed');render()},lock:()=>lock(),
 tour0:()=>{location.hash='home';setTimeout(()=>tour(0),300)},reset:()=>{if(confirm('Reset all demo data?')){localStorage.removeItem('oj');location.reload()}},visit:()=>toast('Request sent. A Sakhi will call you soon.'),
