@@ -117,6 +117,19 @@ function buildSelectString(table: string, params: any): string {
   return selectParts.join(",");
 }
 
+const TABLES_WITH_UPDATED_AT = new Set([
+  "User",
+  "ChatThread",
+  "Shop",
+  "Product",
+  "Order",
+  "Payment",
+  "Refund",
+  "Delivery",
+  "DeliveryBatch",
+  "FeatureFlag",
+]);
+
 async function runSupabaseQuery(table: string, method: string, params: any = {}): Promise<any> {
   const base = `${SUPABASE_URL}/rest/v1/${table}`;
 
@@ -166,7 +179,9 @@ async function runSupabaseQuery(table: string, method: string, params: any = {})
         data.id = `${table.toLowerCase()}_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
       }
       if (!data.createdAt) data.createdAt = new Date().toISOString();
-      if (!data.updatedAt) data.updatedAt = new Date().toISOString();
+      if (TABLES_WITH_UPDATED_AT.has(table) && !data.updatedAt) {
+        data.updatedAt = new Date().toISOString();
+      }
 
       const res = await fetch(base, {
         method: "POST",
@@ -188,7 +203,10 @@ async function runSupabaseQuery(table: string, method: string, params: any = {})
       } else if (params.where) {
         query = buildFilter(query, params.where);
       }
-      const data = { ...params.data, updatedAt: new Date().toISOString() };
+      const data = { ...params.data };
+      if (TABLES_WITH_UPDATED_AT.has(table)) {
+        data.updatedAt = new Date().toISOString();
+      }
       const res = await fetch(query, {
         method: "PATCH",
         headers: sbHeaders("return=representation"),
@@ -205,7 +223,10 @@ async function runSupabaseQuery(table: string, method: string, params: any = {})
     case "updateMany": {
       let query = `${base}?`;
       query = buildFilter(query, params.where);
-      const data = { ...params.data, updatedAt: new Date().toISOString() };
+      const data = { ...params.data };
+      if (TABLES_WITH_UPDATED_AT.has(table)) {
+        data.updatedAt = new Date().toISOString();
+      }
       const res = await fetch(query, {
         method: "PATCH",
         headers: sbHeaders("return=representation"),
