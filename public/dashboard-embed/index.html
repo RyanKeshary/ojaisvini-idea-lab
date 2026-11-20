@@ -201,7 +201,44 @@ saveprof:()=>{const n=$('#pname').value.trim(),sl=$('#pslug').value.trim(),up=$(
 priv2:()=>{S.priv=S.priv?0:1;save();nav()},langn:()=>{S.lang={en:'hi',hi:'mr',mr:'en'}[S.lang];save();nav();render()},lang:(e,v)=>{S.lang=v;save();nav();render()},priv:(e)=>{S.priv=e.target.checked?1:0;save();nav()},
 mic:()=>{const o=$('.orb');o.classList.add('rec');listen(x=>{C.t=x;o.classList.remove('rec');render()});setTimeout(()=>o.classList.remove('rec'),6000)},samp:(e,v)=>{C.t=SAMP[v];render()},
 mk:()=>{C.busy=1;C.d=null;C.ok=0;render();setTimeout(()=>{draft();C.busy=0;render();say(C.d.name+'. Price between '+C.d.lo+' and '+C.d.hi+' rupees.')},900)},hear:()=>say(C.d.name+', '+C.d.price+' rupees'),
-pub:()=>{const d=C.d;if(!d.name.trim())return toast('Add a product name','err');const on=navigator.onLine;S.products.push({id:Date.now(),name:d.name,cat:d.cat,price:d.price,e:d.e,img:C.img,sync:on?1:0});save();C.ok=1;toast(on?'Published! Your shop is live.':'Offline — saved locally. Will sync later.');nav();render()},
+pub:async ()=>{
+  const d=C.d;
+  if(!d.name.trim())return toast('Add a product name','err');
+  const on=navigator.onLine;
+  const newProd = {id:Date.now(),name:d.name,cat:d.cat,price:d.price,e:d.e,img:C.img,sync:on?1:0};
+  S.products.push(newProd);
+  save();
+  C.ok=1;
+  toast(on?'Published! Your shop is live.':'Offline — saved locally. Will sync later.');
+  nav();
+  render();
+
+  // Actually sync & publish to the live store database
+  if(on) {
+    try {
+      await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          draft: {
+            title: d.name,
+            description: d.e || (d.name + ' - शुद्ध घरगुती व अस्सल गावरान.'),
+            category: (d.cat === 'Craft' ? 'CRAFT' : d.cat === 'Clothing' ? 'TEXTILE' : 'FOOD'),
+            suggestedPrice: d.price || 150,
+            tags: [d.cat ? d.cat.toLowerCase() : 'artisan', 'homemade'],
+            attributes: { weight: '250g' }
+          },
+          priceINR: Number(d.price) || 150,
+          stock: 20,
+          imageUrls: [C.img || '/uploads/test-achaar.png'],
+          fulfillment: 'both'
+        })
+      });
+    } catch(err) {
+      console.warn('Backend sync note:', err);
+    }
+  }
+},
 del:(e,v)=>{const i=S.products.findIndex(p=>p.id==v),p=S.products.splice(i,1)[0];save();render();toast('Product deleted',0,'Undo',()=>{S.products.splice(i,0,p);save();render()})},
 acc:(e,v)=>{const o=S.orders.find(x=>x.id==v);S.bal+=net(o.amt);toast('Order accepted. ₹'+net(o.amt)+' added to balance');setO(v,'accepted')},dec:(e,v)=>{setO(v,'declined');toast('Order declined')},dlv:(e,v)=>{setO(v,'done');toast('Marked delivered')},
 pool:(e,v)=>{const n=S.orders.filter(o=>o.pc==v&&(o.st=='new'||o.st=='accepted')).length;toast(`Pickup booked for ${n} orders. You save ~₹${(n-1)*40}.`)},
