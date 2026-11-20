@@ -82,7 +82,7 @@ table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px 6px;
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const LS={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const D0={name:'Sunita Tai',slug:'sunita-swad',lang:'en',theme:'',priv:0,pin:'',tour:0,col:0,upi:'',bal:194,pays:[],done:[],
+const D0={name:'Sunita Tai',slug:'sunita-swad',lang:(typeof localStorage!=='undefined'&&localStorage.getItem('buyer_lang'))||'mr',theme:'',priv:0,pin:'',tour:0,col:0,upi:'',bal:194,pays:[],done:[],
 products:[{id:1,name:'Mango pickle',cat:'Food',price:150,e:'🥭',sync:1},{id:2,name:'Papad (1 kg)',cat:'Food',price:110,e:'🫓',sync:1},{id:3,name:'Cane basket',cat:'Crafts',price:220,e:'🧺',sync:1}],
 orders:[{id:1001,item:'Mango pickle',qty:2,amt:300,pc:'412205',v:'Bhor',st:'new',pay:'UPI'},{id:1002,item:'Papad (1 kg)',qty:1,amt:110,pc:'412205',v:'Bhor',st:'new',pay:'COD'},{id:1003,item:'Cane basket',qty:1,amt:220,pc:'411030',v:'Pune',st:'done',pay:'UPI'}],
 sales:[180,260,220,400,310,520,330],
@@ -122,26 +122,36 @@ P.home=()=>{const o=S.orders.filter(x=>x.st=='new'),f=fcast(S.sales),tr=f[2]>=S.
 <div class="card"><h2>Recent orders</h2>${S.orders.slice(-4).reverse().map(x=>`<div class="row sp" style="padding:6px 0"><span>${esc(x.item)} × ${x.qty}</span><span class="tag ${x.st=='new'?'o':''}">${x.st}</span></div>`).join('')||'<p class="mu">No orders yet.</p>'}</div>`};
 
 P.assistant=()=>{
+  const welcome = S.lang === 'mr' 
+    ? 'नमस्कार! मी सखी दीदी, तुमची व्यवसाय मार्गदर्शक. आज तुमच्या दुकानासाठी काय मदत करू?'
+    : S.lang === 'hi'
+    ? 'नमस्ते! मैं सखी दीदी हूँ, आपकी बिज़नेस गाइड. आज आपकी दुकान के लिए क्या मदद करूँ?'
+    : 'Namaste! I am your AI business guide. How can I help your shop today?';
+  const sub = S.lang === 'mr'
+    ? 'तुमच्या भाषेत कोणताही व्यावसायिक प्रश्न विचारा — किंमत, फोटो, कर्ज किंवा योजना.'
+    : S.lang === 'hi'
+    ? 'अपनी भाषा में कोई भी व्यापार प्रश्न पूछें — दाम, फोटो, लोन या सरकारी योजनाएं.'
+    : 'Ask any business question in your language — pricing, photos, loans, or schemes.';
   return `<div class="card" style="margin-bottom:16px">
     <div class="row sp">
       <h2>🤖 Sakhi Didi AI Assistant</h2>
       <span class="tag o">Always Live</span>
     </div>
-    <p class="sm mu" style="margin:4px 0 12px">Ask any business question in your language — pricing, photos, loans, or schemes.</p>
+    <p class="sm mu" style="margin:4px 0 12px">${sub}</p>
     <div id="ai-chat" style="display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;padding:8px 0;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)">
       <div style="background:var(--card);padding:10px 14px;border-radius:12px;max-width:85%;align-self:flex-start">
-        <b>Sakhi Didi:</b> Namaste! I am your AI business guide. How can I help your shop today?
+        <b>Sakhi Didi:</b> ${welcome}
       </div>
     </div>
     <div class="row" style="margin-top:12px">
-      <input id="ai-in" placeholder="Ask Sakhi Didi..." style="flex:1" onkeydown="if(event.key==='Enter')A.aiSend()">
+      <input id="ai-in" placeholder="${S.lang==='mr'?'सखी दीदींना विचारा...':S.lang==='hi'?'सखी दीदी से पूछें...':'Ask Sakhi Didi...'}" style="flex:1" onkeydown="if(event.key==='Enter')A.aiSend()">
       <button class="btn" data-a="aiMic">🎤</button>
       <button class="btn pri" data-a="aiSend">Send</button>
     </div>
     <div class="row" style="margin-top:10px;gap:6px">
-      <button class="chip" data-a="aiQuick" data-v="How do I increase sales?">💡 More sales</button>
-      <button class="chip" data-a="aiQuick" data-v="What schemes am I eligible for?">🏛️ Schemes</button>
-      <button class="chip" data-a="aiQuick" data-v="How should I price my goods?">🏷️ Pricing</button>
+      <button class="chip" data-a="aiQuick" data-v="${S.lang==='mr'?'विक्री कशी वाढवायची?':S.lang==='hi'?'बिक्री कैसे बढ़ाएं?':'How do I increase sales?'}">💡 ${S.lang==='mr'?'अधिक विक्री':S.lang==='hi'?'ज़्यादा बिक्री':'More sales'}</button>
+      <button class="chip" data-a="aiQuick" data-v="${S.lang==='mr'?'माझ्यासाठी कोणत्या सरकारी योजना आहेत?':S.lang==='hi'?'मेरे लिए कौन सी सरकारी योजनाएं हैं?':'What schemes am I eligible for?'}">🏛️ ${S.lang==='mr'?'योजना':S.lang==='hi'?'योजनाएं':'Schemes'}</button>
+      <button class="chip" data-a="aiQuick" data-v="${S.lang==='mr'?'उत्पादनाची किंमत कशी ठरवावी?':S.lang==='hi'?'सामान की कीमत कैसे तय करें?':'How should I price my goods?'}">🏷️ ${S.lang==='mr'?'किंमत':S.lang==='hi'?'कीमत':'Pricing'}</button>
     </div>
   </div>`;
 };

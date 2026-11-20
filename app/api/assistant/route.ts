@@ -107,9 +107,9 @@ export async function POST(req: Request) {
               completion = await client.chat.completions.create(
                 {
                   model: m,
-                  temperature: 0.7,
-                  max_tokens: 500,
-                  messages: [{ role: "system", content: system }, ...prior.slice(-10)],
+                  temperature: 0.5,
+                  max_tokens: 150,
+                  messages: [{ role: "system", content: system }, ...prior.slice(-6)],
                   stream: true,
                 },
                 { signal: AbortSignal.timeout(20000) }
