@@ -160,13 +160,18 @@ export default function SpeakSnapSellLanding() {
         <nav>
           <a href="#story">How it works</a>
           <a href="#video">Watch Demo</a>
-          <a href="#lang">Languages</a>
-          <a href="#feat">Everything in one place</a>
+          <a href="/buyer">Browse as Buyer</a>
+          <a href="#feat">Ecosystem</a>
           <a href="#jr">Her journey</a>
         </nav>
-        <Link className="landing-btn cta sm" href="/app/home">
-          Open Dashboard
-        </Link>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          <Link className="landing-btn sm" href="/buyer" style={{ background: "transparent", border: "1px solid var(--line)", color: "var(--ink)" }}>
+            Buyer Shop
+          </Link>
+          <Link className="landing-btn cta sm" href="/app/home">
+            Seller App
+          </Link>
+        </div>
       </header>
 
       {/* Hero */}

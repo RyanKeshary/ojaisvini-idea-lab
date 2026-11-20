@@ -85,13 +85,21 @@ export async function GET() {
   });
   return NextResponse.json({
     ok: true,
-    products: products.map((p) => ({
-      id: p.id,
-      title: p.title,
-      priceINR: p.priceINR,
-      stock: p.stock,
-      status: p.status,
-      images: JSON.parse(p.images) as string[],
-    })),
+    products: products.map((p) => {
+      let parsedImages: string[] = [];
+      try {
+        parsedImages = typeof p.images === "string" ? JSON.parse(p.images) : (p.images || []);
+      } catch {
+        parsedImages = ["/uploads/test-achaar.png"];
+      }
+      return {
+        id: p.id,
+        title: p.title,
+        priceINR: p.priceINR,
+        stock: p.stock,
+        status: p.status,
+        images: parsedImages,
+      };
+    }),
   });
 }
