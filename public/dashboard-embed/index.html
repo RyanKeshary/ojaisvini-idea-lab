@@ -40,7 +40,7 @@ table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px 6px;
 #toasts{position:fixed;bottom:16px;right:16px;display:flex;flex-direction:column;gap:8px;z-index:100;max-width:calc(100vw - 32px)}
 .toast{background:var(--tx);color:var(--bg);padding:10px 14px;border-radius:10px;font-size:12px;animation:in .2s;display:flex;gap:10px;align-items:center}.toast.err{background:#b3261e;color:#fff}.toast button{background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit}@keyframes in{from{opacity:0;transform:translateY(8px)}}
 .ov{position:fixed;inset:0;background:#0007;display:grid;place-items:center;z-index:60;padding:16px}
-.md{background:var(--bg);border:1px solid var(--bd);border-radius:14px;padding:20px;width:min(520px,100%);max-height:90vh;overflow:auto}
+.md{background:var(--bg);border:1px solid var(--bd);border-radius:16px;padding:22px;width:min(680px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 20px 45px rgba(0,0,0,.25)}
 .lock{position:fixed;inset:0;background:var(--bg);z-index:90;display:grid;place-items:center;text-align:center}
 .keys{display:grid;grid-template-columns:repeat(3,72px);gap:10px;justify-content:center;margin-top:12px}.keys button{height:60px;font-size:20px}
 .tip{position:fixed;z-index:80;background:var(--tx);color:var(--bg);padding:12px;border-radius:10px;max-width:260px;font-size:12px}.ring{outline:3px solid #FF6700;outline-offset:3px;border-radius:10px}
@@ -152,18 +152,324 @@ return`<div class="card" style="margin-bottom:16px"><h2>Pooled pickup</h2><h5>Or
 <div class="card" style="overflow:auto"><table><tr><th>Order</th><th>Item</th><th>Amount</th><th>Status</th><th></th></tr>${S.orders.slice().reverse().map(o=>`<tr><td>#${o.id}<br><h5>${esc(o.v)} ${o.pc}</h5></td><td>${esc(o.item)} × ${o.qty}<br><h5>${o.pay}</h5></td><td>${m(o.amt)}</td><td><span class="tag ${o.st=='new'?'o':''}">${o.st}</span></td><td>${o.st=='new'?`<button class="btn sm pri" data-a="acc" data-v="${o.id}">Accept</button> <button class="btn sm" data-a="dec" data-v="${o.id}">Decline</button>`:o.st=='accepted'?`<button class="btn sm" data-a="dlv" data-v="${o.id}">Mark delivered</button>`:''}</td></tr>`).join('')}</table></div>`};
 P.payouts=()=>`<div class="grid"><div class="card"><h4>Available balance</h4><div class="big">${m(S.bal)}</div><label for="up">UPI ID</label><input id="up" value="${esc(S.upi)}" placeholder="name@bank" data-i="upi"><div class="row" style="margin-top:12px"><button class="btn cta" data-a="wd" ${S.bal?'':'disabled'}>Withdraw to UPI</button></div><h5 style="margin-top:8px">Demo only. No real money moves.</h5></div><div class="card"><h2>Payout history</h2>${S.pays.map(p=>`<div class="row sp" style="padding:6px 0"><span>${p.d}</span><b>${m(p.a)}</b><h5>${esc(p.u)}</h5></div>`).join('')||'<p class="mu">No payouts yet.</p>'}</div></div>`;
 /* schemes */
-const SC=[{n:'PM Mudra Yojana',w:'A loan up to ₹10 lakh for small businesses, with no collateral.',e:'You can borrow money to buy materials. Go to a bank with your Aadhaar and tell them your work.',tr:0,need:'loan'},
-{n:'PMFME',w:'Support for small food businesses: a subsidy of up to 35% on equipment.',e:'If you make food, the government pays part of the cost of your machines.',tr:'Food',need:'loan'},
-{n:'Lakhpati Didi',w:'Skill training and credit for self-help group (SHG) women to earn ₹1 lakh a year.',e:'Women in a bachat gat get training and loans to earn more every year.',shg:1,need:'training'},
-{n:'DAY-NRLM (Umed)',w:'SHG formation, bank linkage and market support for rural women.',e:'Join a women savings group. It helps you get loans and find buyers.',shg:1,need:'market'},
-{n:'PM Vishwakarma',w:'Training, toolkit grant and low-interest loans for artisans.',e:'If you make crafts or stitch clothes, you get a free toolkit, training and a cheap loan.',tr:['Crafts','Tailoring'],need:'training'},
-{n:'PMEGP',w:'Subsidy of 25–35% on loans for new micro units.',e:'Starting a small unit? The government returns part of your loan cost.',need:'loan'},
-{n:'Stand-Up India',w:'Bank loans of ₹10 lakh to ₹1 crore for women entrepreneurs.',e:'For a bigger business, a bank can lend you a large amount.',need:'loan'}];
+const ARTICLES = {
+  'PM Mudra Yojana': {
+    title: 'Pradhan Mantri MUDRA Yojana (PMMY)',
+    category: 'Collateral-Free Micro Enterprise Loan',
+    authority: 'Ministry of Finance, Government of India',
+    tagline: 'Collateral-free institutional credit up to ₹10 Lakhs for small micro-enterprises and women entrepreneurs.',
+    overview: 'Pradhan Mantri MUDRA Yojana (PMMY) was established to provide non-farm micro and small enterprises with structured, collateral-free credit through Commercial Banks, Regional Rural Banks (RRBs), and Micro Finance Institutions (MFIs). For rural women engaged in home-based processing, weaving, stitching, small shops, or services, MUDRA provides vital seed and working capital without demanding property collateral.',
+    tiers: [
+      { name: 'Shishu', limit: 'Loans up to ₹50,000', desc: 'Ideal for initial setup, sewing machines, small kitchen apparatus, or seed stock.' },
+      { name: 'Kishore', limit: 'Loans ₹50,000 to ₹5,00,000', desc: 'Designed for scaling production, buying raw material in bulk, and workshop expansion.' },
+      { name: 'Tarun', limit: 'Loans ₹5,00,000 to ₹10,00,000', desc: 'For enterprise maturation, commercial automation, and regional retail distribution.' }
+    ],
+    benefits: [
+      '100% collateral-free and third-party-guarantee free loan.',
+      'Zero upfront processing fees for Shishu and Kishore loan tiers.',
+      'Flexible repayment tenure between 3 to 5 years tailored to cash flow.',
+      'Mudra RuPay Debit Card issued for seamless working capital drawdowns.'
+    ],
+    eligibility: [
+      'Any Indian citizen with a viable business plan in manufacturing, trading, or service activities.',
+      'Applicant must be at least 18 years of age.',
+      'Clear financial track record with no prior defaults at formal financial institutions.'
+    ],
+    documents: [
+      'Aadhaar Card, Voter ID, or PAN Card',
+      'Proof of Residence (Electricity bill, Ration Card, or Gram Panchayat certificate)',
+      'Bank passbook photocopy with past 6 months transaction history',
+      'Estimated project cost sheet or equipment purchase quotation',
+      'Two recent passport-size photographs'
+    ],
+    howToApply: 'Visit any public, private, or regional rural bank branch. You can also apply digitally on the government UdyamiMitra (udyamimitra.in) or JanSamarth portal.',
+    link: 'https://www.mudra.org.in'
+  },
+  'PMFME': {
+    title: 'PM Formalisation of Micro food processing Enterprises (PMFME)',
+    category: 'Credit-Linked Subsidy & Technical Modernization',
+    authority: 'Ministry of Food Processing Industries (MoFPI)',
+    tagline: '35% capital subsidy and comprehensive support to modernize rural food ventures (pickle, papad, spices, snacks).',
+    overview: 'The PMFME Scheme under Atmanirbhar Bharat Abhiyan directly supports rural women in food processing enterprises. It bridges the gap between home-scale production and formal commerce by providing a 35% capital subsidy on machinery, free FSSAI food licensing guidance, modern hygiene packaging assistance, and branding support.',
+    tiers: [
+      { name: 'Individual Food Units', limit: '35% capital subsidy (up to ₹10 Lakhs)', desc: 'For buying grinders, pulverizers, dehydrators, vacuum sealers, and testing kits.' },
+      { name: 'SHG Seed Capital', limit: '₹40,000 per SHG member', desc: 'For working capital and minor tools to boost immediate manufacturing batches.' },
+      { name: 'Common Infrastructure', limit: '35% government grant', desc: 'For village cooperatives sharing cold storage, sorting, or drying sheds.' }
+    ],
+    benefits: [
+      '35% credit-linked capital subsidy capped up to ₹10,00,000 per enterprise.',
+      'District Resource Persons (DRP) appointed to write your Detailed Project Report (DPR) completely free.',
+      'Training on food hygiene, preservation techniques, standardized packaging, and shelf-life extension.',
+      '50% grant assistance for brand design, barcode registration, and national e-commerce onboarding.'
+    ],
+    eligibility: [
+      'Existing or newly aspiring micro food processing entrepreneurs or SHG members.',
+      'Minimum applicant age: 18 years.',
+      'Beneficiary equity contribution of at least 10% of total project outlay.'
+    ],
+    documents: [
+      'Aadhaar Card and PAN Card',
+      'Proof of unit premises (ownership deed, tax receipt, or village rent agreement)',
+      'Bank statement for past 6 months',
+      'Quotation of food processing machinery to be procured',
+      'Existing FSSAI registration number (if available)'
+    ],
+    howToApply: 'Register directly on the national PMFME portal (pmfme.mofpi.gov.in). Free assistance is provided at your District Industries Centre (DIC) through assigned DRP officers.',
+    link: 'https://pmfme.mofpi.gov.in'
+  },
+  'Lakhpati Didi': {
+    title: 'Lakhpati Didi Mission',
+    category: 'Rural Women Micro-Enterprise & Sustainable Wealth Creation',
+    authority: 'Ministry of Rural Development (MoRD) / DAY-NRLM',
+    tagline: 'Empowering Self-Help Group (SHG) women to achieve an annual sustainable income of ₹1 Lakh or more.',
+    overview: 'Lakhpati Didi is India’s flagship economic initiative dedicated to transitioning 3 crore rural women from subsistence work into sustainable nano-entrepreneurs earning at least ₹1,00,000 annually. Through organized Bachat Gats (Self-Help Groups), women receive livelihood diversification support, subsidized bank credit lines, enterprise coaching, and digital commerce tools.',
+    tiers: [
+      { name: 'Livelihood Planning', limit: 'Household Investment Plan (HIP)', desc: 'Custom roadmaps matching local trade, seasonality, and household capacity.' },
+      { name: 'Community Investment Support', limit: 'Revolving low-interest fund', desc: 'Immediate capital for raw materials, craft inputs, seeds, or poultry/dairy.' },
+      { name: 'Commercial Bank Linkage', limit: '₹1 Lakh to ₹5 Lakh credit line', desc: 'Subsidized loan linkage through local bank branches for business scaling.' }
+    ],
+    benefits: [
+      'Dedicated Community Resource Persons (CRPs) assisting your business day-to-day.',
+      'Specialized hands-on skilling: Drone Didi, food preservation, organic farming, LED assembly, and tailoring.',
+      'Access to state interest subvention, effectively reducing borrowing costs down to 4%–7%.',
+      'Direct stall allocations at SARAS Melas, state exhibitions, and online listing on government e-Marketplaces.',
+      'Digital literacy training: smartphone business management, UPI payment collection, and catalog sharing.'
+    ],
+    eligibility: [
+      'Woman member of an active SHG under DAY-NRLM / State Mission for at least 6 months.',
+      'Panchasutra compliance (regular savings, regular meetings, internal lending, timely repayment, recordkeeping).',
+      'Readiness to undertake enterprise training and track financial revenue.'
+    ],
+    documents: [
+      'Aadhaar Card with linked mobile number',
+      'SHG Membership Passbook & Group Resolution copy',
+      'Individual and SHG savings bank account details',
+      'Household Enterprise Plan (formulated with Village Organization support)'
+    ],
+    howToApply: 'Connect with your Village Organization (VO) / Gram Sangathan or Cluster Level Federation (CLF) under your State Rural Livelihoods Mission (e.g. MSRLM Umed, JSLPS, MPSRLM).',
+    link: 'https://aajeevika.gov.in'
+  },
+  'DAY-NRLM (Umed)': {
+    title: 'DAY-NRLM / Maharashtra Umed Mission',
+    category: 'Community Institution & Self-Help Group Credit Ecosystem',
+    authority: 'Ministry of Rural Development & State Livelihood Missions',
+    tagline: 'Livelihood empowerment through women self-help federations, low-interest capital & village collectives.',
+    overview: 'Deendayal Antyodaya Yojana - National Rural Livelihoods Mission (DAY-NRLM), operational as Umed in Maharashtra, is the cornerstone of rural women collectivization. It provides institutional backing, micro-finance linkages, emergency mutual support funds, and collective marketing strength to enable rural women to run profitable enterprises.',
+    tiers: [
+      { name: 'Revolving Fund (RF)', limit: '₹20,000 to ₹30,000 per SHG', desc: 'Injected into the group after 3 months to build internal lending capacity.' },
+      { name: 'Community Investment Fund', limit: 'Up to ₹1.5 Lakh per group', desc: 'Capital allocated through Village Organizations for individual member livelihoods.' },
+      { name: 'Bank Linkage Credit', limit: '₹6 Lakh to ₹10 Lakh collateral-free', desc: 'Long-term subsidized commercial bank financing with interest subvention.' }
+    ],
+    benefits: [
+      'Interest subvention lowering effective borrowing interest rates to 7% (or 4% with prompt repayments).',
+      'No property collateral or third-party guarantees needed up to ₹20 Lakhs per group.',
+      'Collective bargaining power to purchase raw ingredients, cloth, and farm inputs at wholesale rates.',
+      'Village level support networks and grievance redressal through federation cadres.'
+    ],
+    eligibility: [
+      'Rural women belonging to vulnerable or low-income households.',
+      'Group size: 10 to 20 members (minimum 5 in hilly or tribal talukas).',
+      'Active observance of group savings and bookkeeping for minimum 3 months.'
+    ],
+    documents: [
+      'Aadhaar cards of all group office bearers and members',
+      'Group resolution for opening / linking bank account',
+      'SHG group photograph and signature/thumb-impression register',
+      'Bank passbook showing consecutive savings'
+    ],
+    howToApply: 'Contact the Livelihood Coordinator or Community Resource Person (CRP) at your Gram Panchayat or Block Development Office (BDO).',
+    link: 'https://umed.in'
+  },
+  'PM Vishwakarma': {
+    title: 'PM Vishwakarma Kaushal Samman',
+    category: 'Traditional Artisan Skilling, Toolkits & Low-Interest Credit',
+    authority: 'Ministry of Micro, Small and Medium Enterprises (MoMSME)',
+    tagline: 'End-to-end support, modern toolkits, and 5% interest loans for traditional craftswomen & artisans.',
+    overview: 'PM Vishwakarma honours and elevates traditional artisans and craftspeople working with indigenous tools and hands. Covering 18 heritage trades—including tailors (Darzi), basket/mat weavers (Tokri Bunkar), doll & toy makers, potters, and coir weavers—the scheme provides formal government recognition, paid skill training, modern toolkit vouchers, and low-interest collateral-free loans.',
+    tiers: [
+      { name: 'Skill Upgradation', limit: '5–7 days with ₹500/day stipend', desc: 'Training in modern designs, digital marketing, and ergonomic practices.' },
+      { name: 'Modern Toolkit', limit: '₹15,000 Digital Grant Voucher', desc: 'Direct financial voucher to buy high-performance electric machinery and precision tools.' },
+      { name: 'Enterprise Credit', limit: '₹1 Lakh (Tranche 1) + ₹2 Lakh (Tranche 2)', desc: 'Collateral-free loan at an ultra-low 5% interest rate with 8% government subsidy.' }
+    ],
+    benefits: [
+      'Official PM Vishwakarma Certificate and National Digital Artisan Identity Card.',
+      '₹15,000 free toolkit grant voucher upon training completion.',
+      'Collateral-free credit: ₹1,00,000 for 18 months, unlocking ₹2,00,000 for 30 months on prompt repayment.',
+      'Concessional interest rate capped at only 5%.',
+      'Monthly digital transaction incentive of ₹1 per transaction up to 100 transactions.'
+    ],
+    eligibility: [
+      'Artisan or craftsperson working in one of the 18 eligible trades on a self-employed basis.',
+      'Minimum age of 18 years on application date.',
+      'No active loans under similar central schemes (such as PMEGP or Mudra) in the last 5 years.',
+      'One beneficiary per household.'
+    ],
+    documents: [
+      'Aadhaar Card (mobile-linked for OTP verification)',
+      'Active Savings Bank Account Passbook',
+      'Ration Card or proof of family composition',
+      'Self-declaration of traditional artisan trade'
+    ],
+    howToApply: 'Visit your nearest Common Service Center (CSC) with your Aadhaar for biometric verification, or apply online at pmvishwakarma.gov.in. Applications undergo Gram Panchayat verification.',
+    link: 'https://pmvishwakarma.gov.in'
+  },
+  'PMEGP': {
+    title: 'Prime Minister’s Employment Generation Programme (PMEGP)',
+    category: 'Credit-Linked Capital Subsidy for Micro-Enterprises',
+    authority: 'Khadi & Village Industries Commission (KVIC) / MoMSME',
+    tagline: 'Up to 35% government subsidy on bank loans for setting up new manufacturing and service businesses.',
+    overview: 'PMEGP is India’s premier credit-linked subsidy initiative aimed at fostering self-employment and micro-enterprises. For rural women entrepreneurs, the scheme provides exceptional advantages: women are classified as special category beneficiaries, qualifying for the maximum 35% capital subsidy on total project costs with only a 5% promoter equity requirement.',
+    tiers: [
+      { name: 'Manufacturing Sector', limit: 'Project cost up to ₹50 Lakhs', desc: 'Ideal for food packaging, garment fabrication, flour mills, spice grinding, and crafts.' },
+      { name: 'Service / Commercial', limit: 'Project cost up to ₹20 Lakhs', desc: 'Ideal for custom tailoring centers, rural laundry hubs, catering, and mobile repair.' }
+    ],
+    benefits: [
+      '35% government capital subsidy for rural women setting up manufacturing or service units.',
+      'Only 5% personal contribution required from women entrepreneurs; bank funds the rest.',
+      'Pre-disbursement Entrepreneurship Development Programme (EDP) training provided free.',
+      'Direct electronic subsidy transfer (Margin Money) locked in an interest-free bank deposit for 3 years, then adjusted against your loan.'
+    ],
+    eligibility: [
+      'Any individual aged 18 years and above.',
+      'Educational requirement: at least 8th standard pass for manufacturing projects over ₹10 Lakhs and service projects over ₹5 Lakhs.',
+      'Scheme strictly applies to newly established units (existing units cannot apply).'
+    ],
+    documents: [
+      'Aadhaar Card and PAN Card',
+      'Educational qualification certificate / marksheet',
+      'Special category certificate (self-declaration for women / caste certificate if applicable)',
+      'Detailed Project Profile (DPR) detailing machinery, raw materials, and revenue projections',
+      'Rural Area Certificate issued by Gram Panchayat / Sarpanch'
+    ],
+    howToApply: 'Submit an online application on the KVIC e-portal (kviconline.gov.in/pmegpeportal). Applications are vetted by the District Level Task Force Committee (DLTFC) and forwarded to your chosen bank.',
+    link: 'https://www.kviconline.gov.in'
+  },
+  'Stand-Up India': {
+    title: 'Stand-Up India Scheme',
+    category: 'Commercial Enterprise Credit for Women Entrepreneurs',
+    authority: 'Department of Financial Services (DFS), Ministry of Finance',
+    tagline: 'Bank credit from ₹10 Lakh to ₹1 Crore for women establishing new commercial ventures.',
+    overview: 'The Stand-Up India Scheme was specifically formulated to support women and SC/ST entrepreneurs in graduating to substantial commercial-scale business enterprises. Every bank branch is mandated to facilitate at least one high-value enterprise loan between ₹10 Lakh and ₹1 Crore to a woman entrepreneur, supporting manufacturing, services, agri-allied, or trading ventures.',
+    tiers: [
+      { name: 'Composite Enterprise Loan', limit: '₹10 Lakh to ₹1 Crore', desc: 'Covers term loan for machinery, civil works, vehicles, and working capital requirements.' }
+    ],
+    benefits: [
+      'High capital ceiling allowing rural women to build regional manufacturing and trading factories.',
+      'Covers up to 85% of total project expenditure, minimizing owner upfront capital.',
+      'Comfortable 7-year repayment window with an initial moratorium period up to 18 months.',
+      'Handholding support network connecting you to SIDBI mentors, testing laboratories, and export councils.'
+    ],
+    eligibility: [
+      'Woman entrepreneur of 18 years or above.',
+      'The project must be a greenfield enterprise (first venture in manufacturing, services, or trading).',
+      'For non-individual enterprises (such as partnerships or Pvt Ltd), at least 51% shareholding and controlling stake must be held by a woman.'
+    ],
+    documents: [
+      'Identity Proof (Aadhaar, Voter ID, Passport) and PAN Card',
+      'Proof of unit registration / incorporation / MSME Udyam registration',
+      'Comprehensive Detailed Project Report (DPR) with 3-year cash flow projections',
+      'Machinery purchase quotations and lease/ownership deed of premises',
+      'Applicant past 1-year personal and business bank statements'
+    ],
+    howToApply: 'Apply directly through the Stand-Up Mitra portal (standupmitra.in) or visit any scheduled commercial bank branch and meet the Chief Manager or Stand-Up India desk officer.',
+    link: 'https://www.standupmitra.in'
+  }
+};
+
+const SC=[
+  {n:'PM Mudra Yojana',w:'A loan up to ₹10 lakh for small businesses, with no collateral.',e:'You can borrow money to buy materials. Go to a bank with your Aadhaar and tell them your work.',tr:0,need:'loan'},
+  {n:'PMFME',w:'Support for small food businesses: a subsidy of up to 35% on equipment.',e:'If you make food, the government pays part of the cost of your machines.',tr:'Food',need:'loan'},
+  {n:'Lakhpati Didi',w:'Skill training and credit for self-help group (SHG) women to earn ₹1 lakh a year.',e:'Women in a bachat gat get training and loans to earn more every year.',shg:1,need:'training'},
+  {n:'DAY-NRLM (Umed)',w:'SHG formation, bank linkage and market support for rural women.',e:'Join a women savings group. It helps you get loans and find buyers.',shg:1,need:'market'},
+  {n:'PM Vishwakarma',w:'Training, toolkit grant and low-interest loans for artisans.',e:'If you make crafts or stitch clothes, you get a free toolkit, training and a cheap loan.',tr:['Crafts','Tailoring'],need:'training'},
+  {n:'PMEGP',w:'Subsidy of 25–35% on loans for new micro units.',e:'Starting a small unit? The government returns part of your loan cost.',need:'loan'},
+  {n:'Stand-Up India',w:'Bank loans of ₹10 lakh to ₹1 crore for women entrepreneurs.',e:'For a bigger business, a bank can lend you a large amount.',need:'loan'}
+];
+
+function showSchemeArticle(key) {
+  const a = ARTICLES[key] || {
+    title: key,
+    category: 'Government Initiative',
+    authority: 'Government of India',
+    tagline: 'Empowering women entrepreneurs with capital and training.',
+    overview: 'Check official government guidelines or consult your local bank branch for complete details.',
+    tiers: [],
+    benefits: ['Low-interest or collateral-free financial support.','Government approved training and subsidies.'],
+    eligibility: ['Indian women entrepreneurs aged 18 and above.'],
+    documents: ['Aadhaar Card','Bank Passbook','Passport Photographs'],
+    howToApply: 'Visit your nearest bank or district administrative office.',
+    link: 'https://www.india.gov.in'
+  };
+
+  const h = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px;border-bottom:1px solid var(--bd);padding-bottom:12px">
+      <div>
+        <span class="tag b" style="margin-bottom:6px;display:inline-block">${esc(a.category)}</span>
+        <h2 style="font-size:22px;margin:4px 0 2px;line-height:1.25">${esc(a.title)}</h2>
+        <p class="sm mu" style="margin:0">${esc(a.authority)}</p>
+      </div>
+      <button class="btn sm" data-a="mx" style="flex:none;font-size:16px;line-height:1;padding:6px 10px" aria-label="Close">✕</button>
+    </div>
+
+    <div style="background:var(--card);padding:12px 14px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--p)">
+      <p style="font-weight:600;margin:0 0 4px;color:var(--tx)">💡 ${esc(a.tagline)}</p>
+    </div>
+
+    <div style="line-height:1.6;font-size:14px;margin-bottom:20px;color:var(--tx)">
+      <h3 style="margin:0 0 6px;font-size:16px">📖 Overview & Purpose</h3>
+      <p style="margin:0 0 14px">${esc(a.overview)}</p>
+
+      ${a.tiers && a.tiers.length ? `
+        <h3 style="margin:16px 0 8px;font-size:16px">📊 Support Categories & Limits</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:10px;margin-bottom:16px">
+          ${a.tiers.map(t => `
+            <div style="background:var(--bg);border:1px solid var(--bd);padding:10px 12px;border-radius:10px">
+              <span class="tag o" style="font-size:11px;font-weight:700">${esc(t.name)}</span>
+              <div style="font-weight:700;margin:6px 0 2px;color:var(--p)">${esc(t.limit)}</div>
+              <p class="sm mu" style="margin:0">${esc(t.desc)}</p>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+
+      <h3 style="margin:16px 0 6px;font-size:16px">✨ Key Benefits & Subsidies</h3>
+      <ul style="margin:0 0 16px;padding-left:20px">
+        ${a.benefits.map(b => `<li style="margin-bottom:6px">${esc(b)}</li>`).join('')}
+      </ul>
+
+      <h3 style="margin:16px 0 6px;font-size:16px">✅ Eligibility Criteria</h3>
+      <ul style="margin:0 0 16px;padding-left:20px">
+        ${a.eligibility.map(e => `<li style="margin-bottom:6px">${esc(e)}</li>`).join('')}
+      </ul>
+
+      <h3 style="margin:16px 0 6px;font-size:16px">📄 Required Documents</h3>
+      <div style="background:var(--card);padding:12px;border-radius:10px;margin-bottom:16px">
+        <ul style="margin:0;padding-left:18px">
+          ${a.documents.map(d => `<li style="margin-bottom:4px"><b>${esc(d)}</b></li>`).join('')}
+        </ul>
+      </div>
+
+      <h3 style="margin:16px 0 6px;font-size:16px">🚀 Step-by-Step Application Process</h3>
+      <p style="margin:0 0 16px">${esc(a.howToApply)}</p>
+    </div>
+
+    <div class="row sp" style="border-top:1px solid var(--bd);padding-top:14px">
+      <a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer" class="btn pri" style="display:inline-flex;align-items:center;gap:6px">
+        Official Portal & Application ↗
+      </a>
+      <button class="btn" data-a="exp" data-v="${SC.findIndex(s=>s.n===key)}" style="display:inline-flex;align-items:center;gap:6px">
+        🔊 Listen summary
+      </button>
+    </div>
+  `;
+  modal(h);
+}
+
 let Q={tr:'',shg:'',need:'',go:0};
 const sm=s=>(!s.tr||(Array.isArray(s.tr)?s.tr:[s.tr]).includes(Q.tr))&&(!s.shg||Q.shg=='yes')&&(Q.need==''||s.need==Q.need||!s.need);
 const ch=(k,a)=>a.map(([v,l])=>`<button class="chip ${Q[k]==v?'on':''}" data-a="q" data-k="${k}" data-v="${v}">${l}</button>`).join('');
 P.schemes=()=>`<div class="card" style="margin-bottom:16px"><h2>Find schemes for me</h2><label>What do you make?</label><div class="row">${ch('tr',[['Food','🍲 Food'],['Crafts','🧺 Crafts'],['Tailoring','🪡 Tailoring'],['Dairy','🥛 Dairy']])}</div><label>Are you in a self-help group (bachat gat)?</label><div class="row">${ch('shg',[['yes','Yes'],['no','No']])}</div><label>What do you need?</label><div class="row">${ch('need',[['loan','💰 Loan'],['training','📘 Training'],['market','🛒 Buyers']])}</div><div class="row" style="margin-top:12px"><button class="btn pri" data-a="qgo" ${Q.tr&&Q.shg&&Q.need?'':'disabled'}>Show schemes</button></div></div>
-${Q.go?`<div class="card"><h2>${SC.filter(sm).length} schemes match</h2>${SC.filter(sm).map(s=>`<div class="pr" style="display:block"><h3>${s.n}</h3><p class="sm mu" style="margin:4px 0 8px">${s.w}</p><button class="btn sm" data-a="exp" data-v="${SC.indexOf(s)}">🔊 Explain simply</button></div>`).join('')||'<p class="mu">No match. Try other answers.</p>'}<h5>Demo list. Check details with your bank or district office.</h5></div>`:''}`;
+${Q.go?`<div class="card"><h2>${SC.filter(sm).length} schemes match</h2>${SC.filter(sm).map(s=>`<div class="pr" style="display:block;cursor:pointer;border-radius:12px;padding:12px;margin-bottom:8px;background:var(--card);transition:transform .15s ease,box-shadow .15s ease" data-a="sart" data-v="${esc(s.n)}"><div class="row sp" style="align-items:flex-start"><div><h3 style="color:var(--p);text-decoration:underline;margin:0 0 4px">${esc(s.n)} ↗</h3><p class="sm mu" style="margin:2px 0 8px">${esc(s.w)}</p></div><span class="tag b" style="font-size:11px">📖 Read article</span></div><div class="row" style="margin-top:6px" onclick="event.stopPropagation()"><button class="btn sm" data-a="exp" data-v="${SC.indexOf(s)}">🔊 Explain simply</button><button class="btn sm pri" data-a="sart" data-v="${esc(s.n)}">View full guide</button></div></div>`).join('')||'<p class="mu">No match. Try other answers.</p>'}<h5>Demo list. Tap any scheme card or button to read its in-depth article and eligibility checklist.</h5></div>`:''};
 /* learn */
 const LE=[['Photo tips for your products','Crafts',2,'Use daylight near a window and a plain cloth behind the product.'],['Pricing your pickle','Food',3,'Add cost of materials, your time and 20% profit.'],['Packing food safely','Food',3,'Use clean dry jars and seal the lid with tape.'],['Cutting blouse pieces with less waste','Tailoring',3,'Plan the pattern on the cloth before cutting.'],['Selling milk products','Dairy',2,'Keep products cold and deliver the same day.'],['What is UPI and is it safe','All',2,'Never share your PIN. Receiving money needs no PIN.']];
 let LF='All';
@@ -243,7 +549,7 @@ del:(e,v)=>{const i=S.products.findIndex(p=>p.id==v),p=S.products.splice(i,1)[0]
 acc:(e,v)=>{const o=S.orders.find(x=>x.id==v);S.bal+=net(o.amt);toast('Order accepted. ₹'+net(o.amt)+' added to balance');setO(v,'accepted')},dec:(e,v)=>{setO(v,'declined');toast('Order declined')},dlv:(e,v)=>{setO(v,'done');toast('Marked delivered')},
 pool:(e,v)=>{const n=S.orders.filter(o=>o.pc==v&&(o.st=='new'||o.st=='accepted')).length;toast(`Pickup booked for ${n} orders. You save ~₹${(n-1)*40}.`)},
 wd:()=>{if(!/^[\w.-]{2,}@[a-z]{2,}$/i.test(S.upi.trim()))return toast('Enter a valid UPI ID first','err');const a=S.bal;S.pays.unshift({d:new Date().toLocaleDateString('en-IN'),a,u:S.upi});S.bal=0;save();toast('₹'+a+' sent to '+S.upi+' (demo)');nav();render()},
-q:(e,v)=>{Q[e.target.dataset.k]=v;Q.go=0;render()},qgo:()=>{Q.go=1;render()},exp:(e,v)=>say(SC[v].n+'. '+SC[v].e),lf:(e,v)=>{LF=v;render()},ld:(e,v)=>{v=+v;S.done=S.done.includes(v)?S.done.filter(x=>x!=v):[...S.done,v];save();render()},lsn:(e,v)=>say(LE[v][0]+'. '+LE[v][3]),
+sart:(e,v)=>{showSchemeArticle(v)},q:(e,v)=>{Q[e.target.dataset.k]=v;Q.go=0;render()},qgo:()=>{Q.go=1;render()},exp:(e,v)=>{const i=+v;say(SC[i]?SC[i].n+'. '+SC[i].e:'')},lf:(e,v)=>{LF=v;render()},ld:(e,v)=>{v=+v;S.done=S.done.includes(v)?S.done.filter(x=>x!=v):[...S.done,v];save();render()},lsn:(e,v)=>say(LE[v][0]+'. '+LE[v][3]),
 pmic:()=>listen(x=>{$('#pt').value=x}),post:()=>{const x=$('#pt').value.trim();if(!x)return toast('Write something first','err');S.posts.unshift({id:Date.now(),by:S.name,tx:x,lk:0,r:[],me:0});save();toast('Posted');render()},lk:(e,v)=>{const p=S.posts.find(x=>x.id==v);p.me=p.me?0:1;save();render()},
 setpin:()=>{const v=$('#np').value;if(!/^\d{4}$/.test(v))return toast('PIN must be 4 digits','err');S.pin=v;save();toast('PIN saved');render()},nopin:()=>{S.pin='';save();toast('PIN removed');render()},lock:()=>lock(),
 tour0:()=>{location.hash='home';setTimeout(()=>tour(0),300)},reset:()=>{if(confirm('Reset all demo data?')){localStorage.removeItem('oj');location.reload()}},visit:()=>toast('Request sent. A Sakhi will call you soon.'),
