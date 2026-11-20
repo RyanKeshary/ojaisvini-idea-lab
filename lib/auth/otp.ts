@@ -21,10 +21,19 @@ function hashCode(phone: string, code: string): string {
 export async function createOtp(phone: string): Promise<{ code: string; expiresAt: Date }> {
   const code = String(randomInt(0, 1000000)).padStart(6, "0");
   const expiresAt = new Date(Date.now() + OTP_TTL_MS);
-  await db.otpToken.deleteMany({ where: { phone } });
-  await db.otpToken.create({
-    data: { phone, hash: hashCode(phone, code), expiresAt, attempts: 0 },
-  });
+  const hash = hashCode(phone, code);
+
+  try {
+    await db.otpToken.deleteMany({ where: { phone } });
+    await db.otpToken.create({
+      data: { phone, hash, expiresAt, attempts: 0 },
+    });
+  } catch {
+    // Fallback to Supabase REST if direct Postgres is unreachable (e.g. Vercel IPv4)
+    const { supabaseRest } = await import("@/lib/supabase-rest");
+    await supabaseRest.saveOtp(phone, hash, expiresAt);
+  }
+
   return { code, expiresAt };
 }
 
@@ -36,13 +45,29 @@ export async function verifyOtp(
   if (code === DEMO_CODE || isDemo()) {
     if (code === DEMO_CODE) return { ok: true };
   }
-  const token = await db.otpToken.findFirst({
-    where: { phone },
-    orderBy: { createdAt: "desc" },
-  });
+
+  let token: { id: string; hash: string; expiresAt: Date; attempts: number } | null = null;
+  let useRest = false;
+
+  try {
+    token = await db.otpToken.findFirst({
+      where: { phone },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch {
+    useRest = true;
+    const { supabaseRest } = await import("@/lib/supabase-rest");
+    token = await supabaseRest.findOtpToken(phone);
+  }
+
   if (!token) return { ok: false, error: "otp-expired" };
   if (token.expiresAt.getTime() < Date.now()) {
-    await db.otpToken.delete({ where: { id: token.id } });
+    if (useRest) {
+      const { supabaseRest } = await import("@/lib/supabase-rest");
+      await supabaseRest.deleteOtpToken(token.id);
+    } else {
+      await db.otpToken.delete({ where: { id: token.id } }).catch(() => {});
+    }
     return { ok: false, error: "otp-expired" };
   }
   if (token.attempts >= OTP_MAX_ATTEMPTS) {
@@ -53,9 +78,19 @@ export async function verifyOtp(
   const match = a.length === b.length && timingSafeEqual(a, b);
   if (!match) {
     const attempts = token.attempts + 1;
-    await db.otpToken.update({ where: { id: token.id }, data: { attempts } });
+    if (useRest) {
+      const { supabaseRest } = await import("@/lib/supabase-rest");
+      await supabaseRest.updateOtpAttempts(token.id, attempts);
+    } else {
+      await db.otpToken.update({ where: { id: token.id }, data: { attempts } }).catch(() => {});
+    }
     return { ok: false, error: attempts >= OTP_MAX_ATTEMPTS ? "otp-locked" : "otp-wrong" };
   }
-  await db.otpToken.delete({ where: { id: token.id } });
+  if (useRest) {
+    const { supabaseRest } = await import("@/lib/supabase-rest");
+    await supabaseRest.deleteOtpToken(token.id);
+  } else {
+    await db.otpToken.delete({ where: { id: token.id } }).catch(() => {});
+  }
   return { ok: true };
 }

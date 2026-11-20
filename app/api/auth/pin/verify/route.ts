@@ -21,23 +21,64 @@ export async function POST(req: Request) {
   const rl = rateLimit(`pinverify:${clientIp(req.headers)}`, 30, 10 * 60 * 1000);
   if (!rl.ok) return err("rate-limited", 429);
 
-  const user = await db.user.findUnique({ where: { phone } });
+  let user: any = null;
+  let useRest = false;
+
+  try {
+    user = await db.user.findUnique({ where: { phone } });
+  } catch {
+    useRest = true;
+    const { supabaseRest } = await import("@/lib/supabase-rest");
+    user = await supabaseRest.findUserByPhone(phone);
+  }
+
   if (!user || !user.pinHash || user.deletedAt) return err("no-account", 400);
-  if (user.pinLockedUntil && user.pinLockedUntil.getTime() > Date.now()) {
+  const lockedUntil = user.pinLockedUntil ? new Date(user.pinLockedUntil).getTime() : 0;
+  if (lockedUntil > Date.now()) {
     return err("pin-locked", 423);
   }
   const ok = await checkPin(pin, user.pinHash);
   if (!ok) {
-    const fails = user.pinFails + 1;
+    const fails = (user.pinFails || 0) + 1;
     const locked = fails >= PIN_MAX_FAILS;
-    await db.user.update({
-      where: { id: user.id },
-      data: { pinFails: fails, pinLockedUntil: locked ? new Date(Date.now() + PIN_LOCK_MS) : null },
-    });
-    await db.auditLog.create({ data: { actorId: user.id, action: locked ? "pin.locked" : "pin.failed", meta: "{}" } });
+    const lockDate = locked ? new Date(Date.now() + PIN_LOCK_MS) : null;
+    if (useRest) {
+      const { supabaseRest } = await import("@/lib/supabase-rest");
+      await supabaseRest.updateUser(user.id, {
+        pinFails: fails,
+        pinLockedUntil: lockDate ? lockDate.toISOString() : null,
+      });
+      await supabaseRest.createAuditLog({ actorId: user.id, action: locked ? "pin.locked" : "pin.failed" });
+    } else {
+      try {
+        await db.user.update({
+          where: { id: user.id },
+          data: { pinFails: fails, pinLockedUntil: lockDate },
+        });
+        await db.auditLog.create({ data: { actorId: user.id, action: locked ? "pin.locked" : "pin.failed", meta: "{}" } });
+      } catch {
+        const { supabaseRest } = await import("@/lib/supabase-rest");
+        await supabaseRest.updateUser(user.id, {
+          pinFails: fails,
+          pinLockedUntil: lockDate ? lockDate.toISOString() : null,
+        });
+      }
+    }
     return err(locked ? "pin-locked" : "pin-wrong", 401);
   }
-  await db.user.update({ where: { id: user.id }, data: { pinFails: 0, pinLockedUntil: null } });
+
+  if (useRest) {
+    const { supabaseRest } = await import("@/lib/supabase-rest");
+    await supabaseRest.updateUser(user.id, { pinFails: 0, pinLockedUntil: null });
+  } else {
+    try {
+      await db.user.update({ where: { id: user.id }, data: { pinFails: 0, pinLockedUntil: null } });
+    } catch {
+      const { supabaseRest } = await import("@/lib/supabase-rest");
+      await supabaseRest.updateUser(user.id, { pinFails: 0, pinLockedUntil: null });
+    }
+  }
+
   const ticket = await issueTicket(user.id);
   return NextResponse.json({ ok: true, ticket, name: user.name });
 }

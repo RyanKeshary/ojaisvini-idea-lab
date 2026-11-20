@@ -3,6 +3,7 @@
 > **"SPEAK. SNAP. SELL."**  
 > *The only digital business platform where a rural woman who cannot read or type goes from a spoken sentence and one photo to a live, shareable, payment-ready online storefront in under 2 minutes, in her own language, even with poor connectivity.*
 
+**Live Deployment:** [https://ojaisvini-idea-lab.vercel.app](https://ojaisvini-idea-lab.vercel.app)  
 **Theme:** Tech4Startup — SDG 4 (Quality Education) + SDG 9 (Industry, Innovation & Infrastructure)  
 **Problem Statement 6 Focus:** Overcoming access barriers for rural women entrepreneurs in Maharashtra & India.
 
@@ -16,6 +17,7 @@ Ojasvini is designed for low-literacy women operating on low-end or shared smart
 - **Audio-first & visual-first interactions:** Every key screen, button, and prompt can be spoken aloud (`🔊 Listen`).
 - **No-typing listing loop:** Speak product description -> snap photo -> Groq multimodal AI drafts the listing -> audio review -> confirm by voice ("haan" / "₹150") -> published!
 - **End-to-end commerce & empowerment:** Integrates learning, selling, community, scheme discovery, and mentored support in a single, offline-capable PWA.
+- **Modern Responsive Design:** Full mobile/desktop adaptive layout with tactile physics, smooth scroll-driven 3D mobile product showcase, universal entrance motion, and clean light-mode aesthetic.
 
 ---
 
@@ -50,6 +52,7 @@ Ojasvini is designed for low-literacy women operating on low-end or shared smart
                                   +------------------------------------+
                                   |     Browser / PWA (Client)         |
                                   |  - Voice Orb & Web Speech API      |
+                                  |  - 3D Interactive Device Showcase  |
                                   |  - Service Worker + IDB Outbox     |
                                   |  - Zustand Client Prefs & State    |
                                   +-----------------+------------------+
@@ -60,12 +63,12 @@ Ojasvini is designed for low-literacy women operating on low-end or shared smart
 |                                    Next.js 15 App Router (Server)                                     |
 |                                                                                                       |
 |  [ Public Routes ]           [ Protected Seller App ]          [ Consoles & Management ]              |
-|  - / (Landing Hero)          - /app/home, /create              - /sakhi-console (Field Volunteer)     |
+|  - / (Speak. Snap. Sell.)    - /app/home, /create, /profile    - /sakhi-console (Field Volunteer)     |
 |  - /shop/[slug] (Storefront) - /app/products, /orders          - /admin (Metrics, Flags, Moderation)  |
 |  - /gallery (UI Kit Demo)    - /app/learn, /schemes, /community                                       |
 |                                                                                                       |
 |  ---------------------------------------------------------------------------------------------------  |
-|  [ API Layer (Zod-Validated, Rate-Limited, In-Memory Token Bucket) ]                                   |
+|  [ API Layer (Zod-Validated, Rate-Limited, Resilient Supabase REST & Direct DB) ]                    |
 |  - /api/listing/generate · /api/ai/intent · /api/stt · /api/assistant · /api/insights                 |
 |  - /api/pay/* (Demo Gateway) · /api/orders/* · /api/schemes/* · /api/community/* · /api/auth/*         |
 |                                                                                                       |
@@ -74,16 +77,17 @@ Ojasvini is designed for low-literacy women operating on low-end or shared smart
 |  - Listing · Orders & Pooling · Payment State Machine · Eligibility Engine · Learn Catalog            |
 |                                                                                                       |
 |  ---------------------------------------------------------------------------------------------------  |
-|  [ Adapters (Real with Graceful Deterministic Fallback) ]                                              |
-|  - AI: Groq (Llama 3.3, Llama 4 Vision, Whisper Turbo) <---> Deterministic Mock Provider             |
+|  [ Adapters & Multi-Cloud Resiliency ]                                                                |
+|  - AI: Groq (Qwen 3.8 27B / Llama, Whisper Turbo) <---> Deterministic Mock Provider                   |
+|  - Database: Dual Driver (Prisma Direct + Supabase PostgREST HTTPS Bridge for IPv4 Serverless)        |
 |  - Payments: Demo Gateway (UPI / Card / Netbanking / COD) <---> Idempotent HMAC Signatures            |
-|  - Storage: Local Disk (/public/uploads) <---> Cloud S3/R2 Ready                                      |
+|  - Storage: Resilient Disk (/public/uploads) <---> In-Memory Temp Storage                             |
 +---------------------------------------------------+---------------------------------------------------+
                                                     |
                                                     v
                                       +---------------------------+
-                                      |     Prisma ORM (SQLite)   |
-                                      |   PostgreSQL-Ready Schema |
+                                      |     PostgreSQL / SQLite   |
+                                      |   Supabase Cloud Database |
                                       +---------------------------+
 ```
 
@@ -92,7 +96,7 @@ Ojasvini is designed for low-literacy women operating on low-end or shared smart
 ## 🚀 Quickstart & Setup
 
 ### 1. Requirements
-- Node.js 18+ (tested on Node.js 20 & 24)
+- Node.js 18+ (tested on Node.js 20 & 22)
 - npm or pnpm
 
 ### 2. Installation
@@ -105,21 +109,34 @@ npm install
 ```
 
 ### 3. Environment Configuration
-Copy `.env.example` to `.env.local`:
+Copy `.env.example` to `.env.local` (or configure in Vercel):
 ```bash
 cp .env.example .env.local
 ```
 Key configuration parameters:
-- `AI_PROVIDER=mock`: Deterministic fixtures running offline without API keys (default).
-- `AI_PROVIDER=groq`: Enables live Groq AI. Set `GROQ_API_KEY=<your-groq-key>` in `.env.local`.
-- `GROQ_MODEL_CHAT=llama-3.3-70b-versatile`
-- `GROQ_MODEL_VISION=meta-llama/llama-4-scout-17b-16e-instruct`
-- `GROQ_MODEL_STT=whisper-large-v3-turbo`
-- `DATABASE_URL="file:./dev.db"`
+- `NEXT_PUBLIC_SITE_URL="https://ojaisvini-idea-lab.vercel.app"`
+- `NEXT_PUBLIC_SUPABASE_URL="https://yebysrmdiabvubxfozby.supabase.co"`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY="..."`
+- `SUPABASE_SERVICE_ROLE_KEY="..."`
+- `DATABASE_URL="postgresql://... or file:./dev.db"`
+- `AI_PROVIDER=groq` (or `mock` for fully offline testing)
+- `GROQ_API_KEY="..."`
+- `GROQ_MODEL_CHAT="qwen/qwen3.8-27b"`
+- `GROQ_MODEL_STT="whisper-large-v3-turbo"`
+- `NEXT_PUBLIC_DEMO=1`
+- `OJAS_DEMO=1`
 
-### 4. Database Seed
-Run the unified master seed script to populate staff accounts, demo sellers, products, realistic orders, schemes, lessons, and forum posts:
+### 4. Database Setup & Seed
+Before running database operations, ensure the datasource provider matches your `DATABASE_URL` (SQLite for local `file:./dev.db` or PostgreSQL for remote databases). The repository provides `scripts/prisma-prepare.cjs` to automatically configure the schema provider:
+
 ```bash
+# Prepare schema provider based on DATABASE_URL (.env or .env.local)
+node scripts/prisma-prepare.cjs
+
+# Sync schema state to database (loads .env / .env.local via dotenv if needed)
+node --env-file=.env.local node_modules/.bin/prisma db push || npx prisma db push
+
+# Populate staff accounts, demo sellers, products, realistic orders, schemes, and lessons
 npm run seed
 ```
 

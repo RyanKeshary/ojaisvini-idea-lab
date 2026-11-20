@@ -30,8 +30,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ code: "rate-limited", messageKey: "auth.errors.rateLimited" }, { status: 429 });
   }
   const { code } = await createOtp(phone);
-  await getSmsProvider().send(phone, `Ojasvini code: ${code}. Kisi se share na karein.`);
-  await db.auditLog.create({ data: { action: "otp.sent", meta: JSON.stringify({ phone: `${phone.slice(0, 2)}••••${phone.slice(6)}` }) } });
+  try {
+    await getSmsProvider().send(phone, `Ojasvini code: ${code}. Kisi se share na karein.`);
+  } catch (e) {
+    console.warn("SMS send warning:", e);
+  }
+  try {
+    await db.auditLog.create({ data: { action: "otp.sent", meta: JSON.stringify({ phone: `${phone.slice(0, 2)}••••${phone.slice(6)}` }) } });
+  } catch {
+    const { supabaseRest } = await import("@/lib/supabase-rest");
+    await supabaseRest.createAuditLog({ action: "otp.sent", meta: JSON.stringify({ phone: `${phone.slice(0, 2)}••••${phone.slice(6)}` }) });
+  }
   if (isDemo()) {
     return NextResponse.json({ ok: true, demoOtp: code });
   }

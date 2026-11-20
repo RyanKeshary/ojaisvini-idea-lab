@@ -2,6 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
+// Load environment variables from .env or .env.local if present
+try {
+  require('dotenv').config({ path: path.join(__dirname, '../.env.local') });
+  require('dotenv').config({ path: path.join(__dirname, '../.env') });
+} catch (_) {}
+
 const schemaPath = path.join(__dirname, '../prisma/schema.prisma');
 let schema = fs.readFileSync(schemaPath, 'utf8');
 
@@ -19,18 +25,25 @@ if (dbUrl.startsWith('postgres://') || dbUrl.startsWith('postgresql://')) {
     fs.writeFileSync(schemaPath, schema);
     console.log('[prisma-prepare] Switched datasource provider to postgresql for production.');
   }
-  // In Vercel deployment with remote Postgres, sync tables
-  if (process.env.VERCEL) {
-    try {
-      console.log('[prisma-prepare] Running prisma db push on Vercel...');
-      execSync('npx prisma db push --skip-generate --accept-data-loss', {
-        stdio: 'inherit',
-        env: { ...process.env, DATABASE_URL: dbUrl }
-      });
-    } catch (e) {
-      console.warn('[prisma-prepare] prisma db push note:', e.message);
-    }
-  }
 } else {
-  console.log('[prisma-prepare] Using local sqlite datasource.');
+  if (schema.includes('provider = "postgresql"')) {
+    schema = schema.replace(/provider\s*=\s*"postgresql"/g, 'provider = "sqlite"');
+    fs.writeFileSync(schemaPath, schema);
+    console.log('[prisma-prepare] Switched datasource provider to sqlite for local development.');
+  } else {
+    console.log('[prisma-prepare] Using local sqlite datasource.');
+  }
+}
+
+// Push schema changes on Vercel unless explicitly disabled with SKIP_PRISMA_DB_PUSH=1
+if (process.env.VERCEL && process.env.SKIP_PRISMA_DB_PUSH !== '1') {
+  try {
+    console.log('[prisma-prepare] Running prisma db push on Vercel...');
+    execSync('npx prisma db push --skip-generate --accept-data-loss', {
+      stdio: 'inherit',
+      env: { ...process.env, DATABASE_URL: dbUrl }
+    });
+  } catch (e) {
+    console.warn('[prisma-prepare] prisma db push note:', e.message);
+  }
 }

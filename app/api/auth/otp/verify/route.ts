@@ -25,7 +25,17 @@ export async function POST(req: Request) {
   const v = await verifyOtp(phone, otp);
   if (!v.ok) return err(v.error, 401);
 
-  let user = await db.user.findUnique({ where: { phone } });
+  let user: any = null;
+  let useRest = false;
+
+  try {
+    user = await db.user.findUnique({ where: { phone } });
+  } catch {
+    useRest = true;
+    const { supabaseRest } = await import("@/lib/supabase-rest");
+    user = await supabaseRest.findUserByPhone(phone);
+  }
+
   if (!user) {
     if (!create) return err("no-account", 400);
     try {
@@ -33,10 +43,22 @@ export async function POST(req: Request) {
     } catch {
       return err("invalid-phone", 400);
     }
-    user = await db.user.create({ data: { phone, name: "", role: "WOMAN" } });
-    await db.auditLog.create({ data: { actorId: user.id, action: "user.registered", meta: "{}" } });
+    if (useRest) {
+      const { supabaseRest } = await import("@/lib/supabase-rest");
+      user = await supabaseRest.createUser({ phone, name: "", role: "WOMAN" });
+      await supabaseRest.createAuditLog({ actorId: user?.id, action: "user.registered" });
+    } else {
+      try {
+        user = await db.user.create({ data: { phone, name: "", role: "WOMAN" } });
+        await db.auditLog.create({ data: { actorId: user.id, action: "user.registered", meta: "{}" } });
+      } catch {
+        const { supabaseRest } = await import("@/lib/supabase-rest");
+        user = await supabaseRest.createUser({ phone, name: "", role: "WOMAN" });
+        await supabaseRest.createAuditLog({ actorId: user?.id, action: "user.registered" });
+      }
+    }
   }
-  if (user.deletedAt) return err("no-account", 400);
+  if (!user || user.deletedAt) return err("no-account", 400);
   const ticket = await issueTicket(user.id);
   return NextResponse.json({ ok: true, ticket, name: user.name, hasPin: !!user.pinHash });
 }
